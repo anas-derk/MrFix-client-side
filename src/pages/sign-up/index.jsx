@@ -1,0 +1,90 @@
+import Head from 'next/head';
+import Header from '@/components/Header';
+import SideBar from '@/components/sideBar';
+import { useEffect, useState } from 'react';
+import { FiUserPlus } from "react-icons/fi";
+
+export default function Signup() {
+
+    const [isSideBarAppeared, setIsSideBarAppeared] = useState(false);
+
+    useEffect(() => {
+
+        let header = document.querySelector("#__next .page-header"),
+            pageContent = document.querySelector(".sign-up .page-content");
+
+        pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
+
+        let address = document.querySelector(".sign-up .sign-up-form .address");
+
+        address.style.height = `calc(116px + 1.5rem)`;
+
+    }, []);
+
+    return (
+        // Start Who Are We Page
+        <div className="sign-up">
+            <Head>
+                <title>Mr. Fix - Signup</title>
+            </Head>
+            <Header setIsSideBarAppeared={setIsSideBarAppeared} />
+            {isSideBarAppeared && <SideBar />}
+            {/* Start Page Content Section */}
+            <section className="page-content pt-4 pb-4">
+                {/* Start Container From Bootstrap */}
+                <div className="container">
+                    <h1 className='page-title mb-4'>أهلاً وسهلاً بك في Mr. Fix</h1>
+                    <form className="sign-up-form">
+                        {/* Start Grid System From Bootstrap */}
+                        <div className="row">
+                            {/* Start Column */}
+                            <div className="col-md-6">
+                                <input type="text" placeholder='الاسم والكنية' className='form-control p-3 mb-4' />
+                                <input type="email" placeholder="البريد الالكتروني" className='form-control p-3 mb-4' />
+                                <input type="number" placeholder="رقم الجوال" className='form-control p-3 mb-4' min="0" max="9" maxLength="10" />
+                                <input type="password" placeholder="كلمة السر" className='form-control p-3 mb-4' />
+                                <input type="password" placeholder="تأكيد كلمة السر" className='form-control p-3 mb-4' />
+                            </div>
+                            {/* End Column */}
+                            {/* Start Column */}
+                            <div className="col-md-6">
+                                <select className='form-control p-3 mb-4'>
+                                    <option defaultValue="" hidden>اختر الجنس</option>
+                                    <option value="male">ذكر</option>
+                                    <option value="female">أنثى</option>
+                                </select>
+                                <input type="date" placeholder="تاريخ الميلاد" className='form-control p-3 mb-4' />
+                                <select className='form-control p-3 mb-4'>
+                                    <option defaultValue="" hidden>اختر المحافظة</option>
+                                    <option value="lattakia">اللاذقية</option>
+                                    <option value="lattakia">حلب</option>
+                                    <option value="lattakia">دمشق</option>
+                                    <option value="lattakia">طرطوس</option>
+                                    <option value="lattakia">درعا</option>
+                                    <option value="lattakia">القنيطرة</option>
+                                    <option value="lattakia">ريف دمشق</option>
+                                    <option value="lattakia">حماة</option>
+                                    <option value="lattakia">إدلب</option>
+                                    <option value="lattakia">حمص</option>
+                                    <option value="lattakia">الحسكة</option>
+                                    <option value="lattakia">دير الزور</option>
+                                    <option value="lattakia">الرقة</option>
+                                </select>
+                                <textarea placeholder="العنوان بالتفصيل" className='form-control p-3 address' />
+                            </div>
+                            {/* End Column */}
+                        </div>
+                        {/* End Grid System From Bootstrap */}
+                        <button type='submit' className='btn sign-up-btn w-50 p-3 mx-auto d-block'>
+                            <span className='ms-2'>تسجيل</span>
+                            <FiUserPlus />
+                        </button>
+                    </form>
+                </div>
+                {/* End Container From Bootstrap */}
+            </section>
+            {/* End Page Content Section */}
+        </div>
+        // End Who Are We Page
+    );
+}

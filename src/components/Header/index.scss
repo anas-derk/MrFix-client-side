@@ -1,0 +1,21 @@
+.page-header{
+    background-color: var(--main-color-one);
+    border-bottom: 7px solid var(--main-color-two);
+    .outline-menu-icon, .outline-menu-close-icon{
+        font-size: 33px;
+        cursor: pointer;
+    }
+    .authentication-link-list{
+        gap: 20px;
+        li {
+            border: 1px solid #CCC;
+            width: fit-content;
+            &:hover{
+                background-color: var(--main-color-three);
+                a{
+                    color: #000;
+                }
+            }
+        }
+    }
+}

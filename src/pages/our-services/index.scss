@@ -1,0 +1,29 @@
+.our-services{
+    .page-content{
+        background-color: var(--main-color-four);
+        .container{
+            min-height: inherit;
+            .row{
+                min-height: inherit;
+                .service-box{
+                    border: 1px solid var(--main-color-one);
+                    box-shadow: 1px 1px 15px var(--main-color-three),
+                                -1px -1px 15px var(--main-color-two);
+                    border-radius: 10px;
+                    background-color: #FFF;
+                    height: 150px;
+                    .service-details-link{
+                        color: #000;
+                        &:hover{
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+            .service-request-link{
+                background-color: var(--main-color-one);
+                color: #FFF;
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+.service-request{
+    .page-content{
+        background-color: var(--main-color-four);
+        .container{
+            min-height: inherit;
+            .service-request-form{
+                textarea{
+                    resize: none;
+                }
+                .service-request-btn{
+                    background-color: var(--main-color-one);
+                    color: #FFF;
+                }
+            }
+        }
+    }
+}

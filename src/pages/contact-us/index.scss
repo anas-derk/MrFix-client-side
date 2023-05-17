@@ -1,0 +1,13 @@
+.contact-us{
+    .contact-methods{
+        font-size: 20px;
+        .email-box{
+            .email-link{
+                color: #000;
+                &:hover{
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
