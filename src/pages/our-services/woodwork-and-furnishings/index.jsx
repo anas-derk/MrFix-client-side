@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
-import SideBar from '@/components/sideBar';
 import { useEffect, useState } from 'react';
 import whoAreWeImage from "../../../../public/images/WhoAreWe/who-are-we.png";
 import data from "../../../../public/data/index";
