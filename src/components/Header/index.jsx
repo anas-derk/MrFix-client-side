@@ -5,62 +5,47 @@ import { FiUserPlus } from "react-icons/fi";
 import { AiOutlineCloseSquare } from "react-icons/ai";
 import Logo from "../../../public/images/Logo/logo.png";
 
-let isSideBarAppearedTemp = false;
-
-export default function Header({ setIsSideBarAppeared }) {
+export default function Header() {
     return (
-        <header className="page-header pt-3 pb-2 text-white">
-            {/* Start Container From Bootstrap */}
-            <div className="container">
-                {/* Start Grid System From Bootstrap */}
-                <div className="row align-items-center">
-                    {/* Start Column From Bootstrap */}
-                    <div className="col-md-4">
-                        {!isSideBarAppearedTemp && <HiOutlineMenu
-                            className="outline-menu-icon"
-                            onClick={() => {
-                                isSideBarAppearedTemp = !isSideBarAppearedTemp;
-                                setIsSideBarAppeared(isSideBarAppearedTemp);
-                            }}
-                        />}
-                        {isSideBarAppearedTemp && <AiOutlineCloseSquare
-                            className="outline-menu-close-icon"
-                            onClick={() => {
-                                isSideBarAppearedTemp = !isSideBarAppearedTemp;
-                                setIsSideBarAppeared(isSideBarAppearedTemp);
-                            }}
-                        />}
-                    </div>
-                    {/* End Column From Bootstrap */}
-                    {/* Start Column From Bootstrap */}
-                    <div className="col-md-4 text-center">
-                        <img src={Logo.src} alt="Logo !!" width="100" height="70" />
-                    </div>
-                    {/* End Column From Bootstrap */}
-                    {/* Start Column From Bootstrap */}
-                    <div className="col-md-4">
-                        {/* Start Authentication Link List */}
-                        <ul className="authentication-link-list d-flex flex-wrap justify-content-end">
-                            <li className="p-2">
-                                <Link href="/login">
-                                    <MdOutlineLogin className="login-icon" />
-                                    <span className="me-2">دخول</span>
-                                </Link>
+        <header className="page-header text-white">
+            <nav className="navbar navbar-expand-lg pt-3 pb-3">
+                <div className="container">
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <Link className="nav-link" aria-current="page" href="/">الرئيسية</Link>
                             </li>
-                            <li className="p-2">
-                                <Link href="/sign-up">
-                                    <FiUserPlus className="signup-icon" />
-                                    <span className="me-2">انضم لنا</span>
-                                </Link>
+                            <li className="nav-item">
+                                <Link className="nav-link" href="/who-are-we">من نحن</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" href="/our-services">خدماتنا</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" href="/contact-us">اتصل بنا</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" href="/login">تسجيل  الدخول</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" href="/sign-up">إنشاء  حساب</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" href="/profile">الملف  الشخصي</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" href="/service-request">طلب خدمة</Link>
                             </li>
                         </ul>
-                        {/* End Authentication Link List */}
                     </div>
-                    {/* End Column From Bootstrap */}
+                    <Link className="logo" href="/">
+                        <img src={Logo.src} alt="Logo image !!" width="100" height="75" />
+                    </Link>
                 </div>
-                {/* End Grid System From Bootstrap */}
-            </div>
-            {/* End Container From Bootstrap */}
+            </nav>
         </header>
     );
 } 

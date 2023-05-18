@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
-import SideBar from '@/components/sideBar';
 import { useEffect, useState } from 'react';
 import sliderImage1 from "../../public/images/Home/slider1.png";
 import sliderImage2 from "../../public/images/Home/slider2.png";
@@ -8,8 +7,6 @@ import sliderImage3 from "../../public/images/Home/slider3.png";
 import Link from 'next/link';
 
 export default function Home() {
-
-  const [isSideBarAppeared, setIsSideBarAppeared] = useState(false);
 
   useEffect(() => {
 
@@ -26,8 +23,7 @@ export default function Home() {
       <Head>
         <title>Mr. Fix - Home</title>
       </Head>
-      <Header setIsSideBarAppeared={setIsSideBarAppeared} />
-      {isSideBarAppeared && <SideBar />}
+      <Header />
       {/* Start Page Content Section */}
       <div className="page-content">
         {/* Start Slider Section */}

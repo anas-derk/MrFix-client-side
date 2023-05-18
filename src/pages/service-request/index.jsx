@@ -1,13 +1,10 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
-import SideBar from '@/components/sideBar';
 import { useEffect, useState } from 'react';
 import { FiUserPlus } from "react-icons/fi";
 import ourServicesData from "../../../public/data/index";
 
 export default function ServiceRequest() {
-
-    const [isSideBarAppeared, setIsSideBarAppeared] = useState(false);
 
     useEffect(() => {
 
@@ -24,8 +21,7 @@ export default function ServiceRequest() {
             <Head>
                 <title>Mr. Fix - Service Request</title>
             </Head>
-            <Header setIsSideBarAppeared={setIsSideBarAppeared} />
-            {isSideBarAppeared && <SideBar />}
+            <Header />
             {/* Start Page Content Section */}
             <section className="page-content pt-4 pb-4">
                 {/* Start Container From Bootstrap */}

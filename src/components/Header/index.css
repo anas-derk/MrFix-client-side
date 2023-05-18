@@ -8,19 +8,10 @@
   cursor: pointer;
 }
 
-.page-header .authentication-link-list {
-  gap: 20px;
+.page-header .navbar .navbar-nav .nav-item .nav-link {
+  font-size: 18px;
 }
 
-.page-header .authentication-link-list li {
-  border: 1px solid #CCC;
-  width: fit-content;
-}
-
-.page-header .authentication-link-list li:hover {
-  background-color: var(--main-color-three);
-}
-
-.page-header .authentication-link-list li:hover a {
-  color: #000;
+.page-header .navbar .navbar-nav .nav-item .nav-link:hover {
+  color: #0F0;
 }

@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
-import SideBar from '@/components/sideBar';
 import { useEffect, useState } from 'react';
 import whoAreWeImage from "../../../../public/images/WhoAreWe/who-are-we.png";
 import data from "../../../../public/data/index";
@@ -24,8 +23,7 @@ export default function SuggestionsServices() {
             <Head>
                 <title>Mr. Fix - {data.servicesData[9].optionValue}</title>
             </Head>
-            <Header setIsSideBarAppeared={setIsSideBarAppeared} />
-            {isSideBarAppeared && <SideBar />}
+            <Header />
             {/* Start Page Content Section */}
             <section className="page-content pt-3 pb-3">
                 {/* Start Container From Bootstrap */}

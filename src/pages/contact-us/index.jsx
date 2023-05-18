@@ -1,12 +1,9 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
-import SideBar from '@/components/sideBar';
 import { useEffect, useState } from 'react';
 import whoAreWeImage from "../../../public/images/WhoAreWe/who-are-we.png";
 
 export default function ContactUs() {
-
-    const [isSideBarAppeared, setIsSideBarAppeared] = useState(false);
 
     useEffect(() => {
 
@@ -23,8 +20,7 @@ export default function ContactUs() {
             <Head>
                 <title>Mr. Fix - Contact Us</title>
             </Head>
-            <Header setIsSideBarAppeared={setIsSideBarAppeared} />
-            {isSideBarAppeared && <SideBar />}
+            <Header />
             {/* Start Page Content Section */}
             <section className="page-content pt-4 pb-4">
                 {/* Start Container From Bootstrap */}

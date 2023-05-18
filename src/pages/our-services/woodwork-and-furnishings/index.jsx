@@ -7,8 +7,6 @@ import data from "../../../../public/data/index";
 
 export default function WoodworkAndFurnishings() {
 
-    const [isSideBarAppeared, setIsSideBarAppeared] = useState(false);
-
     useEffect(() => {
 
         let header = document.querySelector("#__next .page-header"),
@@ -24,8 +22,7 @@ export default function WoodworkAndFurnishings() {
             <Head>
                 <title>Mr. Fix - {data.servicesData[3].optionValue}</title>
             </Head>
-            <Header setIsSideBarAppeared={setIsSideBarAppeared} />
-            {isSideBarAppeared && <SideBar />}
+            <Header />
             {/* Start Page Content Section */}
             <section className="page-content pt-3 pb-3">
                 {/* Start Container From Bootstrap */}

@@ -1,13 +1,10 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
-import SideBar from '@/components/sideBar';
 import { useEffect, useState } from 'react';
 import ourServicesData from "../../../public/data/index";
 import Link from 'next/link';
 
 export default function OurServices() {
-
-    const [isSideBarAppeared, setIsSideBarAppeared] = useState(false);
 
     useEffect(() => {
 
@@ -24,8 +21,7 @@ export default function OurServices() {
             <Head>
                 <title>Mr. Fix - Our Services</title>
             </Head>
-            <Header setIsSideBarAppeared={setIsSideBarAppeared} />
-            {isSideBarAppeared && <SideBar />}
+            <Header />
             {/* Start Page Content Section */}
             <section className="page-content pt-4 pb-4">
                 {/* Start Container From Bootstrap */}

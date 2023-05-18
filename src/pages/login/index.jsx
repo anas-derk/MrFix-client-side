@@ -1,13 +1,10 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
-import SideBar from '@/components/sideBar';
 import { useEffect, useState } from 'react';
 import loginImage from "../../../public/images/Login/login.png";
 import Link from 'next/link';
 
 export default function Login() {
-
-    const [isSideBarAppeared, setIsSideBarAppeared] = useState(false);
 
     useEffect(() => {
 
@@ -24,17 +21,9 @@ export default function Login() {
             <Head>
                 <title>Mr. Fix - Login</title>
             </Head>
-            <Header setIsSideBarAppeared={setIsSideBarAppeared} />
-            {isSideBarAppeared && <SideBar />}
+            <Header />
             {/* Start Page Content Section */}
-            <div
-                className="page-content"
-                style={isSideBarAppeared ? {
-                    position: "relative",
-                    right: "300px",
-                    width: "calc(100vw - 317px)"} : {}
-                }
-            >
+            <div className="page-content">
                 {/* Start Container From Bootstrap */}
                 <div className="container">
                     {/* Start Grid System From Bootstrap */}

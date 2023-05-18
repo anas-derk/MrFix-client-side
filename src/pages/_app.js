@@ -3,7 +3,6 @@ import Head from "next/head";
 import "../Scss/index.css";
 import "../components/Header/index.css";
 import Footer from "@/components/Footer";
-import "../components/sideBar/index.css";
 import "../pages/index.css";
 import "../pages/login/index.css";
 import "./sign-up/index.css";
@@ -22,13 +21,16 @@ export default function App({ Component, pageProps }) {
           rel="stylesheet"
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
           crossOrigin="anonymous"
-          />
+        />
         {/* End Include Bootstrap Framework Css File */}
-        {/* Start Include Tajawal Font From Google Fonts Website */}
+        {/* Start Include Fonts From Google Fonts Website */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet" />
-        {/* End Include Tajawal Font From Google Fonts Website */}
+        <link href="https://fonts.googleapis.com/css2?family=Changa:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Lemonada:wght@300;400;500&display=swap" rel="stylesheet" />
+        {/* End Include Fonts From Google Fonts Website */}
       </Head>
       <Component {...pageProps} />
       {/* <Footer /> */}
@@ -37,7 +39,7 @@ export default function App({ Component, pageProps }) {
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossOrigin="anonymous"
-        ></Script>
+      ></Script>
       {/* End Include Bootstrap Framework Js File */}
     </>
   );

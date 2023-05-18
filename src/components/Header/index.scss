@@ -5,15 +5,14 @@
         font-size: 33px;
         cursor: pointer;
     }
-    .authentication-link-list{
-        gap: 20px;
-        li {
-            border: 1px solid #CCC;
-            width: fit-content;
-            &:hover{
-                background-color: var(--main-color-three);
-                a{
-                    color: #000;
+    .navbar{
+        .navbar-nav{
+            .nav-item{
+                .nav-link{
+                    font-size: 18px;
+                    &:hover{
+                        color: #0F0;
+                    }
                 }
             }
         }

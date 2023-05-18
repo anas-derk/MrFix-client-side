@@ -1,12 +1,9 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
-import SideBar from '@/components/sideBar';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import whoAreWeImage from "../../../public/images/WhoAreWe/who-are-we.png";
 
 export default function WhoAreWe() {
-
-    const [isSideBarAppeared, setIsSideBarAppeared] = useState(false);
 
     useEffect(() => {
 
@@ -23,8 +20,7 @@ export default function WhoAreWe() {
             <Head>
                 <title>Mr. Fix - Who Are We</title>
             </Head>
-            <Header setIsSideBarAppeared={setIsSideBarAppeared} />
-            {isSideBarAppeared && <SideBar />}
+            <Header />
             {/* Start Page Content Section */}
             <section className="page-content">
                 {/* Start Container From Bootstrap */}
