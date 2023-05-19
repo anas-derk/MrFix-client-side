@@ -35,7 +35,7 @@ export default function Login() {
                                 <h4 className='mb-4'>أهلاً بعودتك .</h4>
                                 <input type="text" placeholder="البريد الالكتروني أو رقم الجوال" className="form-control mb-4 p-3" />
                                 <input type="password" placeholder="كلمة السر" className="form-control mb-4 p-3" />
-                                <Link href="/" className='mb-3 btn w-100 text-start'>نسيت كلمة السر !</Link>
+                                <Link href="/forget-password" className='mb-3 btn w-100 text-start'>نسيت كلمة السر !</Link>
                                 <button type='submit' className='btn login-btn w-100 p-3'>تسجيل الدخول</button>
                             </form>
                             {/* End Login Form */}
