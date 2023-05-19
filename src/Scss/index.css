@@ -28,16 +28,14 @@ a {
   height: inherit;
 }
 
-.shared-pages-with-styles .page-content {
-  background-color: var(--main-color-four);
-}
-
 .shared-pages-with-styles .page-content .container {
   min-height: inherit;
 }
 
 .shared-pages-with-styles .page-content .container .row {
   min-height: inherit;
+  background-color: var(--main-color-four);
+  border-radius: 30px;
 }
 
 .shared-pages-with-styles .page-content .container .row .page-img {
@@ -49,4 +47,7 @@ a {
   text-align: justify;
   line-height: 2;
   font-size: 20px;
+  margin-bottom: 0;
+  height: 400px;
+  overflow-y: scroll;
 }
