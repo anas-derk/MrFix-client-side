@@ -1,18 +1,18 @@
-.login{
+.forget-password{
     .page-content{
         .container{
             min-height: inherit;
             .row{
                 min-height: inherit;
-                .login-form{
+                .forget-password-form{
                     box-shadow: 1px 1px 10px #FFF;
                     border-radius: 15px;
-                    .login-btn{
+                    .forget-password-btn{
                         background-color: var(--main-color-one);
                         color: #FFF;
                     }
                 }
-                .login-img{
+                .forget-password-img{
                     max-width: 100%;
                     height: 100%;
                 }

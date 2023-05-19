@@ -1,0 +1,12 @@
+.profile .page-content .container {
+  min-height: inherit;
+}
+
+.profile .page-content .container .edit-profile-form textarea {
+  resize: none;
+}
+
+.profile .page-content .container .edit-profile-form .edit-profile-btn {
+  background-color: var(--main-color-one);
+  color: #FFF;
+}

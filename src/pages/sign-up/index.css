@@ -1,7 +1,3 @@
-.sign-up .page-content {
-  background-color: var(--main-color-four);
-}
-
 .sign-up .page-content .container {
   min-height: inherit;
 }

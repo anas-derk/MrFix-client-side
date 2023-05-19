@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
-import whoAreWeImage from "../../../public/images/WhoAreWe/who-are-we.png";
+import contactUsImage from "../../../public/images/ContactUs/contact-us.png";
 
 export default function ContactUs() {
 
@@ -27,29 +27,25 @@ export default function ContactUs() {
                 <div className="container">
                     {/* Start Grid System From Bootstrap */}
                     <div className="row align-items-center">
-                        <h1 className='page-title text-center mb-2'>اتصل بنا</h1>
                         {/* Start Column */}
                         <div className="col-md-6">
-                            <p className='how-to-contact-us-explain page-content-explain'>
-                                نحن نعلم أننا نستطيع أن نكون افضل. ولكن أخبرنا كيف من خلال التواصل معنا
-                                نحن نستمر في النمو والتطور، لكن الأهم من ذلك ، أن نتعلم منك ما هي الأفكار أو المفاهيم التي قد تجعلك في راحة أكثر
-                                بدأنا للتو ونعلم أنه يمكننا أن نفعل أكثر لذا التعليقات و الآراء هي وستظل دائمًا مرحبا بها في Mr. fix.
+                            <p className='how-to-contact-us-explain page-content-explain pe-4 ps-4'>
+                                نهتم بشكل كبير في النمو والتطور والريادة ولنكون الأفضل دائماً نحن بحاجة أن نتعلم منك ما هي الآراء والأفكار أو المفاهيم التي قد تجعلك في راحة أكثر لذا أخبرنا كيف من خلال التواصل معنا.
+                                <br />
+                                و كذلك التعليقات والشكاوي ستظل دائمًا مرحبا   بها في مستر فيكس
+                                <br />
                                 كلنا آذان صاغية على :
+                                <br />
+                                <span>الإيميل : </span>
+                                <a href="mailto:mr.fix.support@gmail.com" className='email-link'>mr.fix.support@gmail.com .</a>
+                                <br />
+                                <span>رقم الجوال: 09444444444444</span>
                             </p>
-                            <div className="contact-methods">
-                                <div className='email-box mb-3'>
-                                    <span>الإيميل : </span>
-                                    <a href="mailto:mr.fix.support@gmail.com" className='email-link'>mr.fix.support@gmail.com .</a>
-                                </div>
-                                <div className='mobile-box'>
-                                    <span>رقم الجوال: 09444444444444</span>
-                                </div>
-                            </div>
                         </div>
                         {/* End Column */}
                         {/* Start Column */}
                         <div className="col-md-6">
-                            <img src={whoAreWeImage.src} alt="Who Are We Image !!" className='contact-us-img page-img' />
+                            <img src={contactUsImage.src} alt="Contact Us Image !!" className='contact-us-img page-img' />
                         </div>
                         {/* End Column */}
                     </div>

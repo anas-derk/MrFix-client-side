@@ -9,6 +9,9 @@ import "./sign-up/index.css";
 import "./contact-us/index.css";
 import "./our-services/index.css";
 import "./service-request/index.css";
+import "./forget-password/index.css";
+import "./reset-password/index.css";
+import "./profile/index.css";
 
 export default function App({ Component, pageProps }) {
   return (

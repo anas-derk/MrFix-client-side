@@ -49,5 +49,5 @@ a {
   font-size: 20px;
   margin-bottom: 0;
   height: 400px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }

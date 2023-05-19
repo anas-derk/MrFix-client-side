@@ -1,7 +1,3 @@
-.login .page-content {
-  background-color: var(--main-color-four);
-}
-
 .login .page-content .container {
   min-height: inherit;
 }
@@ -12,6 +8,7 @@
 
 .login .page-content .container .row .login-form {
   box-shadow: 1px 1px 10px #FFF;
+  border-radius: 15px;
 }
 
 .login .page-content .container .row .login-form .login-btn {
