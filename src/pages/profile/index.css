@@ -1,3 +1,7 @@
+.profile .page-content {
+  background-color: var(--main-color-five);
+}
+
 .profile .page-content .container {
   min-height: inherit;
 }

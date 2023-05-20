@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ourServicesData from "../../../public/data/index";
 import Link from 'next/link';
+import fixLogo from "../../../public/images/OurServices/1.png";
 
 export default function OurServices() {
 
@@ -34,10 +35,13 @@ export default function OurServices() {
                             <div className="col-md-3" key={index}>
                                 {/* Start Service Box */}
                                 <div className="service-box p-3 d-flex flex-column justify-content-between">
-                                    <div className="service-name-and-logo d-flex">
+                                    <div className="service-name d-flex">
                                         <h5 className='service-name'>{service.name}</h5>
                                     </div>
-                                    <Link className='service-details-link' href={service.detailsInfoLink}>إقرأ أكثر</Link>
+                                    <div className='service-link-and-logo d-flex justify-content-between align-items-end'>
+                                        <Link className='service-details-link' href={service.detailsInfoLink}>إقرأ المزيد ...</Link>
+                                        <img src={fixLogo.src} alt="Fix Image" className='fix-image' />
+                                    </div>
                                 </div>
                                 {/* End Service Box */}
                             </div>
