@@ -52,3 +52,20 @@ a{
         }
     }
 }
+
+.shared-our-services-with-styles{
+    .page-content{
+        background-size: 100% 100%;
+        .page-title{
+            font-family: 'Lemonada', cursive;
+        }
+        .page-content-explain{
+            text-align: center;
+            line-height: 2;
+            font-size: 22px;
+            margin-bottom: 0;
+            background-color: var(--main-color-six);
+            border-radius: 20px;
+        }
+    }
+}
