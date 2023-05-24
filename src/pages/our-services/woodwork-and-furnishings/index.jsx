@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
-import { useEffect, useState } from 'react';
-import whoAreWeImage from "../../../../public/images/WhoAreWe/who-are-we.png";
+import { useEffect } from 'react';
+import electricalsAndElectronicsImage from "../../../../public/images/OurServices/electricals-and-electronics.png";
 import data from "../../../../public/data/index";
 
 export default function WoodworkAndFurnishings() {
@@ -17,28 +17,23 @@ export default function WoodworkAndFurnishings() {
 
     return (
         // Start Woodwork And Furnishings Services Page
-        <div className="woodwork-and-furnishings-services shared-pages-with-styles page-content-explain">
+        <div className="woodwork-and-furnishings-services shared-our-services-with-styles">
             <Head>
                 <title>Mr. Fix - {data.servicesData[3].optionValue}</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}
-            <section className="page-content pt-3 pb-3">
+            <section className="page-content pt-3 pb-3" style={{ backgroundImage: `url(${electricalsAndElectronicsImage.src})` }}>
                 {/* Start Container From Bootstrap */}
                 <div className="container">
                     {/* Start Grid System From Bootstrap */}
                     <div className="row align-items-center">
-                        <h1 className='page-title text-center mb-2'>{ data.servicesData[3].name }</h1>
+                        <h1 className='page-title text-center mb-4'>{ data.servicesData[3].name }</h1>
                         {/* Start Column */}
                         <div className="col-md-6">
-                            <p className='service-explain page-content-explain'>
+                            <p className='service-explain page-content-explain p-4'>
                                 { data.servicesData[3].explain }
                             </p>
-                        </div>
-                        {/* End Column */}
-                        {/* Start Column */}
-                        <div className="col-md-6">
-                            <img src={whoAreWeImage.src} alt="Woodwork and furnishings Image !!" className='woodwork-and-furnishings-img page-img' />
                         </div>
                         {/* End Column */}
                     </div>
