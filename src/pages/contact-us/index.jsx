@@ -22,7 +22,7 @@ export default function ContactUs() {
             </Head>
             <Header />
             {/* Start Page Content Section */}
-            <section className="page-content pt-4 pb-4">
+            <section className="page-content p-4">
                 {/* Start Container From Bootstrap */}
                 <div className="container">
                     {/* Start Grid System From Bootstrap */}

@@ -42,7 +42,7 @@ export default function Home() {
               {/* Start Grid System */}
               <div className="row align-items-center">
                 {/* Start Column */}
-                <div className="col-md-6">
+                <div className="col-md-6 content-box">
                   <p className='slider-content-explain text-center'>
                     أعتني بمنزلك من خلال هاتفك
                     <br />
@@ -55,7 +55,7 @@ export default function Home() {
                 </div>
                 {/* End Column */}
                 {/* Start Column */}
-                <div className="col-md-6">
+                <div className="col-md-6 image-box">
                   <img src={sliderImage1.src} alt="Slider Image 1" className='slider-image' />
                 </div>
                 {/* End Column */}

@@ -71,7 +71,7 @@ export default function Signup() {
                             {/* End Column */}
                         </div>
                         {/* End Grid System From Bootstrap */}
-                        <button type='submit' className='btn sign-up-btn w-50 p-3 mx-auto d-block'>
+                        <button type='submit' className='btn sign-up-btn w-50 p-3 mt-4 mx-auto d-block'>
                             <span className='ms-2'>تسجيل</span>
                             <FiUserPlus />
                         </button>

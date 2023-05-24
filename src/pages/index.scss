@@ -8,9 +8,13 @@
             .slider{
                 background-color: var(--main-color-five);
                 .container{
-                    
                     .row{
-                        
+                        @media (max-width: 767px) {
+                            .content-box{
+                                order: 2;
+                                padding-top: 30px;
+                            }
+                        }
                     }
                 }
                 .slider-content-explain{

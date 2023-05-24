@@ -2,16 +2,18 @@ import Link from "next/link";
 import { HiOutlineMenu } from "react-icons/hi";
 import { MdOutlineLogin } from "react-icons/md";
 import { FiUserPlus } from "react-icons/fi";
-import { AiOutlineCloseSquare } from "react-icons/ai";
+import { AiOutlineCloseSquare, AiOutlineMenu } from "react-icons/ai";
 import Logo from "../../../public/images/Logo/logo.png";
 
 export default function Header() {
     return (
+        // Start Page Header
         <header className="page-header text-white">
             <nav className="navbar navbar-expand-lg pt-3 pb-3">
+                {/* Start Container Component From Bootstrap */}
                 <div className="container">
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
+                        <AiOutlineMenu />
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav">
@@ -41,11 +43,15 @@ export default function Header() {
                             </li>
                         </ul>
                     </div>
-                    <Link className="logo" href="/">
-                        <img src={Logo.src} alt="Logo image !!" width="100" height="75" />
-                    </Link>
+                    <div className="logo-box">
+                        <Link className="logo" href="/">
+                            <img src={Logo.src} alt="Logo image !!" width="100" height="75" />
+                        </Link>
+                    </div>
                 </div>
+                {/* End Container Component From Bootstrap */}
             </nav>
         </header>
+        // End Page Header
     );
 } 

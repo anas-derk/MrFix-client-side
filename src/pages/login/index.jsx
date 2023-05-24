@@ -23,13 +23,13 @@ export default function Login() {
             </Head>
             <Header />
             {/* Start Page Content Section */}
-            <div className="page-content pt-4 pb-4">
+            <div className="page-content p-4">
                 {/* Start Container From Bootstrap */}
                 <div className="container">
                     {/* Start Grid System From Bootstrap */}
                     <div className="row align-items-center">
                         {/* Start Column */}
-                        <div className="col-md-6 p-5">
+                        <div className="col-lg-6 p-5">
                             {/* Start Login Form */}
                             <form className="login-form bg-white p-4 text-center">
                                 <h4 className='mb-4'>أهلاً بعودتك .</h4>
@@ -42,7 +42,7 @@ export default function Login() {
                         </div>
                         {/* End Column */}
                         {/* Start Column */}
-                        <div className="col-md-6">
+                        <div className="col-lg-6">
                             <img src={loginImage.src} alt="Login Image !!" className='login-img' />
                         </div>
                         {/* End Column */}

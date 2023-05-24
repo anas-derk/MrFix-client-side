@@ -6,12 +6,30 @@
         cursor: pointer;
     }
     .navbar{
+        .navbar-toggler{
+            border: 2px solid var(--main-color-three);
+            color: var(--main-color-three);
+            font-weight: bold;
+        }
+        .collapse{
+            @media (max-width: 991px) {
+                order: 3;
+            }
+        }
+        .logo-box{
+            @media (max-width: 991px) {
+                order: 2;
+            }
+        }
         .navbar-nav{
             .nav-item{
                 .nav-link{
                     font-size: 18px;
                     &:hover{
                         color: #0F0;
+                    }
+                    @media (max-width: 991px) {
+                        text-align: center;
                     }
                 }
             }
