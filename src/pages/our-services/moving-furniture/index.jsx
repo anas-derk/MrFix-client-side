@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect } from 'react';
-import electricalsAndElectronicsImage from "../../../../public/images/OurServices/electricals-and-electronics.png";
+import movingFurnitureImage from "../../../../public/images/OurServices/moving-furniture.png";
 import data from "../../../../public/data/index";
 
 export default function MovingFurniture() {
@@ -23,7 +23,7 @@ export default function MovingFurniture() {
             </Head>
             <Header />
             {/* Start Page Content Section */}
-            <section className="page-content pt-3 pb-3" style={{ backgroundImage: `url(${electricalsAndElectronicsImage.src})` }}>
+            <section className="page-content pt-3 pb-3" style={{ backgroundImage: `url(${movingFurnitureImage.src})` }}>
                 {/* Start Container From Bootstrap */}
                 <div className="container">
                     {/* Start Grid System From Bootstrap */}
