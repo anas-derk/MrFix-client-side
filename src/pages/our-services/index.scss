@@ -5,6 +5,10 @@
             min-height: inherit;
             .row{
                 min-height: inherit;
+                @media (max-width: 767px) {
+                    gap: 30px;
+                    margin-bottom: 30px;
+                }
                 .service-box{
                     border: 5px solid var(--main-color-six);
                     border-radius: 20px;

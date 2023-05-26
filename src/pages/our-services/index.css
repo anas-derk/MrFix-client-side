@@ -10,6 +10,13 @@
   min-height: inherit;
 }
 
+@media (max-width: 767px) {
+  .our-services .page-content .container .row {
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+}
+
 .our-services .page-content .container .row .service-box {
   border: 5px solid var(--main-color-six);
   border-radius: 20px;

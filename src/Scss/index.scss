@@ -62,16 +62,29 @@ a{
 .shared-our-services-with-styles{
     .page-content{
         background-size: 100% 100%;
-        .page-title{
-            font-family: 'Lemonada', cursive;
+        @media (max-width: 767px) {
+            background: var(--main-color-five) !important;
         }
-        .page-content-explain{
-            text-align: center;
-            line-height: 2;
-            font-size: 22px;
-            margin-bottom: 0;
-            background-color: var(--main-color-six);
-            border-radius: 20px;
+        .row{
+            .page-title{
+                font-family: 'Lemonada', cursive;
+            }
+            .page-content-explain{
+                text-align: center;
+                line-height: 2;
+                font-size: 22px;
+                margin-bottom: 0;
+                background-color: var(--main-color-six);
+                border-radius: 20px;
+            }
+            .image-in-responsive{
+                max-width: 100%;
+            }
+            @media (max-width: 767px) {
+                > div:first-of-type{
+                    order: 2;
+                }
+            }
         }
     }
 }

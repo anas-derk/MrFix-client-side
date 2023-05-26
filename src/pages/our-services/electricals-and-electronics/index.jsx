@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect } from 'react';
 import electricalsAndElectronicsImage from "../../../../public/images/OurServices/electricals-and-electronics.png";
+import electricalsAndElectronicsImageInRes from "../../../../public/images/OurServices/responsive/electricals-and-electronics.png";
 import data from "../../../../public/data/index";
 
 export default function ElectricalsAndElectronics() {
@@ -34,6 +35,11 @@ export default function ElectricalsAndElectronics() {
                             <p className='service-explain page-content-explain p-4'>
                                 {data.servicesData[0].explain}
                             </p>
+                        </div>
+                        {/* End Column */}
+                        {/* Start Column */}
+                        <div className="col-md-6">
+                            <img src={electricalsAndElectronicsImageInRes.src} alt="Image" className='image-in-responsive' />
                         </div>
                         {/* End Column */}
                     </div>

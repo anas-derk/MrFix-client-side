@@ -67,15 +67,31 @@ a {
   background-size: 100% 100%;
 }
 
-.shared-our-services-with-styles .page-content .page-title {
+@media (max-width: 767px) {
+  .shared-our-services-with-styles .page-content {
+    background: var(--main-color-five) !important;
+  }
+}
+
+.shared-our-services-with-styles .page-content .row .page-title {
   font-family: 'Lemonada', cursive;
 }
 
-.shared-our-services-with-styles .page-content .page-content-explain {
+.shared-our-services-with-styles .page-content .row .page-content-explain {
   text-align: center;
   line-height: 2;
   font-size: 22px;
   margin-bottom: 0;
   background-color: var(--main-color-six);
   border-radius: 20px;
+}
+
+.shared-our-services-with-styles .page-content .row .image-in-responsive {
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .shared-our-services-with-styles .page-content .row > div:first-of-type {
+    order: 2;
+  }
 }
