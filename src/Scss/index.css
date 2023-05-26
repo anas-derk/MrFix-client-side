@@ -73,6 +73,10 @@ a {
   }
 }
 
+.shared-our-services-with-styles .page-content .row > div:last-of-type {
+  display: none;
+}
+
 .shared-our-services-with-styles .page-content .row .page-title {
   font-family: 'Lemonada', cursive;
 }
@@ -93,5 +97,9 @@ a {
 @media (max-width: 767px) {
   .shared-our-services-with-styles .page-content .row > div:first-of-type {
     order: 2;
+    margin-top: 30px;
+  }
+  .shared-our-services-with-styles .page-content .row > div:last-of-type {
+    display: block;
   }
 }

@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect } from 'react';
 import plumbingImage from "../../../../public/images/OurServices/plumbing.png";
+import plumbingImageInRes from "../../../../public/images/OurServices/responsive/plumbing.png";
 import data from "../../../../public/data/index";
 
 export default function Plumbing() {
@@ -34,6 +35,11 @@ export default function Plumbing() {
                             <p className='service-explain page-content-explain p-4'>
                                 { data.servicesData[1].explain }
                             </p>
+                        </div>
+                        {/* End Column */}
+                        {/* Start Column */}
+                        <div className="col-md-6">
+                            <img src={plumbingImageInRes.src} alt="Image" className='image-in-responsive' />
                         </div>
                         {/* End Column */}
                     </div>

@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect } from 'react';
 import suggestionsForChangingTheDecorImage from "../../../../public/images/OurServices/suggestions-for-changing-the-decor.png";
+import suggestionsForChangingTheDecorImageInRes from "../../../../public/images/OurServices/responsive/suggestions-for-changing-the-decor.png";
 import data from "../../../../public/data/index";
 
 export default function SuggestionsServices() {
@@ -34,6 +35,11 @@ export default function SuggestionsServices() {
                             <p className='service-explain page-content-explain p-2'>
                                 { data.servicesData[9].explain }
                             </p>
+                        </div>
+                        {/* End Column */}
+                        {/* Start Column */}
+                        <div className="col-md-6">
+                            <img src={suggestionsForChangingTheDecorImageInRes.src} alt="Image" className='image-in-responsive' />
                         </div>
                         {/* End Column */}
                     </div>

@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect } from 'react';
 import rentalHomeMaintenanceImage from "../../../../public/images/OurServices/rental-home-maintenance.png";
+import rentalHomeMaintenanceImageInRes from "../../../../public/images/OurServices/responsive/rental-home-maintenance.png";
 import data from "../../../../public/data/index";
 
 export default function RentalHomeMaintenance() {
@@ -28,12 +29,17 @@ export default function RentalHomeMaintenance() {
                 <div className="container">
                     {/* Start Grid System From Bootstrap */}
                     <div className="row align-items-center">
-                        <h1 className='page-title text-center mb-4'>{ data.servicesData[8].name }</h1>
+                        <h1 className='page-title text-center mb-4'>{data.servicesData[8].name}</h1>
                         {/* Start Column */}
                         <div className="col-md-6">
                             <p className='service-explain page-content-explain p-4'>
-                                { data.servicesData[8].explain }
+                                {data.servicesData[8].explain}
                             </p>
+                        </div>
+                        {/* End Column */}
+                        {/* Start Column */}
+                        <div className="col-md-6">
+                            <img src={rentalHomeMaintenanceImageInRes.src} alt="Image" className='image-in-responsive' />
                         </div>
                         {/* End Column */}
                     </div>

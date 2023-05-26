@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect } from 'react';
 import inquiryAboutTheCostOfRepairImage from "../../../../public/images/OurServices/inquiry-about-the-cost-of-repair.png";
+import inquiryAboutTheCostOfRepairImageInRes from "../../../../public/images/OurServices/responsive/inquiry-about-the-cost-of-repair.png";
 import data from "../../../../public/data/index";
 
 export default function InquiryRepairCostServices() {
@@ -34,6 +35,11 @@ export default function InquiryRepairCostServices() {
                             <p className='service-explain page-content-explain p-2'>
                                 { data.servicesData[10].explain }
                             </p>
+                        </div>
+                        {/* End Column */}
+                        {/* Start Column */}
+                        <div className="col-md-6">
+                            <img src={inquiryAboutTheCostOfRepairImageInRes.src} alt="Image" className='image-in-responsive' />
                         </div>
                         {/* End Column */}
                     </div>
