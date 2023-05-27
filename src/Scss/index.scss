@@ -89,15 +89,24 @@ input, select, textarea{
             background: var(--main-color-five) !important;
         }
         .row{
+            @media (max-width: 767px) {
+                gap: 30px;
+            }
             > div:first-of-type{
                 padding-left: 45px;
                 height: 258px !important;
+                @media (max-width: 767px) {
+                    padding-left: 12px;
+                }
             }
             > div:last-of-type{
                 display: none;
             }
             .page-title{
                 font-family: 'Lemonada', cursive;
+                @media (max-width: 767px) {
+                    margin: 15px 0 25px 0 !important;
+                }
             }
             .page-content-explain{
                 text-align: center;
@@ -109,6 +118,9 @@ input, select, textarea{
                 height: inherit;
                 display: flex;
                 align-items: center;
+                @media (max-width: 520px) {
+                    font-size: 4vw;
+                }
             }
             .image-in-responsive{
                 max-width: 100%;
@@ -116,7 +128,6 @@ input, select, textarea{
             @media (max-width: 767px) {
                 > div:first-of-type{
                     order: 2;
-                    margin-top: 30px;
                 }
                 > div:last-of-type{
                     display: block;

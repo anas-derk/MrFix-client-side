@@ -100,9 +100,21 @@ input, select, textarea {
   }
 }
 
+@media (max-width: 767px) {
+  .shared-our-services-with-styles .page-content .row {
+    gap: 30px;
+  }
+}
+
 .shared-our-services-with-styles .page-content .row > div:first-of-type {
   padding-left: 45px;
   height: 258px !important;
+}
+
+@media (max-width: 767px) {
+  .shared-our-services-with-styles .page-content .row > div:first-of-type {
+    padding-left: 12px;
+  }
 }
 
 .shared-our-services-with-styles .page-content .row > div:last-of-type {
@@ -111,6 +123,12 @@ input, select, textarea {
 
 .shared-our-services-with-styles .page-content .row .page-title {
   font-family: 'Lemonada', cursive;
+}
+
+@media (max-width: 767px) {
+  .shared-our-services-with-styles .page-content .row .page-title {
+    margin: 15px 0 25px 0 !important;
+  }
 }
 
 .shared-our-services-with-styles .page-content .row .page-content-explain {
@@ -125,6 +143,12 @@ input, select, textarea {
   align-items: center;
 }
 
+@media (max-width: 520px) {
+  .shared-our-services-with-styles .page-content .row .page-content-explain {
+    font-size: 4vw;
+  }
+}
+
 .shared-our-services-with-styles .page-content .row .image-in-responsive {
   max-width: 100%;
 }
@@ -132,7 +156,6 @@ input, select, textarea {
 @media (max-width: 767px) {
   .shared-our-services-with-styles .page-content .row > div:first-of-type {
     order: 2;
-    margin-top: 30px;
   }
   .shared-our-services-with-styles .page-content .row > div:last-of-type {
     display: block;
