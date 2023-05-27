@@ -57,12 +57,10 @@ export default function Home() {
                   <div className="row align-items-center">
                     {/* Start Column */}
                     <div className="col-md-5 content-box">
-                      <p className='slider-content-explain text-center'>
-                        المنزل هو كل الأشياء الرائعة
-                        <br />
-                        <br />
-                        دعنا نساعدك في تنظيم كل شيء في المنزل و تبسيط جميع الأمور المتعلقة بالمنزل وتغطية احتياجات الصيانة
-                      </p>
+                      <div className='slider-content-explain text-center'>
+                        <p>المنزل هو كل الأشياء الرائعة</p>
+                        <p className='pe-2 ps-2 exeption-paragraph'>دعنا نساعدك في تنظيم كل شيء في المنزل و تبسيط جميع الأمور المتعلقة بالمنزل وتغطية احتياجات الصيانة</p>
+                      </div>
                     </div>
                     {/* End Column */}
                     {/* Start Column */}
@@ -77,16 +75,12 @@ export default function Home() {
                   {/* Start Grid System */}
                   <div className="row align-items-center">
                     {/* Start Column */}
-                    <div className="col-md-5 content-box">
-                      <p className='slider-content-explain text-center'>
-                        أعتني بمنزلك من خلال هاتفك
-                        <br />
-                        <br />
-                        معًا، سنعمل على صيانة منزلك  والمحافظة عليه من خلال موقع بسيط
-                        <br />
-                        <br />
-                        يتيح مستر فيكس إصلاح وصيانة جميع ما يحتاجه منزلك في مكان واحد
-                      </p>
+                    <div className="col-md-5 content-box custom-mobile">
+                      <div className='slider-content-explain text-center'>
+                        <p>أعتني بمنزلك من خلال هاتفك</p>
+                        <p>معًا، سنعمل على صيانة منزلك  والمحافظة عليه من خلال موقع بسيط</p>
+                        <p>يتيح مستر فيكس إصلاح وصيانة جميع ما يحتاجه منزلك في مكان واحد</p>
+                      </div>
                     </div>
                     {/* End Column */}
                     {/* Start Column */}
@@ -102,15 +96,11 @@ export default function Home() {
                   <div className="row align-items-center">
                     {/* Start Column */}
                     <div className="col-md-5 content-box">
-                      <p className='slider-content-explain text-center'>
-                        نحاول أن نبسط الأمور، ونرغب في أن نكون جزءَ في تخفيف الأعباء وتوفير الأمان و الراحة بشكل دائم
-                        <br />
-                        <br />
-                        نريد منك أن تفكر فينا كشريك موثوق به
-                        <br />
-                        <br />
-                        دعنا نحافظ على ابتسامتك
-                      </p>
+                      <div className='slider-content-explain text-center'>
+                        <p className='exeption-paragraph-3'>نحاول أن نبسط الأمور، ونرغب في أن نكون جزءَ في تخفيف الأعباء وتوفير الأمان و الراحة بشكل دائم</p>
+                        <p>نريد منك أن تفكر فينا كشريك موثوق به</p>
+                        <p>دعنا نحافظ على ابتسامتك</p>
+                      </div>
                     </div>
                     {/* End Column */}
                     {/* Start Column */}

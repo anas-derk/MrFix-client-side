@@ -8,12 +8,22 @@
   min-height: inherit;
 }
 
+@media (max-width: 767px) {
+  .home .page-content .introduction .slider {
+    height: 527px;
+  }
+}
+
 .home .page-content .introduction .slider .container {
   min-height: inherit;
 }
 
 .home .page-content .introduction .slider .container .slick-slider {
   min-height: inherit;
+}
+
+.home .page-content .introduction .slider .container .slick-slider .slide {
+  padding-top: 15px !important;
 }
 
 .home .page-content .introduction .slider .container .slick-slider .slick-arrow {
@@ -24,6 +34,12 @@
   bottom: 20px;
 }
 
+@media (max-width: 767px) {
+  .home .page-content .introduction .slider .container .slick-slider .slick-dots {
+    bottom: 25px;
+  }
+}
+
 .home .page-content .introduction .slider .container .row {
   direction: rtl;
 }
@@ -31,12 +47,21 @@
 @media (max-width: 767px) {
   .home .page-content .introduction .slider .container .row .content-box {
     order: 2;
-    padding-top: 30px;
+    padding-top: 10px;
+  }
+  .home .page-content .introduction .slider .container .row .content-box p {
+    margin-bottom: 10px;
   }
 }
 
 .home .page-content .introduction .slider .container .row .image-box {
   text-align: left;
+}
+
+@media (max-width: 767px) {
+  .home .page-content .introduction .slider .container .row .image-box {
+    text-align: center;
+  }
 }
 
 .home .page-content .introduction .slider .container .row .image-box .slider-image {
@@ -46,9 +71,35 @@
 }
 
 .home .page-content .introduction .slider .slider-content-explain {
-  line-height: 2;
-  font-family: 'Lemonada', cursive;
   font-size: 20px;
+}
+
+.home .page-content .introduction .slider .slider-content-explain p {
+  font-family: 'Lemonada', cursive;
+  line-height: 2;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+  .home .page-content .introduction .slider .slider-content-explain p:first-child.exeption-paragraph-3 {
+    line-height: 2.4;
+  }
+}
+
+.home .page-content .introduction .slider .slider-content-explain p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .home .page-content .introduction .slider .slider-content-explain p:last-child.exeption-paragraph {
+    line-height: 3;
+  }
+}
+
+@media (max-width: 767px) {
+  .home .page-content .introduction .slider .slider-content-explain {
+    font-size: 18px;
+  }
 }
 
 .home .page-content .introduction .slider .slider-image {

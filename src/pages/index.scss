@@ -8,15 +8,24 @@
             .slider{
                 background-color: var(--main-color-five);
                 min-height: inherit;
+                @media (max-width: 767px) {
+                    height: 527px;
+                }
                 .container{
                     min-height: inherit;
                     .slick-slider{
                         min-height: inherit;
+                        .slide{
+                            padding-top: 15px !important;
+                        }
                         .slick-arrow{
                             display: none !important;
                         }
                         .slick-dots{
                             bottom: 20px;
+                            @media (max-width: 767px) {
+                                bottom: 25px;
+                            }
                         }
                     }
                     .row{
@@ -24,11 +33,17 @@
                         @media (max-width: 767px) {
                             .content-box{
                                 order: 2;
-                                padding-top: 30px;
+                                padding-top: 10px;
+                                p{
+                                    margin-bottom: 10px;
+                                }
                             }
                         }
                         .image-box{
                             text-align: left;
+                            @media (max-width: 767px) {
+                                text-align: center;
+                            }
                             .slider-image{
                                 max-width: 90%;
                                 display: inline-block;
@@ -38,9 +53,30 @@
                     }
                 }
                 .slider-content-explain{
-                    line-height: 2;
-                    font-family: 'Lemonada', cursive;
+                    p{
+                        font-family: 'Lemonada', cursive;
+                        line-height: 2;
+                        margin-bottom: 20px;
+                        &:first-child {
+                            @media (max-width: 767px) {
+                                &.exeption-paragraph-3{
+                                    line-height: 2.4;
+                                }
+                            }
+                        }
+                        &:last-child {
+                            margin-bottom: 0;
+                            @media (max-width: 767px) {
+                                &.exeption-paragraph{
+                                    line-height: 3;
+                                }
+                            }
+                        }
+                    }
                     font-size: 20px;
+                    @media (max-width: 767px) {
+                        font-size: 18px;
+                    }
                 }
                 .slider-image{
                     max-width: 100%;
