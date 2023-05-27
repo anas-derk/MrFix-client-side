@@ -26,7 +26,7 @@ export default function ServiceRequest() {
             <section className="page-content pt-4 pb-4">
                 {/* Start Container From Bootstrap */}
                 <div className="container">
-                    <h1 className='page-title mb-4'>طلب خدمة</h1>
+                    <h1 className='page-title mb-4 text-center'>طلب خدمة</h1>
                     <form className="service-request-form">
                         <select className='form-control p-3 mb-4 request-type-select'>
                             <option defaultValue="" hidden>نوع الطلب</option>
@@ -43,7 +43,7 @@ export default function ServiceRequest() {
                         <div className="row">
                             {/* Start Column */}
                             <div className="col-md-6">
-                                <input type="text" placeholder="العنوان بالتفصيل في حالة إختلافه عن العنوان المسجل" className='form-control p-3 mb-4' />
+                                <textarea placeholder="العنوان بالتفصيل في حالة إختلافه عن العنوان المسجل" className='form-control p-3 mb-4'></textarea>
                                 <input type="file" placeholder="صورة عن الأداة المعطلة" className='form-control p-3 mb-4' />
                                 <input type="file" placeholder="صورة عن المكان المعطل" className='form-control p-3 mb-4' />
                             </div>
@@ -52,7 +52,7 @@ export default function ServiceRequest() {
                             <div className="col-md-6">
                                 <input type="date" placeholder="تاريخ اليوم المفضل لزيارة الورشة" className='form-control p-3 mb-4' />
                                 <input type="text" placeholder="الوقت المفضل لزيارة الورشة" className='form-control p-3 mb-4' />
-                                <input type="text" placeholder="أوقات المفضل النظامية" className='form-control p-3 mb-4' />
+                                <input type="text" placeholder="أوقات الكهرباء النظامية" className='form-control p-3 mb-4' />
                                 <input type="text" placeholder="هل يوجد طاقة بديلة ؟" className='form-control p-3 mb-4' />
                             </div>
                             {/* End Column */}

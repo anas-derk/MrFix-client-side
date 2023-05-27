@@ -29,7 +29,7 @@ export default function Signup() {
             <section className="page-content pt-4 pb-4">
                 {/* Start Container From Bootstrap */}
                 <div className="container">
-                    <h1 className='page-title mb-4'>أهلاً وسهلاً بك في Mr. Fix</h1>
+                    <h1 className='page-title mb-4'>أهلاً وسهلاً بك في مستر فيكس</h1>
                     <form className="sign-up-form">
                         {/* Start Grid System From Bootstrap */}
                         <div className="row">
@@ -66,7 +66,7 @@ export default function Signup() {
                                     <option value="lattakia">دير الزور</option>
                                     <option value="lattakia">الرقة</option>
                                 </select>
-                                <textarea placeholder="العنوان بالتفصيل" className='form-control p-3 address' />
+                                <textarea placeholder="العنوان بالتفصيل - مثال: شارع ميسلون, في البناء مقابل محل انكو, في الطابق الرابع" className='form-control p-3 address' />
                             </div>
                             {/* End Column */}
                         </div>

@@ -66,7 +66,7 @@ export default function Profile() {
                                     <option value="lattakia">دير الزور</option>
                                     <option value="lattakia">الرقة</option>
                                 </select>
-                                <textarea placeholder="العنوان بالتفصيل" className='form-control p-3 address' />
+                                <textarea placeholder="العنوان بالتفصيل - مثال: شارع ميسلون, في البناء مقابل محل انكو, في الطابق الرابع" className='form-control p-3 address' />
                             </div>
                             {/* End Column */}
                         </div>

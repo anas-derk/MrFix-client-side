@@ -27,12 +27,20 @@
                                 padding-top: 30px;
                             }
                         }
+                        .image-box{
+                            text-align: left;
+                            .slider-image{
+                                max-width: 90%;
+                                display: inline-block;
+                                margin: 0 auto;
+                            }
+                        }
                     }
                 }
                 .slider-content-explain{
                     line-height: 2;
                     font-family: 'Lemonada', cursive;
-                    font-size: 23px;
+                    font-size: 20px;
                 }
                 .slider-image{
                     max-width: 100%;

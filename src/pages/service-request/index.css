@@ -8,6 +8,7 @@
 
 .service-request .page-content .container .service-request-form textarea {
   resize: none;
+  height: calc(116px + 1.5rem);
 }
 
 .service-request .page-content .container .service-request-form .service-request-btn {

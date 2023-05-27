@@ -30,6 +30,19 @@ a {
   height: inherit;
 }
 
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--main-color-two);
+}
+
+input, select, textarea {
+  border-radius: 15px !important;
+}
+
 .shared-pages-with-styles .page-content .container {
   min-height: inherit;
 }
@@ -73,6 +86,11 @@ a {
   }
 }
 
+.shared-our-services-with-styles .page-content .row > div:first-of-type {
+  padding-left: 45px;
+  height: 258px !important;
+}
+
 .shared-our-services-with-styles .page-content .row > div:last-of-type {
   display: none;
 }
@@ -84,10 +102,13 @@ a {
 .shared-our-services-with-styles .page-content .row .page-content-explain {
   text-align: center;
   line-height: 2;
-  font-size: 22px;
+  font-size: 21px;
   margin-bottom: 0;
   background-color: var(--main-color-six);
   border-radius: 20px;
+  height: inherit;
+  display: flex;
+  align-items: center;
 }
 
 .shared-our-services-with-styles .page-content .row .image-in-responsive {

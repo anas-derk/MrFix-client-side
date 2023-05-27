@@ -30,9 +30,9 @@ export default function ForgetPassword() {
                         {/* Start Column */}
                         <div className="col-lg-6 p-5">
                             {/* Start Login Form */}
-                            <form className="forget-password-form bg-white p-4 text-center">
-                                <h4 className='mb-4'>نسيت كلمة السر !</h4>
-                                <input type="email" placeholder="البريد الالكتروني" className="form-control mb-4 p-3" />
+                            <form className="forget-password-form bg-white p-4 pt-5 pb-5 text-center mt-4">
+                                <h4 className='mb-5'>نسيت كلمة السر !</h4>
+                                <input type="email" placeholder="البريد الالكتروني" className="form-control mb-5 p-3" />
                                 <button type='submit' className='btn forget-password-btn w-100 p-3'>إرسال</button>
                             </form>
                             {/* End Login Form */}

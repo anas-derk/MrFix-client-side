@@ -35,10 +35,20 @@
   }
 }
 
+.home .page-content .introduction .slider .container .row .image-box {
+  text-align: left;
+}
+
+.home .page-content .introduction .slider .container .row .image-box .slider-image {
+  max-width: 90%;
+  display: inline-block;
+  margin: 0 auto;
+}
+
 .home .page-content .introduction .slider .slider-content-explain {
   line-height: 2;
   font-family: 'Lemonada', cursive;
-  font-size: 23px;
+  font-size: 20px;
 }
 
 .home .page-content .introduction .slider .slider-image {

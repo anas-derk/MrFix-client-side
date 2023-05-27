@@ -40,4 +40,5 @@
 .our-services .page-content .container .service-request-link {
   background-color: var(--main-color-one);
   color: #FFF;
+  font-size: 20px;
 }

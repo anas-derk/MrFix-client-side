@@ -56,7 +56,7 @@ export default function Home() {
                   {/* Start Grid System */}
                   <div className="row align-items-center">
                     {/* Start Column */}
-                    <div className="col-md-6 content-box">
+                    <div className="col-md-5 content-box">
                       <p className='slider-content-explain text-center'>
                         المنزل هو كل الأشياء الرائعة
                         <br />
@@ -66,8 +66,8 @@ export default function Home() {
                     </div>
                     {/* End Column */}
                     {/* Start Column */}
-                    <div className="col-md-6 image-box">
-                      <img src={sliderImage1.src} alt="Slider Image 1" className='slider-image' />
+                    <div className="col-md-7 image-box">
+                      <img src={sliderImage1.src} alt="Slider Image 1" className='slider-image slider-image-1' />
                     </div>
                     {/* End Column */}
                   </div>
@@ -77,7 +77,7 @@ export default function Home() {
                   {/* Start Grid System */}
                   <div className="row align-items-center">
                     {/* Start Column */}
-                    <div className="col-md-6 content-box">
+                    <div className="col-md-5 content-box">
                       <p className='slider-content-explain text-center'>
                         أعتني بمنزلك من خلال هاتفك
                         <br />
@@ -90,8 +90,8 @@ export default function Home() {
                     </div>
                     {/* End Column */}
                     {/* Start Column */}
-                    <div className="col-md-6 image-box">
-                      <img src={sliderImage2.src} alt="Slider Image 1" className='slider-image' />
+                    <div className="col-md-7 image-box">
+                      <img src={sliderImage2.src} alt="Slider Image 2" className='slider-image slider-image-2 ' />
                     </div>
                     {/* End Column */}
                   </div>
@@ -101,7 +101,7 @@ export default function Home() {
                   {/* Start Grid System */}
                   <div className="row align-items-center">
                     {/* Start Column */}
-                    <div className="col-md-6 content-box">
+                    <div className="col-md-5 content-box">
                       <p className='slider-content-explain text-center'>
                         نحاول أن نبسط الأمور، ونرغب في أن نكون جزءَ في تخفيف الأعباء وتوفير الأمان و الراحة بشكل دائم
                         <br />
@@ -114,8 +114,8 @@ export default function Home() {
                     </div>
                     {/* End Column */}
                     {/* Start Column */}
-                    <div className="col-md-6 image-box">
-                      <img src={sliderImage3.src} alt="Slider Image 1" className='slider-image' />
+                    <div className="col-md-7 image-box">
+                      <img src={sliderImage3.src} alt="Slider Image 3" className='slider-image slider-image-3' />
                     </div>
                     {/* End Column */}
                   </div>
@@ -127,7 +127,7 @@ export default function Home() {
           {/* End Slider */}
           {/* Start Start With Us Box */}
           <div className="start-with-us-box">
-            <Link href="/" className='d-block mt-3 btn mx-auto start-with-us-btn pt-2 pe-5 ps-5'>إبدأ معنا</Link>
+            <Link href="/sign-up" className='d-block mt-3 btn mx-auto start-with-us-btn pt-2 pe-5 ps-5'>إبدأ معنا</Link>
           </div>
           {/* End Start With Us Box */}
         </section>
