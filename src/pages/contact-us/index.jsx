@@ -47,7 +47,9 @@ export default function ContactUs() {
                         {/* End Column */}
                         {/* Start Column */}
                         <div className="col-md-6">
-                            <img src={contactUsImage.src} alt="Contact Us Image !!" className='contact-us-img page-img' />
+                            <div className="image-box">
+                                <img src={contactUsImage.src} alt="Contact Us Image !!" className='contact-us-img page-img' />
+                            </div>
                         </div>
                         {/* End Column */}
                     </div>

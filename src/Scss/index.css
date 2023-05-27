@@ -62,9 +62,15 @@ input, select, textarea {
   }
 }
 
-.shared-pages-with-styles .page-content .container .row .page-img {
+.shared-pages-with-styles .page-content .container .row .image-box .page-img {
   max-width: 100%;
   height: 100%;
+}
+
+@media (max-width: 767px) {
+  .shared-pages-with-styles .page-content .container .row .image-box {
+    padding-left: 3rem;
+  }
 }
 
 .shared-pages-with-styles .page-content .container .row .page-content-explain {
@@ -74,6 +80,14 @@ input, select, textarea {
   margin-bottom: 0;
   height: 400px;
   overflow-y: auto;
+}
+
+@media (max-width: 767px) {
+  .shared-pages-with-styles .page-content .container .row .page-content-explain {
+    text-align: center;
+    font-size: 18px;
+    padding: 0 2rem !important;
+  }
 }
 
 .shared-our-services-with-styles .page-content {

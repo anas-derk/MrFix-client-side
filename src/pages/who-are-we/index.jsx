@@ -50,7 +50,9 @@ export default function WhoAreWe() {
                         {/* End Column */}
                         {/* Start Column */}
                         <div className="col-md-6">
-                            <img src={whoAreWeImage.src} alt="Who Are We Image !!" className='who-are-we-img page-img' />
+                            <div className='image-box'>
+                                <img src={whoAreWeImage.src} alt="Who Are We Image !!" className='who-are-we-img page-img' />
+                            </div>
                         </div>
                         {/* End Column */}
                     </div>

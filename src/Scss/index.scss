@@ -55,9 +55,14 @@ input, select, textarea{
                         order: 2;
                     }
                 }
-                .page-img{
-                    max-width: 100%;
-                    height: 100%;
+                .image-box{
+                    .page-img{
+                        max-width: 100%;
+                        height: 100%;
+                    }
+                    @media (max-width: 767px) {
+                        padding-left: 3rem;
+                    }
                 }
                 .page-content-explain{
                     text-align: justify;
@@ -66,6 +71,11 @@ input, select, textarea{
                     margin-bottom: 0;
                     height: 400px;
                     overflow-y: auto;
+                    @media (max-width: 767px) {
+                        text-align: center;
+                        font-size: 18px;
+                        padding: 0 2rem !important;
+                    }
                 }
             }
         }
