@@ -5,6 +5,27 @@
 
 .home .page-content .introduction .slider {
   background-color: var(--main-color-five);
+  min-height: inherit;
+}
+
+.home .page-content .introduction .slider .container {
+  min-height: inherit;
+}
+
+.home .page-content .introduction .slider .container .slick-slider {
+  min-height: inherit;
+}
+
+.home .page-content .introduction .slider .container .slick-slider .slick-arrow {
+  display: none !important;
+}
+
+.home .page-content .introduction .slider .container .slick-slider .slick-dots {
+  bottom: 20px;
+}
+
+.home .page-content .introduction .slider .container .row {
+  direction: rtl;
 }
 
 @media (max-width: 767px) {

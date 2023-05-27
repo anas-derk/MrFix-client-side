@@ -7,8 +7,20 @@
         .introduction{
             .slider{
                 background-color: var(--main-color-five);
+                min-height: inherit;
                 .container{
+                    min-height: inherit;
+                    .slick-slider{
+                        min-height: inherit;
+                        .slick-arrow{
+                            display: none !important;
+                        }
+                        .slick-dots{
+                            bottom: 20px;
+                        }
+                    }
                     .row{
+                        direction: rtl;
                         @media (max-width: 767px) {
                             .content-box{
                                 order: 2;
