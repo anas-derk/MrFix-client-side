@@ -2,7 +2,11 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
 import { FiUserPlus } from "react-icons/fi";
+import { AiOutlineClockCircle } from "react-icons/ai";
+import { TfiFaceSmile } from "react-icons/tfi";
 import global_functions from '../../../public/global_functions/validations';
+import Link from 'next/link';
+import Axios from 'axios';
 
 export default function Signup() {
 
@@ -16,8 +20,12 @@ export default function Signup() {
     const [city, setCity] = useState("");
     const [address, setAddress] = useState("");
     const [errors, setErrors] = useState([]);
+    const [inputType, setInputType] = useState("text");
+    const [isSignupStatus, setIsSignupStatus] = useState(false);
+    const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
+    const [errMsg, setErrorMsg] = useState("");
 
-    const createAccount = (e) => {
+    const createAccount = async (e) => {
         e.preventDefault();
         setErrors([]);
         let errorList = global_functions.inputValuesValidation(
@@ -28,10 +36,6 @@ export default function Signup() {
                     rules: {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        minLength: {
-                            value: 5,
-                            msg: "عذراً ، يجب أن يكون عدد الأحرف على الأقل 4 !!"
                         },
                         maxLength: {
                             value: 30,
@@ -133,9 +137,39 @@ export default function Signup() {
             ]
         );
         setErrors(errorList);
-        // if (!errors) {
-        //     console.log("ee");
-        // } 
+        console.log(errors.length);
+        if (errors.length === 0) {
+            setIsSignupStatus(true);
+            try {
+                let res = await Axios.post(`${process.env.BASE_API_URL}/users/create-new-user`, {
+                    firstAndLastName,
+                    email,
+                    mobilePhone,
+                    password,
+                    gender,
+                    birthday,
+                    city,
+                    address,
+                });
+                let result = await res.data;
+                if (result === "تم بنجاح إنشاء الحساب") {
+                    let successStatusTimeout = setTimeout(() => {
+                        setIsSignupStatus(false);
+                        setIsSuccessfulyStatus(true);
+                        clearTimeout(successStatusTimeout);
+                    }, 2000);
+                } else {
+                    setIsSignupStatus(false);
+                    setErrorMsg(result);
+                    let errMsgTimeout = setTimeout(() => {
+                        setErrorMsg("");
+                        clearTimeout(errMsgTimeout);
+                    }, 4000);
+                }
+            } catch(err) {
+                setErrorMsg(err);
+            }
+        }
     }
 
     useEffect(() => {
@@ -169,35 +203,35 @@ export default function Signup() {
                                     className={`form-control p-3 ${errors["firstAndLastName"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setFirstAndLastName(e.target.value)}
                                 />
-                                {errors["firstAndLastName"] && <p className='error-msg text-danger'>{ errors["firstAndLastName"] }</p>}
+                                {errors["firstAndLastName"] && <p className='error-msg text-danger'>{errors["firstAndLastName"]}</p>}
                                 <input
                                     type="text"
                                     placeholder="البريد الالكتروني"
                                     className={`form-control p-3 ${errors["email"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
-                                {errors["email"] && <p className='error-msg text-danger'>{ errors["email"] }</p>}
+                                {errors["email"] && <p className='error-msg text-danger'>{errors["email"]}</p>}
                                 <input
                                     type="number"
                                     placeholder="رقم الجوال"
                                     className={`form-control p-3 ${errors["mobilePhone"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setMobilePhone(e.target.value)}
                                 />
-                                {errors["mobilePhone"] && <p className='error-msg text-danger'>{ errors["mobilePhone"] }</p>}
+                                {errors["mobilePhone"] && <p className='error-msg text-danger'>{errors["mobilePhone"]}</p>}
                                 <input
                                     type="password"
                                     placeholder="كلمة السر"
                                     className={`form-control p-3 ${errors["password"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
-                                {errors["password"] && <p className='error-msg text-danger'>{ errors["password"] }</p>}
+                                {errors["password"] && <p className='error-msg text-danger'>{errors["password"]}</p>}
                                 <input
                                     type="password"
                                     placeholder="تأكيد كلمة السر"
                                     className={`form-control p-3 ${errors["confirmPassword"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
-                                {errors["confirmPassword"] && <p className='error-msg text-danger'>{ errors["confirmPassword"] }</p>}
+                                {errors["confirmPassword"] && <p className='error-msg text-danger'>{errors["confirmPassword"]}</p>}
                             </div>
                             {/* End Column */}
                             {/* Start Column */}
@@ -210,14 +244,16 @@ export default function Signup() {
                                     <option value="male">ذكر</option>
                                     <option value="female">أنثى</option>
                                 </select>
-                                {errors["gender"] && <p className='error-msg text-danger'>{ errors["gender"] }</p>}
+                                {errors["gender"] && <p className='error-msg text-danger'>{errors["gender"]}</p>}
                                 <input
-                                    type="date"
+                                    type={inputType}
                                     placeholder="تاريخ الميلاد"
                                     className={`form-control p-3 ${errors["birthday"] ? "border border-danger mb-2" : "mb-4"}`}
+                                    onFocus={() => setInputType("date")}
+                                    onBlur={() => setInputType("text")}
                                     onChange={(e) => setBirthday(e.target.value)}
                                 />
-                                {errors["birthday"] && <p className='error-msg text-danger'>{ errors["birthday"] }</p>}
+                                {errors["birthday"] && <p className='error-msg text-danger'>{errors["birthday"]}</p>}
                                 <select
                                     className={`form-control p-3 ${errors["city"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setCity(e.target.value)}
@@ -237,26 +273,49 @@ export default function Signup() {
                                     <option value="deer-al-zour">دير الزور</option>
                                     <option value="raqqa">الرقة</option>
                                 </select>
-                                {errors["city"] && <p className='error-msg text-danger'>{ errors["city"] }</p>}
+                                {errors["city"] && <p className='error-msg text-danger'>{errors["city"]}</p>}
                                 <textarea
                                     placeholder="العنوان بالتفصيل - مثال: شارع ميسلون, في البناء مقابل محل انكو, في الطابق الرابع"
                                     className={`form-control p-3 address ${errors["address"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setAddress(e.target.value)}
                                 />
-                                {errors["address"] && <p className='error-msg text-danger'>{ errors["address"] }</p>}
+                                {errors["address"] && <p className='error-msg text-danger'>{errors["address"]}</p>}
                             </div>
                             {/* End Column */}
                         </div>
                         {/* End Grid System From Bootstrap */}
-                        <button type='submit' className='btn sign-up-btn w-50 p-3 mt-4 mx-auto d-block'>
+                        {!isSignupStatus && !errMsg && <button className='btn sign-up-btn w-50 p-3 mt-4 mx-auto d-block'>
                             <span className='ms-2'>تسجيل</span>
                             <FiUserPlus />
-                        </button>
+                        </button>}
+                        {isSignupStatus && <button className='btn wait-sign-up-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
+                            <span className='ms-2'>جاري التسجيل ...</span>
+                            <AiOutlineClockCircle />
+                        </button>}
+                        {errMsg && <button className='btn btn-danger error-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
+                            {errMsg}
+                        </button>}
                     </form>
                 </div>
                 {/* End Container From Bootstrap */}
             </section>
             {/* End Page Content Section */}
+            {isSuccessfulyStatus &&
+                /* Start Popup Box */
+                <div className="popup-box">
+                    <div className="popup d-flex flex-column align-items-center justify-content-center">
+                        <h3 className='text-center welcome-msg mb-4'>
+                            <span className='ms-3'>مبارك عزيزي الزائر</span>
+                            <TfiFaceSmile />
+                        </h3>
+                        <h4 className='signup-confirm-msg'>لقد تمّ تسجيل حسابك لدينا</h4>
+                        <h5 className='happy-msg mb-5'>نحن مسرورون بانضمامك لدينا</h5>
+                        <Link className='btn btn-success' href="/login">تسجيل الدخول الآن</Link>
+                    </div>
+
+                </div>
+                /* End Popup Box */
+            }
         </div>
         // End Who Are We Page
     );
