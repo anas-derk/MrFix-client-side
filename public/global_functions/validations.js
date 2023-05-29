@@ -3,7 +3,7 @@ const isEmail = (email) => {
 }
 
 const isValidPassword = (password) => {
-
+    
 }
 
 const inputValuesValidation = (inputs) => {
@@ -45,6 +45,15 @@ const inputValuesValidation = (inputs) => {
             // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
             if (input.value.length > inputRules.maxLength.value) {
                 errorList[input.name] = inputRules.maxLength.msg;
+                // في حالة وجود خطأ نقوم بتجاهل كل التعليمات اللاحقة داخل التكرار الحالي للحلقة والانتقال إلى التكرار التالي
+                continue;
+            }
+        }
+        // التحقق من كون القاعدة داخل كائن القواعد موجودة 
+        if (typeof inputRules.isMatch !== "undefined") {
+            // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
+            if (input.value != inputRules.isMatch.value) {
+                errorList[input.name] = inputRules.isMatch.msg;
                 // في حالة وجود خطأ نقوم بتجاهل كل التعليمات اللاحقة داخل التكرار الحالي للحلقة والانتقال إلى التكرار التالي
                 continue;
             }

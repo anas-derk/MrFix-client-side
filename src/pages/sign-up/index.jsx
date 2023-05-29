@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
 import { FiUserPlus } from "react-icons/fi";
-import global_functions from '../../../public/data/global_functions';
+import global_functions from '../../../public/global_functions/validations';
 
 export default function Signup() {
 
@@ -81,6 +81,55 @@ export default function Signup() {
                         },
                     },
                 },
+                {
+                    name: "confirmPassword",
+                    value: confirmPassword,
+                    rules: {
+                        isRequired: {
+                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                        },
+                        isMatch: {
+                            value: password,
+                            msg: "عذراً ، لا يوجد تطابق بين كلمة السر وتأكيدها !!",
+                        },
+                    },
+                },
+                {
+                    name: "gender",
+                    value: gender,
+                    rules: {
+                        isRequired: {
+                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                        },
+                    },
+                },
+                {
+                    name: "birthday",
+                    value: birthday,
+                    rules: {
+                        isRequired: {
+                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                        },
+                    },
+                },
+                {
+                    name: "city",
+                    value: city,
+                    rules: {
+                        isRequired: {
+                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                        },
+                    },
+                },
+                {
+                    name: "address",
+                    value: address,
+                    rules: {
+                        isRequired: {
+                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                        },
+                    },
+                },
             ]
         );
         setErrors(errorList);
@@ -145,29 +194,32 @@ export default function Signup() {
                                 <input
                                     type="password"
                                     placeholder="تأكيد كلمة السر"
-                                    className='form-control p-3 mb-4'
+                                    className={`form-control p-3 ${errors["confirmPassword"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
+                                {errors["confirmPassword"] && <p className='error-msg text-danger'>{ errors["confirmPassword"] }</p>}
                             </div>
                             {/* End Column */}
                             {/* Start Column */}
                             <div className="col-md-6">
                                 <select
-                                    className='form-control p-3 mb-4'
+                                    className={`form-control p-3 ${errors["gender"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setGender(e.target.value)}
                                 >
                                     <option defaultValue="" hidden>اختر الجنس</option>
                                     <option value="male">ذكر</option>
                                     <option value="female">أنثى</option>
                                 </select>
+                                {errors["gender"] && <p className='error-msg text-danger'>{ errors["gender"] }</p>}
                                 <input
                                     type="date"
                                     placeholder="تاريخ الميلاد"
-                                    className='form-control p-3 mb-4'
+                                    className={`form-control p-3 ${errors["birthday"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setBirthday(e.target.value)}
                                 />
+                                {errors["birthday"] && <p className='error-msg text-danger'>{ errors["birthday"] }</p>}
                                 <select
-                                    className='form-control p-3 mb-4'
+                                    className={`form-control p-3 ${errors["city"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setCity(e.target.value)}
                                 >
                                     <option defaultValue="" hidden>اختر المحافظة</option>
@@ -185,11 +237,13 @@ export default function Signup() {
                                     <option value="deer-al-zour">دير الزور</option>
                                     <option value="raqqa">الرقة</option>
                                 </select>
+                                {errors["city"] && <p className='error-msg text-danger'>{ errors["city"] }</p>}
                                 <textarea
                                     placeholder="العنوان بالتفصيل - مثال: شارع ميسلون, في البناء مقابل محل انكو, في الطابق الرابع"
-                                    className='form-control p-3 address'
+                                    className={`form-control p-3 address ${errors["address"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setAddress(e.target.value)}
                                 />
+                                {errors["address"] && <p className='error-msg text-danger'>{ errors["address"] }</p>}
                             </div>
                             {/* End Column */}
                         </div>
