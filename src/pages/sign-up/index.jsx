@@ -28,7 +28,7 @@ export default function Signup() {
     const createAccount = async (e) => {
         e.preventDefault();
         setErrors([]);
-        let errorList = global_functions.inputValuesValidation(
+        let errorsObject = global_functions.inputValuesValidation(
             [
                 {
                     name: "firstAndLastName",
@@ -136,9 +136,8 @@ export default function Signup() {
                 },
             ]
         );
-        setErrors(errorList);
-        console.log(errors.length);
-        if (errors.length === 0) {
+        setErrors(errorsObject);
+        if (Object.keys(errorsObject).length == 0) {
             setIsSignupStatus(true);
             try {
                 let res = await Axios.post(`${process.env.BASE_API_URL}/users/create-new-user`, {
