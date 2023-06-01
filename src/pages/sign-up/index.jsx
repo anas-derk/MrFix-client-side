@@ -9,7 +9,7 @@ import Link from 'next/link';
 import Axios from 'axios';
 
 export default function Signup() {
-
+    
     const [firstAndLastName, setFirstAndLastName] = useState("");
     const [email, setEmail] = useState("");
     const [mobilePhone, setMobilePhone] = useState("");
@@ -19,7 +19,7 @@ export default function Signup() {
     const [birthday, setBirthday] = useState("");
     const [city, setCity] = useState("");
     const [address, setAddress] = useState("");
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState({});
     const [inputType, setInputType] = useState("text");
     const [isSignupStatus, setIsSignupStatus] = useState(false);
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
@@ -27,7 +27,7 @@ export default function Signup() {
 
     const createAccount = async (e) => {
         e.preventDefault();
-        setErrors([]);
+        setErrors({});
         let errorsObject = global_functions.inputValuesValidation(
             [
                 {
@@ -141,14 +141,14 @@ export default function Signup() {
             setIsSignupStatus(true);
             try {
                 let res = await Axios.post(`${process.env.BASE_API_URL}/users/create-new-user`, {
-                    firstAndLastName,
-                    email,
-                    mobilePhone,
-                    password,
+                    firstAndLastName: firstAndLastName.trim(),
+                    email: email.trim(),
+                    mobilePhone: mobilePhone.trim(),
+                    password: password.trim(),
                     gender,
                     birthday,
                     city,
-                    address,
+                    address: address.trim(),
                 });
                 let result = await res.data;
                 if (result === "تم بنجاح إنشاء الحساب") {
