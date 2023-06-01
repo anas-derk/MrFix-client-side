@@ -24,8 +24,44 @@ export default function Profile() {
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
     const [errMsg, setErrorMsg] = useState("");
     const [userNotFoundError, setUserNotFoundError] = useState("");
+    const [defaultEmail, setDefaultEmail] = useState("");
+    const [defaultMobilePhone, setDefaultMobilePhone] = useState("");
 
     const router = useRouter();
+
+    useEffect(() => {
+        let header = document.querySelector("#__next .page-header"),
+            pageContent = document.querySelector(".profile .page-content");
+        pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
+        let address = document.querySelector(".profile .edit-profile-form .address");
+        address.style.height = `calc(116px + 1.5rem)`;
+        let id = localStorage.getItem("mr-fix-user-id");
+        setUserId(id);
+        if (!id) {
+            router.push("/login");
+        } else {
+            async function fetchData(userId) {
+                let res = await Axios.get(`${process.env.BASE_API_URL}/users/user-info/${userId}`);
+                let result = await res.data;
+                if (result === "عذراً ، المستخدم غير موجود") {
+                    setUserNotFoundError(result);
+                }
+                else {
+                    setFirstAndLastName(result.firstAndLastName);
+                    setEmail(result.email);
+                    setMobilePhone(result.mobilePhone);
+                    setPassword(result.password);
+                    setGender(result.gender);
+                    setBirthday(result.birthday);
+                    setCity(result.city);
+                    setAddress(result.address);
+                    setDefaultEmail(result.email);
+                    setDefaultMobilePhone(result.mobilePhone);
+                }
+            }
+            fetchData(id);
+        }
+    }, []);
 
     const updateProfile = async (e) => {
         e.preventDefault();
@@ -128,19 +164,54 @@ export default function Profile() {
         setErrors(errorsObject);
         if (Object.keys(errorsObject).length == 0) {
             setIsUpdatingStatus(true);
-            try {
-                let res = await Axios.put(`${process.env.BASE_API_URL}/users/update-user-info/${userId}`, {
-                    firstAndLastName: firstAndLastName.trim(),
-                    email: email.trim().toLowerCase(),
-                    mobilePhone: mobilePhone.trim(),
-                    password: password.trim(),
+            let newUserData = {};
+            if (email !== defaultEmail && mobilePhone === defaultMobilePhone) {
+                newUserData = {
+                    firstAndLastName: firstAndLastName,
+                    email: email,
+                    password: password,
                     gender,
                     birthday,
                     city,
-                    address: address.trim(),
-                });
+                    address: address,
+                }
+            }
+            else if (email === defaultEmail && mobilePhone !== defaultMobilePhone) {
+                newUserData = {
+                    firstAndLastName: firstAndLastName,
+                    mobilePhone: mobilePhone,
+                    password: password,
+                    gender,
+                    birthday,
+                    city,
+                    address: address,
+                }
+            }
+            else if (email !== defaultEmail && mobilePhone !== defaultMobilePhone) {
+                newUserData = {
+                    firstAndLastName: firstAndLastName,
+                    email: email,
+                    mobilePhone: mobilePhone,
+                    password: password,
+                    gender,
+                    birthday,
+                    city,
+                    address: address,
+                }
+            } else {
+                newUserData = {
+                    firstAndLastName: firstAndLastName,
+                    password: password,
+                    gender,
+                    birthday,
+                    city,
+                    address: address,
+                }
+            }
+            try {
+                let res = await Axios.put(`${process.env.BASE_API_URL}/users/update-user-info/${userId}`, newUserData);
                 let result = await res.data;
-                if (result === "عذراً لا يمكن تعديل بيانات الملف الشخصي لأن البريد الإلكتروني أو رقم الموبايل موجود مسبقاً !! !!") {
+                if (result === "عذراً لا يمكن تعديل بيانات الملف الشخصي لأن البريد الإلكتروني أو رقم الموبايل موجود مسبقاً !!") {
                     setTimeout(() => {
                         setIsUpdatingStatus(false);
                         setErrorMsg(result);
@@ -169,38 +240,6 @@ export default function Profile() {
         }
     }
 
-    useEffect(() => {
-        let header = document.querySelector("#__next .page-header"),
-            pageContent = document.querySelector(".profile .page-content");
-        pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
-        let address = document.querySelector(".profile .edit-profile-form .address");
-        address.style.height = `calc(116px + 1.5rem)`;
-        let id = localStorage.getItem("mr-fix-user-id");
-        setUserId(id);
-        if (!id) {
-            router.push("/login");
-        } else {
-            async function fetchData(userId) {
-                let res = await Axios.get(`${process.env.BASE_API_URL}/users/user-info/${userId}`);
-                let result = await res.data;
-                if (result === "عذراً ، المستخدم غير موجود") {
-                    setUserNotFoundError(result);
-                }
-                else {
-                    setFirstAndLastName(result.firstAndLastName);
-                    setEmail(result.email);
-                    setMobilePhone(result.mobilePhone);
-                    setPassword(result.password);
-                    setGender(result.gender);
-                    setBirthday(result.birthday);
-                    setCity(result.city);
-                    setAddress(result.address);
-                }
-            }
-            fetchData(id);
-        }
-    }, []);
-
     return (
         // Start Profile Page
         <div className="profile">
@@ -222,7 +261,7 @@ export default function Profile() {
                                     type="text"
                                     placeholder='الاسم والكنية الجديد'
                                     className={`form-control p-3 ${errors["firstAndLastName"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setFirstAndLastName(e.target.value)}
+                                    onChange={(e) => setFirstAndLastName(e.target.value.trim())}
                                     value={firstAndLastName}
                                 />
                                 {errors["firstAndLastName"] && <p className='error-msg text-danger'>{errors["firstAndLastName"]}</p>}
@@ -230,7 +269,7 @@ export default function Profile() {
                                     type="text"
                                     placeholder="البريد الالكتروني الجديد"
                                     className={`form-control p-3 ${errors["email"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChange={(e) => setEmail(e.target.value.trim().toLowerCase())}
                                     value={email}
                                 />
                                 {errors["email"] && <p className='error-msg text-danger'>{errors["email"]}</p>}
@@ -238,7 +277,7 @@ export default function Profile() {
                                     type="number"
                                     placeholder="رقم الجوال الجديد"
                                     className={`form-control p-3 ${errors["mobilePhone"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setMobilePhone(e.target.value)}
+                                    onChange={(e) => setMobilePhone(e.target.value.trim())}
                                     value={mobilePhone}
                                 />
                                 {errors["mobilePhone"] && <p className='error-msg text-danger'>{errors["mobilePhone"]}</p>}
@@ -246,7 +285,7 @@ export default function Profile() {
                                     type="password"
                                     placeholder="كلمة السر الجديدة"
                                     className={`form-control p-3 ${errors["password"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) => setPassword(e.target.value.trim())}
                                     value={password}
                                 />
                                 {errors["password"] && <p className='error-msg text-danger'>{errors["password"]}</p>}
@@ -298,7 +337,7 @@ export default function Profile() {
                                 <textarea
                                     placeholder="العنوان الجديد بالتفصيل - مثال: شارع ميسلون, في البناء مقابل محل انكو, في الطابق الرابع"
                                     className={`form-control p-3 address ${errors["address"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setAddress(e.target.value)}
+                                    onChange={(e) => setAddress(e.target.value.trim())}
                                     value={address}
                                 />
                                 {errors["address"] && <p className='error-msg text-danger'>{errors["address"]}</p>}
