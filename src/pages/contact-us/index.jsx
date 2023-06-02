@@ -18,7 +18,7 @@ export default function ContactUs() {
         // Start Contact Us Page
         <div className="contact-us shared-pages-with-styles">
             <Head>
-                <title>Mr. Fix - Contact Us</title>
+                <title>مستر فيكس - اتصل بنا</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

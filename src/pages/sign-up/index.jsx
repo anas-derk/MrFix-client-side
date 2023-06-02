@@ -183,7 +183,7 @@ export default function Signup() {
         // Start Who Are We Page
         <div className="sign-up">
             <Head>
-                <title>Mr. Fix - Signup</title>
+                <title>مستر فيكس - إنشاء حساب</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

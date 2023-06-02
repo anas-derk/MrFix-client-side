@@ -105,7 +105,7 @@ export default function Login() {
         // Start Login Page
         <div className="login shared-pages-with-styles">
             <Head>
-                <title>Mr. Fix - Login</title>
+                <title>مستر فيكس - تسجيل الدخول</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

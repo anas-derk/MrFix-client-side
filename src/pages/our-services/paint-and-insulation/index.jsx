@@ -20,7 +20,7 @@ export default function PaintAndInsulation() {
         // Start Paint And Insulation Services Page
         <div className="paint-and-insulation-services shared-our-services-with-styles">
             <Head>
-                <title>Mr. Fix - {data.servicesData[5].optionValue}</title>
+                <title>مستر فيكس - دهان وعزل</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

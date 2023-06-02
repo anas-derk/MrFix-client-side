@@ -20,7 +20,7 @@ export default function InquiryRepairCostServices() {
         // Start Inquir Repair Cost Services Page
         <div className="inquir-repair-cost-services shared-our-services-with-styles">
             <Head>
-                <title>Mr. Fix - {data.servicesData[10].optionValue}</title>
+                <title>مستر فيكس - استفسار عن تكلفة الإصلاح</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

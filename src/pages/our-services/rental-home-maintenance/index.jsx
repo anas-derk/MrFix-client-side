@@ -20,7 +20,7 @@ export default function RentalHomeMaintenance() {
         // Start Rental Home Maintenance Services Page
         <div className="rental-home-maintenance-services shared-our-services-with-styles">
             <Head>
-                <title>Mr. Fix - {data.servicesData[8].optionValue}</title>
+                <title>مستر فيكس - صيانة المنازل المؤجرة</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

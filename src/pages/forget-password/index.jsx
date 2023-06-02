@@ -18,7 +18,7 @@ export default function ForgetPassword() {
         // Start Forget Password Page
         <div className="forget-password shared-pages-with-styles">
             <Head>
-                <title>Mr. Fix - Forget Password</title>
+                <title>مستر فيكس - نسيت كلمة السر</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

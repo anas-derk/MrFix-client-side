@@ -18,7 +18,7 @@ export default function ResetPassword() {
         // Start Reset Password Page
         <div className="reset-password shared-pages-with-styles">
             <Head>
-                <title>Mr. Fix - Reset Password</title>
+                <title>مستر فيكس - إعادة تعيين كلمة السر</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

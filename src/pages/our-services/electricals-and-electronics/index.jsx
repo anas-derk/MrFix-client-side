@@ -20,7 +20,7 @@ export default function ElectricalsAndElectronics() {
         // Start Who Electricals and electronics Services Page
         <div className="electricals-and-electronics-services shared-our-services-with-styles">
             <Head>
-                <title>Mr. Fix - {data.servicesData[0].optionValue}</title>
+                <title>مستر فيكس - الكهربائيات والالكترونيات</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

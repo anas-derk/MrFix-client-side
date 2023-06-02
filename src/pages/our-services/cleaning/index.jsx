@@ -20,7 +20,7 @@ export default function Cleaning() {
         // Start Cleaning Services Page
         <div className="cleaning-services shared-our-services-with-styles">
             <Head>
-                <title>Mr. Fix - {data.servicesData[7].optionValue}</title>
+                <title>مستر فيكس - التنظيف</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

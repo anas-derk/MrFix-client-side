@@ -20,7 +20,7 @@ export default function OurServices() {
         // Start Our Services Page
         <div className="our-services">
             <Head>
-                <title>Mr. Fix - Our Services</title>
+                <title>مستر فيكس - خدماتنا</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

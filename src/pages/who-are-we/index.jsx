@@ -18,7 +18,7 @@ export default function WhoAreWe() {
         // Start Who Are We Page
         <div className="who-are-we shared-pages-with-styles">
             <Head>
-                <title>Mr. Fix - Who Are We</title>
+                <title>مستر فيكس - من نحن ؟</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

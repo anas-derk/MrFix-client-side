@@ -20,7 +20,7 @@ export default function SuggestionsServices() {
         // Start Suggestions Services Page
         <div className="suggestions-services shared-our-services-with-styles">
             <Head>
-                <title>Mr. Fix - {data.servicesData[9].optionValue}</title>
+                <title>مستر فيكس - اقتراحات تغيير ديكور</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

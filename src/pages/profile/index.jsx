@@ -249,7 +249,7 @@ export default function Profile() {
         // Start Profile Page
         <div className="profile">
             <Head>
-                <title>Mr. Fix - Profile</title>
+                <title>مستر فيكس - الملف الشخصي</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

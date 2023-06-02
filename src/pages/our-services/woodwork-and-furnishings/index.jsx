@@ -20,7 +20,7 @@ export default function WoodworkAndFurnishings() {
         // Start Woodwork And Furnishings Services Page
         <div className="woodwork-and-furnishings-services shared-our-services-with-styles">
             <Head>
-                <title>Mr. Fix - {data.servicesData[3].optionValue}</title>
+                <title>مستر فيكس - الخشبيات والمفروشات</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

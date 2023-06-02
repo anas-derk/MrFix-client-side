@@ -20,7 +20,7 @@ export default function Aluminium() {
         // Start Aluminium Services Page
         <div className="aluminium-services shared-our-services-with-styles">
             <Head>
-                <title>Mr. Fix - {data.servicesData[4].optionValue}</title>
+                <title>مستر فيكس - الألمنيوم</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

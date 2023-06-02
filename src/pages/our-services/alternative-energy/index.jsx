@@ -20,7 +20,7 @@ export default function AlternativeEnergy() {
         // Start Alternative Energy Services Page
         <div className="alternative-energy-services shared-our-services-with-styles">
             <Head>
-                <title>Mr. Fix - {data.servicesData[2].optionValue}</title>
+                <title>مستر فيكس - الطاقة البديلة</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

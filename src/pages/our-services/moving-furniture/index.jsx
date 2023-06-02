@@ -20,7 +20,7 @@ export default function MovingFurniture() {
         // Start Moving Furniture Services Page
         <div className="moving-furniture-services shared-our-services-with-styles">
             <Head>
-                <title>Mr. Fix - {data.servicesData[6].optionValue}</title>
+                <title>مستر فيكس - نقل الأثاث</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}

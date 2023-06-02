@@ -36,7 +36,7 @@ export default function Home() {
     // Start Home Page
     <div className="home">
       <Head>
-        <title>Mr. Fix - Home</title>
+        <title>مستر فيكس - الصفحة الرئيسية</title>
       </Head>
       <Header />
       {/* Start Page Content Section */}

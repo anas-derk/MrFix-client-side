@@ -20,7 +20,7 @@ export default function Plumbing() {
         // Start Plumbing Services Page
         <div className="plumbing-services shared-our-services-with-styles">
             <Head>
-                <title>Mr. Fix - {data.servicesData[1].optionValue}</title>
+                <title>مستر فيكس - الصحية</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}
