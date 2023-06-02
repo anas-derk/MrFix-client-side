@@ -41,10 +41,6 @@ export default function Login() {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
                         },
-                        isPassword: {
-                            value: password,
-                            msg: "عذراً ، يجب أن يكون عدد أحرف الكلمة 8 على الأقل ولا تحتوي محارف خاصة ، وتحتوي على أحرف",
-                        },
                     },
                 },
             ]
@@ -133,10 +129,10 @@ export default function Login() {
                                 <input
                                     type="password"
                                     placeholder="كلمة السر"
-                                    className={`form-control p-3 ${errors["text"] ? "border border-danger mb-2" : "mb-4"}`}
+                                    className={`form-control p-3 ${errors["password"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setPassword(e.target.value.trim())}
                                 />
-                                {errors["text"] && <p className='error-msg text-danger'>{errors["text"]}</p>}
+                                {errors["password"] && <p className='error-msg text-danger'>{errors["password"]}</p>}
                                 <Link href="/forget-password" className='mb-3 btn w-100 text-start'>نسيت كلمة السر !</Link>
                                 {!isLoginStatus && !errMsg && <button type='submit' className='btn login-btn w-100 p-3'>تسجيل الدخول</button>}
                                 {isLoginStatus && <button className='btn wait-login-btn w-100 p-3 mt-4 mx-auto d-block' disabled>

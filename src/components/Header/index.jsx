@@ -4,8 +4,20 @@ import { MdOutlineLogin } from "react-icons/md";
 import { FiUserPlus } from "react-icons/fi";
 import { AiOutlineCloseSquare, AiOutlineMenu } from "react-icons/ai";
 import Logo from "../../../public/images/Logo/logo.png";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Header() {
+    const [userId, setUserId] = useState("");
+    const router = useRouter();
+    const logout = () => {
+        localStorage.removeItem("mr-fix-user-id");
+        router.reload();
+    }
+    useEffect(() => {
+        let userId = localStorage.getItem("mr-fix-user-id");
+        setUserId(userId);
+    }, []);
     return (
         // Start Page Header
         <header className="page-header text-white">
@@ -29,18 +41,30 @@ export default function Header() {
                             <li className="nav-item">
                                 <Link className="nav-link" href="/contact-us">اتصل بنا</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" href="/login">تسجيل  الدخول</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" href="/sign-up">إنشاء  حساب</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" href="/profile">الملف  الشخصي</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" href="/service-request">طلب خدمة</Link>
-                            </li>
+                            {!userId && <>
+                                <li className="nav-item">
+                                    <Link className="nav-link" href="/login">تسجيل  الدخول</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" href="/sign-up">إنشاء  حساب</Link>
+                                </li>
+                            </>}
+                            {userId && <>
+                                <li className="nav-item">
+                                    <Link className="nav-link" href="/profile">الملف  الشخصي</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" href="/service-request">طلب خدمة</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <button
+                                        className="nav-link btn btn-danger"
+                                        onClick={logout}
+                                    >
+                                        <span>تسجيل الخروج</span>
+                                    </button>
+                                </li>
+                            </>}
                         </ul>
                     </div>
                     <div className="logo-box">
