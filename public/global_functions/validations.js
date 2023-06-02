@@ -32,6 +32,15 @@ const inputValuesValidation = (inputs) => {
             }
         }
         // التحقق من كون القاعدة داخل كائن القواعد موجودة 
+        if (typeof inputRules.isEmailOrNumber !== "undefined") {
+            // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
+            if (!isEmail(input.value) && isNaN(input.value)) {
+                errorsObject[input.name] = inputRules.isEmailOrNumber.msg;
+                // في حالة وجود خطأ نقوم بتجاهل كل التعليمات اللاحقة داخل التكرار الحالي للحلقة والانتقال إلى التكرار التالي
+                continue;
+            }
+        }
+        // التحقق من كون القاعدة داخل كائن القواعد موجودة 
         if (typeof inputRules.minLength !== "undefined") {
            // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
             if (input.value.length < inputRules.minLength.value) {
