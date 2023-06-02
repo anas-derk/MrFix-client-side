@@ -27,7 +27,7 @@
   border-radius: 20px;
 }
 
-.login .page-content .container .row .login-form .login-btn {
+.login .page-content .container .row .login-form .login-btn, .login .page-content .container .row .login-form .wait-login-btn {
   background-color: var(--main-color-one);
   color: #FFF;
 }

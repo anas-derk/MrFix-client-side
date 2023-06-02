@@ -41,22 +41,27 @@ export default function Profile() {
             router.push("/login");
         } else {
             async function fetchData(userId) {
-                let res = await Axios.get(`${process.env.BASE_API_URL}/users/user-info/${userId}`);
-                let result = await res.data;
-                if (result === "عذراً ، المستخدم غير موجود") {
-                    setUserNotFoundError(result);
+                try {
+                    let res = await Axios.get(`${process.env.BASE_API_URL}/users/user-info/${userId}`);
+                    let result = await res.data;
+                    if (result === "عذراً ، المستخدم غير موجود") {
+                        setUserNotFoundError(result);
+                    }
+                    else {
+                        setFirstAndLastName(result.firstAndLastName);
+                        setEmail(result.email);
+                        setMobilePhone(result.mobilePhone);
+                        setPassword(result.password);
+                        setGender(result.gender);
+                        setBirthday(result.birthday);
+                        setCity(result.city);
+                        setAddress(result.address);
+                        setDefaultEmail(result.email);
+                        setDefaultMobilePhone(result.mobilePhone);
+                    }
                 }
-                else {
-                    setFirstAndLastName(result.firstAndLastName);
-                    setEmail(result.email);
-                    setMobilePhone(result.mobilePhone);
-                    setPassword(result.password);
-                    setGender(result.gender);
-                    setBirthday(result.birthday);
-                    setCity(result.city);
-                    setAddress(result.address);
-                    setDefaultEmail(result.email);
-                    setDefaultMobilePhone(result.mobilePhone);
+                catch (err) {
+                    setUserNotFoundError("عذراً حدث خطأ ، الرجاء إعادة المحاولة");
                 }
             }
             fetchData(id);
