@@ -6,6 +6,7 @@ import ourServicesData from "../../../public/data/index";
 import Axios from "axios";
 import { useRouter } from 'next/router';
 import global_functions from "../../../public/global_functions/validations";
+import { AiOutlineClockCircle } from "react-icons/ai";
 
 export default function ServiceRequest() {
     const [requestType, setRequestType] = useState("");
@@ -24,8 +25,12 @@ export default function ServiceRequest() {
     const [userData, setUserData] = useState("");
     const [errorInFetchUserDataMsg, setErrorInFetchUserDataMsg] = useState("");
     const [errors, setErrors] = useState({});
+    const [isRequestingStatus, setIsRequestingStatus] = useState(false);
+    const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
+    const [errMsg, setErrorMsg] = useState("");
+
     const router = useRouter();
-    const serviceRequest = (e) => {
+    const serviceRequest = async (e) => {
         e.preventDefault();
         setErrors({});
         let errorsObject = global_functions.inputValuesValidation(
@@ -123,6 +128,40 @@ export default function ServiceRequest() {
             ]
         );
         setErrors(errorsObject);
+        console.log(errorsObject);
+        if (Object.keys(errorsObject).length == 0) {
+            setIsRequestingStatus(true);
+            try {
+                let res = await Axios.post(`${process.env.BASE_API_URL}/requests/create-new-request`, {
+                    requestType,
+                    serviceType,
+                    newAddress,
+                    imageOfTheBrokenTool,
+                    pictureOfTheVacationSpot,
+                    preferredDateOfVisit,
+                    preferredTimeOfVisit,
+                    electricityTimes,
+                    isAlternativeEnergyExist,
+                });
+                let result = await res.data;
+                if (result === "تمّ طلب الخدمة بنجاح ، سوف يتم التواصل معك قريباً جداً") {
+                    let successStatusTimeout = setTimeout(() => {
+                        setIsSignupStatus(false);
+                        setIsSuccessfulyStatus(true);
+                        clearTimeout(successStatusTimeout);
+                    }, 2000);
+                } else {
+                    setIsRequestingStatus(false);
+                    setErrorMsg(result);
+                    let errMsgTimeout = setTimeout(() => {
+                        setErrorMsg("");
+                        clearTimeout(errMsgTimeout);
+                    }, 4000);
+                }
+            } catch (err) {
+                setErrorMsg(err);
+            }
+        }
     }
     useEffect(() => {
         let header = document.querySelector("#__next .page-header"),
@@ -155,7 +194,7 @@ export default function ServiceRequest() {
         // Start Service Request Page
         <div className="service-request">
             <Head>
-                <title>Mr. Fix - Service Request</title>
+                <title>مستر فيكس - طلب خدمة</title>
             </Head>
             <Header />
             {/* Start Page Content Section */}
@@ -249,10 +288,17 @@ export default function ServiceRequest() {
                                 {/* End Column */}
                             </div>
                             {/* End Grid System From Bootstrap */}
-                            <button type='submit' className='btn service-request-btn w-50 p-3 mx-auto d-block'>
+                            {!isRequestingStatus && !errMsg && <button type='submit' className='btn service-request-btn w-50 p-3 mx-auto d-block'>
                                 <span className='ms-2'>إرسال</span>
                                 <FiUserPlus />
-                            </button>
+                            </button>}
+                            {isRequestingStatus && <button className='btn wait-requesting-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
+                                <span className='ms-2'>جاري الطلب ...</span>
+                                <AiOutlineClockCircle />
+                            </button>}
+                            {errMsg && <button className='btn btn-danger error-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
+                                {errMsg}
+                            </button>}
                         </form>
                     </> : <p className='alert alert-danger'>{errorInFetchUserDataMsg}</p>}
                 </div>
