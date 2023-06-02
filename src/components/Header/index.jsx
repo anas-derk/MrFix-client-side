@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { HiOutlineMenu } from "react-icons/hi";
-import { MdOutlineLogin } from "react-icons/md";
-import { FiUserPlus } from "react-icons/fi";
-import { AiOutlineCloseSquare, AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineHome, AiOutlineQuestionCircle, AiOutlineUserAdd } from "react-icons/ai";
+import { MdOutlineMedicalServices, MdOutlineContactPhone } from "react-icons/md";
+import { BiLogIn } from "react-icons/bi";
 import Logo from "../../../public/images/Logo/logo.png";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -30,23 +29,41 @@ export default function Header() {
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <Link className="nav-link" aria-current="page" href="/">الرئيسية</Link>
+                                <Link className="nav-link" aria-current="page" href="/">
+                                    <AiOutlineHome />
+                                    <span className="me-2">الرئيسية</span>
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" href="/who-are-we">من نحن</Link>
+                                <Link className="nav-link" href="/who-are-we">
+                                    <AiOutlineQuestionCircle />
+                                    <span className="me-2">من نحن</span>
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" href="/our-services">خدماتنا</Link>
+                                <Link className="nav-link" href="/our-services">
+                                    <MdOutlineMedicalServices />
+                                    <span className="me-2">خدماتنا</span>
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" href="/contact-us">اتصل بنا</Link>
+                                <Link className="nav-link" href="/contact-us">
+                                    <MdOutlineContactPhone />
+                                    <span className="me-2">اتصل بنا</span>
+                                </Link>
                             </li>
                             {!userId && <>
                                 <li className="nav-item">
-                                    <Link className="nav-link" href="/login">تسجيل  الدخول</Link>
+                                    <Link className="nav-link" href="/login">
+                                        <BiLogIn />
+                                        <span className="me-2">تسجيل الدخول</span>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" href="/sign-up">إنشاء  حساب</Link>
+                                    <Link className="nav-link" href="/sign-up">
+                                        <AiOutlineUserAdd />
+                                        <span className="me-2">إنشاء حساب</span>
+                                    </Link>
                                 </li>
                             </>}
                             {userId && <>
