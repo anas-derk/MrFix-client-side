@@ -2,6 +2,8 @@ import Link from "next/link";
 import { AiOutlineMenu, AiOutlineHome, AiOutlineQuestionCircle, AiOutlineUserAdd } from "react-icons/ai";
 import { MdOutlineMedicalServices, MdOutlineContactPhone } from "react-icons/md";
 import { BiLogIn } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
+import { TbLogout } from "react-icons/tb";
 import Logo from "../../../public/images/Logo/logo.png";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -68,17 +70,24 @@ export default function Header() {
                             </>}
                             {userId && <>
                                 <li className="nav-item">
-                                    <Link className="nav-link" href="/profile">الملف  الشخصي</Link>
+                                    <Link className="nav-link" href="/profile">
+                                        <CgProfile />
+                                        <span className="me-2">الملف  الشخصي</span>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" href="/service-request">طلب خدمة</Link>
+                                    <Link className="nav-link" href="/service-request">
+                                        <MdOutlineMedicalServices />
+                                        <span className="me-2">طلب خدمة</span>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
                                     <button
                                         className="nav-link btn btn-danger"
                                         onClick={logout}
                                     >
-                                        <span>تسجيل الخروج</span>
+                                        <TbLogout />
+                                        <span className="me-2">تسجيل الخروج</span>
                                     </button>
                                 </li>
                             </>}
