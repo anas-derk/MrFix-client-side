@@ -98,6 +98,9 @@ export default function ServiceRequest() {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
                         },
+                        isImage: {
+                            msg: "عذراً ، يجب أن يكون الملف صورة من امتداد png أو jpg !!"
+                        },
                     },
                 },
                 {
@@ -106,6 +109,9 @@ export default function ServiceRequest() {
                     rules: {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                        },
+                        isImage: {
+                            msg: "عذراً ، يجب أن يكون الملف صورة من امتداد png أو jpg !!"
                         },
                     },
                 },

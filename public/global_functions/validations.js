@@ -2,6 +2,10 @@ const isEmail = (email) => {
     return email.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
 }
 
+function isImage(file) {
+    return file.type === "image/png" || file.type === "image/jpeg";
+}
+
 const isValidPassword = (password) => {
     
 }
@@ -36,6 +40,15 @@ const inputValuesValidation = (inputs) => {
             // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
             if (!isEmail(input.value) && isNaN(input.value)) {
                 errorsObject[input.name] = inputRules.isEmailOrNumber.msg;
+                // في حالة وجود خطأ نقوم بتجاهل كل التعليمات اللاحقة داخل التكرار الحالي للحلقة والانتقال إلى التكرار التالي
+                continue;
+            }
+        }
+        // التحقق من كون القاعدة داخل كائن القواعد موجودة 
+        if (typeof inputRules.isImage !== "undefined") {
+            // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
+            if (!isImage(input.value)) {
+                errorsObject[input.name] = inputRules.isImage.msg;
                 // في حالة وجود خطأ نقوم بتجاهل كل التعليمات اللاحقة داخل التكرار الحالي للحلقة والانتقال إلى التكرار التالي
                 continue;
             }
