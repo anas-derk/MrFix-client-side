@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
 import { FiUserPlus } from "react-icons/fi";
+import { RiFileUploadLine } from "react-icons/ri";
 import ourServicesData from "../../../public/data/index";
 import Axios from "axios";
 import { useRouter } from 'next/router';
@@ -257,19 +258,31 @@ export default function ServiceRequest() {
                                         className='form-control p-3 mb-4'
                                         onChange={(e) => setNewAddress(e.target.value)}
                                     ></textarea>
-                                    <input
-                                        type="file"
-                                        placeholder="صورة عن الأداة المعطلة"
-                                        className={`form-control p-3 ${errors["imageOfTheBrokenTool"] ? "border border-danger mb-2" : "mb-4"}`}
-                                        onChange={(e) => setImageOfTheBrokenTool(e.target.files[0])}
-                                    />
+                                    <div className={`file-box form-control p-3 ${errors["imageOfTheBrokenTool"] ? "border border-danger mb-2" : "mb-4"}`}>
+                                        <label htmlFor="file1" className='file-label d-flex justify-content-between'>
+                                            <p className='caption'>صورة عن الأداة المعطلة</p>
+                                            <RiFileUploadLine className="upload-file-icon" />
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id='file1'
+                                            placeholder="صورة عن الأداة المعطلة"
+                                            onChange={(e) => setImageOfTheBrokenTool(e.target.files[0])}
+                                        />
+                                    </div>
                                     {errors["imageOfTheBrokenTool"] && <p className='error-msg text-danger'>{errors["imageOfTheBrokenTool"]}</p>}
-                                    <input
-                                        type="file"
-                                        placeholder="صورة عن المكان المعطل"
-                                        className={`form-control p-3 ${errors["pictureOfTheVacationSpot"] ? "border border-danger mb-2" : "mb-4"}`}
-                                        onChange={(e) => setPictureOfTheVacationSpot(e.target.files[0])}
-                                    />
+                                    <div className={`file-box form-control p-3 ${errors["pictureOfTheVacationSpot"] ? "border border-danger mb-2" : "mb-4"}`}>
+                                        <label htmlFor="file2" className='file-label d-flex justify-content-between'>
+                                            <p className='caption'>صورة عن مكان العطل</p>
+                                            <RiFileUploadLine className="upload-file-icon" />
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id='file2'
+                                            placeholder="صورة عن مكان العطل"
+                                            onChange={(e) => setPictureOfTheVacationSpot(e.target.files[0])}
+                                        />
+                                    </div>
                                     {errors["pictureOfTheVacationSpot"] && <p className='error-msg text-danger'>{errors["pictureOfTheVacationSpot"]}</p>}
                                 </div>
                                 {/* End Column */}

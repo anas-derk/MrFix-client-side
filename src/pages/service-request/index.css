@@ -6,6 +6,22 @@
   min-height: inherit;
 }
 
+.service-request .page-content .container .service-request-form .file-box {
+  height: 58px;
+}
+
+.service-request .page-content .container .service-request-form .file-box .file-label {
+  cursor: pointer;
+}
+
+.service-request .page-content .container .service-request-form .file-box .file-label .upload-file-icon {
+  font-size: 23px;
+}
+
+.service-request .page-content .container .service-request-form .file-box input[type="file"] {
+  visibility: hidden;
+}
+
 .service-request .page-content .container .service-request-form textarea {
   resize: none;
   height: calc(116px + 1.5rem);
