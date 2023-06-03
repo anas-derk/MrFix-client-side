@@ -8,13 +8,13 @@ import Axios from 'axios';
 import { useRouter } from 'next/router';
 
 export default function ResetPassword() {
-    const [realCode, setRealCode] = useState("");
     const [typedUserCode, setTypedUserCode] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [newConfirmPassword, setNewConfirmPassword] = useState("");
     const [errors, setErrors] = useState({});
     const [isResetingPasswordStatus, setIsResetingPasswordStatus] = useState(false);
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
+    const [tempResetPasswordData, setTempResetPasswordData] = useState("");
     const [errMsg, setErrorMsg] = useState("");
     const router = useRouter();
     useEffect(() => {
@@ -23,7 +23,7 @@ export default function ResetPassword() {
         pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
         let tempResetPasswordData = JSON.parse(localStorage.getItem("mr-fix-temp-reset-password-data"));
         if (tempResetPasswordData) {
-            setRealCode(tempResetPasswordData.code);
+            setTempResetPasswordData(tempResetPasswordData);
         } else {
             router.push("/forget-password");
         }
@@ -41,7 +41,7 @@ export default function ResetPassword() {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
                         },
                         isMatch: {
-                            value: realCode,
+                            value: tempResetPasswordData.code,
                             msg: "عذراً الرمز غير صحيح !!",
                         },
                     },
@@ -77,26 +77,31 @@ export default function ResetPassword() {
         setErrors(errorsObject);
         if (Object.keys(errorsObject).length == 0) {
             setIsResetingPasswordStatus(true);
-            // try {
-            //     let res = await Axios.put(`${process.env.BASE_API_URL}/users/reset-password/:user_id?newPassword=${newPassword}`);
-            //     let result = await res.data;
-            //     if (result === "لقد تمّت عملية إعادة تعيين كلمة المرور الخاصة بك بنجاح !!") {
-            //         let successStatusTimeout = setTimeout(() => {
-            //             setIsSignupStatus(false);
-            //             setIsSuccessfulyStatus(true);
-            //             clearTimeout(successStatusTimeout);
-            //         }, 2000);
-            //     } else {
-            //         setIsSignupStatus(false);
-            //         setErrorMsg(result);
-            //         let errMsgTimeout = setTimeout(() => {
-            //             setErrorMsg("");
-            //             clearTimeout(errMsgTimeout);
-            //         }, 4000);
-            //     }
-            // } catch (err) {
-            //     setErrorMsg(err);
-            // }
+            console.log(errorsObject);
+            try {
+                let res = await Axios.put(`${process.env.BASE_API_URL}/users/reset-password/${tempResetPasswordData.userId}?newPassword=${newPassword}`);
+                let result = await res.data;
+                if (result === "لقد تمّت عملية إعادة تعيين كلمة المرور الخاصة بك بنجاح !!") {
+                    let resetPasswordStatusTimeout = setTimeout(() => {
+                        setIsResetingPasswordStatus(false);
+                        setIsSuccessfulyStatus(true);
+                        let successStatusTimeout = setTimeout(() => {
+                            clearTimeout(resetPasswordStatusTimeout);
+                            clearTimeout(successStatusTimeout);
+                            router.push("/login");
+                        }, 2500);
+                    }, 2000);
+                } else {
+                    setIsResetingPasswordStatus(false);
+                    setErrorMsg(result);
+                    let errMsgTimeout = setTimeout(() => {
+                        setErrorMsg("");
+                        clearTimeout(errMsgTimeout);
+                    }, 4000);
+                }
+            } catch (err) {
+                setErrorMsg(err);
+            }
         }
     }
     return (
@@ -141,10 +146,13 @@ export default function ResetPassword() {
                                     onChange={(e) => setNewConfirmPassword(e.target.value.trim())}
                                 />
                                 {errors["newConfirmPassword"] && <p className='error-msg text-danger'>{errors["newConfirmPassword"]}</p>}
-                                {!isResetingPasswordStatus && !errMsg && <button type='submit' className='btn reset-password-btn w-100 p-3'>إرسال</button>}
+                                {!isResetingPasswordStatus && !errMsg && !isSuccessfulyStatus && <button type='submit' className='btn reset-password-btn w-100 p-3'>إرسال</button>}
                                 {isResetingPasswordStatus && <button className='btn wait-reset-password-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
                                     <span className='ms-2'>جاري إعادة التعيين ...</span>
                                     <AiOutlineClockCircle />
+                                </button>}
+                                {isSuccessfulyStatus && <button className='btn wait-reset-password-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
+                                    <span className='ms-2'>تمت عملية إعادة تعيين كلمة السر بنجاح ...</span>
                                 </button>}
                                 {errMsg && <button className='btn btn-danger error-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
                                     {errMsg}
