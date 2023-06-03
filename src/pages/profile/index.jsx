@@ -155,7 +155,6 @@ export default function Profile() {
             ]
         );
         setErrors(errorsObject);
-        console.log(errorsObject);
         if (Object.keys(errorsObject).length == 0) {
             setIsUpdatingStatus(true);
             let newUserData = {};
