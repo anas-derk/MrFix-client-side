@@ -54,6 +54,22 @@ const inputValuesValidation = (inputs) => {
             }
         }
         // التحقق من كون القاعدة داخل كائن القواعد موجودة 
+        if (typeof inputRules.isImages !== "undefined") {
+            // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
+            let isFoundFileNotImage = false;
+            for (let file of input.value) {
+                if (!isImage(file)) {
+                    isFoundFileNotImage = true;
+                    break;
+                }
+            }
+            if (isFoundFileNotImage) {
+                errorsObject[input.name] = inputRules.isImages.msg;
+                // في حالة وجود خطأ نقوم بتجاهل كل التعليمات اللاحقة داخل التكرار الحالي للحلقة والانتقال إلى التكرار التالي
+                continue;
+            }
+        }
+        // التحقق من كون القاعدة داخل كائن القواعد موجودة 
         if (typeof inputRules.minLength !== "undefined") {
            // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
             if (input.value.length < inputRules.minLength.value) {

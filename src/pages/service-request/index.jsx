@@ -87,8 +87,8 @@ export default function ServiceRequest() {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
                         },
-                        isImage: {
-                            msg: "عذراً ، يجب أن يكون الملف صورة من امتداد png أو jpg !!"
+                        isImages: {
+                            msg: "عذراً ، يجب أن يكون الملف أو الملفات صور من امتداد png أو jpg !!"
                         },
                     },
                 },
@@ -99,8 +99,8 @@ export default function ServiceRequest() {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
                         },
-                        isImage: {
-                            msg: "عذراً ، يجب أن يكون الملف صورة من امتداد png أو jpg !!"
+                        isImages: {
+                            msg: "عذراً ، يجب أن يكون الملف أو الملفات صور من امتداد png أو jpg !!"
                         },
                     },
                 },
@@ -152,7 +152,6 @@ export default function ServiceRequest() {
             ]
         );
         setErrors(errorsObject);
-        console.log(errorsObject);
         if (Object.keys(errorsObject).length == 0 ||
             (requestType === "طلب إسعافي"
                 && Object.keys(errorsObject).length == 2
@@ -165,8 +164,12 @@ export default function ServiceRequest() {
             formData.append("requestType", requestType);
             formData.append("serviceType", serviceType);
             formData.append("newAddress", newAddress);
-            formData.append("imageOfTheBrokenTool", imageOfTheBrokenTool);
-            formData.append("pictureOfTheVacationSpot", pictureOfTheVacationSpot);
+            for(let i = 0; i < imageOfTheBrokenTool.length; i++) {
+                formData.append(`imageOfTheBrokenTool${i}`, imageOfTheBrokenTool[i]);
+            }
+            for(let i = 0; i < pictureOfTheVacationSpot.length; i++) {
+                formData.append(`pictureOfTheVacationSpot${i}`, pictureOfTheVacationSpot[i]);
+            }
             if (requestType === "طلب عادي") {
                 formData.append("preferredDateOfVisit", preferredDateOfVisit);
                 formData.append("preferredTimeOfVisit", preferredTimeOfVisit);
@@ -174,7 +177,6 @@ export default function ServiceRequest() {
             formData.append("electricityTimes", electricityTimes);
             formData.append("isAlternativeEnergyExist", isAlternativeEnergyExist);
             formData.append("userId", userId);
-            console.log(formData);
             try {
                 let res = await Axios.post(`${process.env.BASE_API_URL}/requests/create-new-request`, formData, {
                     headers: {
@@ -250,28 +252,28 @@ export default function ServiceRequest() {
                                     ></textarea>
                                     <div className={`file-box form-control p-3 ${errors["imageOfTheBrokenTool"] ? "border border-danger mb-2" : "mb-4"}`}>
                                         <label htmlFor="file1" className='file-label d-flex justify-content-between'>
-                                            <p className='caption'>صورة عن الأداة المعطلة</p>
+                                            <p className='caption'>صور عن الأداة المعطلة</p>
                                             <RiFileUploadLine className="upload-file-icon" />
                                         </label>
                                         <input
                                             type="file"
                                             id='file1'
                                             placeholder="صورة عن الأداة المعطلة"
-                                            onChange={(e) => setImageOfTheBrokenTool(e.target.files[0])}
+                                            onChange={(e) => setImageOfTheBrokenTool(e.target.files)}
                                             multiple
                                         />
                                     </div>
                                     {errors["imageOfTheBrokenTool"] && <p className='error-msg text-danger'>{errors["imageOfTheBrokenTool"]}</p>}
                                     <div className={`file-box form-control p-3 ${errors["pictureOfTheVacationSpot"] ? "border border-danger mb-2" : "mb-4"}`}>
                                         <label htmlFor="file2" className='file-label d-flex justify-content-between'>
-                                            <p className='caption'>صورة عن مكان العطل</p>
+                                            <p className='caption'>صور عن مكان العطل</p>
                                             <RiFileUploadLine className="upload-file-icon" />
                                         </label>
                                         <input
                                             type="file"
                                             id='file2'
                                             placeholder="صورة عن مكان العطل"
-                                            onChange={(e) => setPictureOfTheVacationSpot(e.target.files[0])}
+                                            onChange={(e) => setPictureOfTheVacationSpot(e.target.files)}
                                             multiple
                                         />
                                     </div>
