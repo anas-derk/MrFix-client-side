@@ -70,7 +70,7 @@ export default function Login() {
                     }, 2000);
                 }
             } catch (err) {
-                setErrorMsg(err);
+                console.log(err);
             }
         }
     }

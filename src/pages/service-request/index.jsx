@@ -84,15 +84,6 @@ export default function ServiceRequest() {
                     },
                 },
                 {
-                    name: "newAddress",
-                    value: newAddress,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                    },
-                },
-                {
                     name: "imageOfTheBrokenTool",
                     value: imageOfTheBrokenTool,
                     rules: {
