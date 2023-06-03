@@ -163,7 +163,14 @@ export default function ServiceRequest() {
             ]
         );
         setErrors(errorsObject);
-        if (Object.keys(errorsObject).length == 0) {
+        console.log(errorsObject);
+        if (Object.keys(errorsObject).length == 0 ||
+            (requestType === "طلب إسعافي"
+                && Object.keys(errorsObject).length == 2
+                && errorsObject["preferredDateOfVisit"] === "عذراً ، لا يجب أن يكون الحقل فارغاً !!"
+                && errorsObject["preferredTimeOfVisit"] === "عذراً ، لا يجب أن يكون الحقل فارغاً !!"
+            )
+        ) {
             setIsRequestingStatus(true);
             let formData = new FormData();
             formData.append("requestType", requestType);
@@ -171,11 +178,14 @@ export default function ServiceRequest() {
             formData.append("newAddress", newAddress);
             formData.append("imageOfTheBrokenTool", imageOfTheBrokenTool);
             formData.append("pictureOfTheVacationSpot", pictureOfTheVacationSpot);
-            formData.append("preferredDateOfVisit", preferredDateOfVisit);
-            formData.append("preferredTimeOfVisit", preferredTimeOfVisit);
+            if (requestType === "طلب عادي") {
+                formData.append("preferredDateOfVisit", preferredDateOfVisit);
+                formData.append("preferredTimeOfVisit", preferredTimeOfVisit);
+            }
             formData.append("electricityTimes", electricityTimes);
             formData.append("isAlternativeEnergyExist", isAlternativeEnergyExist);
             formData.append("userId", userId);
+            console.log(formData);
             try {
                 let res = await Axios.post(`${process.env.BASE_API_URL}/requests/create-new-request`, formData, {
                     headers: {
@@ -224,8 +234,8 @@ export default function ServiceRequest() {
                                 onChange={(e) => setRequestType(e.target.value)}
                             >
                                 <option value="" hidden>نوع الطلب</option>
-                                <option value="normal-request">طلب عادي</option>
-                                <option value="ambulance-request">طلب إسعافي</option>
+                                <option value="طلب عادي">طلب عادي</option>
+                                <option value="طلب إسعافي">طلب إسعافي</option>
                             </select>
                             {errors["requestType"] && <p className='error-msg text-danger'>{errors["requestType"]}</p>}
                             <select
@@ -265,7 +275,7 @@ export default function ServiceRequest() {
                                 {/* End Column */}
                                 {/* Start Column */}
                                 <div className="col-md-6">
-                                    {requestType !== "ambulance-request" && <>
+                                    {requestType !== "طلب إسعافي" && <>
                                         <input
                                             type={inputType3}
                                             placeholder="تاريخ اليوم المفضل لزيارة الورشة"
