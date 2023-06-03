@@ -7,7 +7,7 @@
                 .reset-password-form{
                     box-shadow: 1px 1px 10px #FFF;
                     border-radius: 15px;
-                    .reset-password-btn{
+                    .reset-password-btn, .wait-reset-password-btn{
                         background-color: var(--main-color-one);
                         color: #FFF;
                     }
