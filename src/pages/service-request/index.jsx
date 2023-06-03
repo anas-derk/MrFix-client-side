@@ -30,6 +30,35 @@ export default function ServiceRequest() {
     const [errMsg, setErrorMsg] = useState("");
 
     const router = useRouter();
+
+    useEffect(() => {
+        let header = document.querySelector("#__next .page-header"),
+            pageContent = document.querySelector(".service-request .page-content");
+        pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
+        let id = localStorage.getItem("mr-fix-user-id");
+        setUserId(id);
+        if (!id) {
+            router.push("/login");
+        } else {
+            async function fetchData(userId) {
+                try {
+                    let res = await Axios.get(`${process.env.BASE_API_URL}/users/user-info/${userId}`);
+                    let result = await res.data;
+                    if (result === "عذراً ، المستخدم غير موجود") {
+                        localStorage.clear();
+                        router.push("/login");
+                    } else {
+                        setUserData(result);
+                    }
+                }
+                catch (err) {
+                    setErrorInFetchUserDataMsg("عذراً حدث خطأ ، الرجاء إعادة المحاولة");
+                }
+            }
+            fetchData(id);
+        }
+    }, []);
+
     const serviceRequest = async (e) => {
         e.preventDefault();
         setErrors({});
@@ -128,27 +157,34 @@ export default function ServiceRequest() {
             ]
         );
         setErrors(errorsObject);
-        console.log(errorsObject);
         if (Object.keys(errorsObject).length == 0) {
             setIsRequestingStatus(true);
+            let formData = new FormData();
+            formData.append("requestType", requestType);
+            formData.append("serviceType", serviceType);
+            formData.append("newAddress", newAddress);
+            formData.append("imageOfTheBrokenTool", imageOfTheBrokenTool);
+            formData.append("pictureOfTheVacationSpot", pictureOfTheVacationSpot);
+            formData.append("preferredDateOfVisit", preferredDateOfVisit);
+            formData.append("preferredTimeOfVisit", preferredTimeOfVisit);
+            formData.append("electricityTimes", electricityTimes);
+            formData.append("isAlternativeEnergyExist", isAlternativeEnergyExist);
+            formData.append("userId", userId);
             try {
-                let res = await Axios.post(`${process.env.BASE_API_URL}/requests/create-new-request`, {
-                    requestType,
-                    serviceType,
-                    newAddress,
-                    imageOfTheBrokenTool,
-                    pictureOfTheVacationSpot,
-                    preferredDateOfVisit,
-                    preferredTimeOfVisit,
-                    electricityTimes,
-                    isAlternativeEnergyExist,
+                let res = await Axios.post(`${process.env.BASE_API_URL}/requests/create-new-request`, formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
                 });
                 let result = await res.data;
                 if (result === "تمّ طلب الخدمة بنجاح ، سوف يتم التواصل معك قريباً جداً") {
-                    let successStatusTimeout = setTimeout(() => {
-                        setIsSignupStatus(false);
+                    let requestingStatusTimeout = setTimeout(() => {
+                        setIsRequestingStatus(false);
                         setIsSuccessfulyStatus(true);
-                        clearTimeout(successStatusTimeout);
+                        setTimeout(() => {
+                            setIsSuccessfulyStatus(false);
+                            clearTimeout(requestingStatusTimeout);
+                        }, 2000);
                     }, 2000);
                 } else {
                     setIsRequestingStatus(false);
@@ -159,37 +195,10 @@ export default function ServiceRequest() {
                     }, 4000);
                 }
             } catch (err) {
-                setErrorMsg(err);
+                console.log(err);
             }
         }
     }
-    useEffect(() => {
-        let header = document.querySelector("#__next .page-header"),
-            pageContent = document.querySelector(".service-request .page-content");
-        pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
-        let id = localStorage.getItem("mr-fix-user-id");
-        setUserId(id);
-        if (!id) {
-            router.push("/login");
-        } else {
-            async function fetchData(userId) {
-                try {
-                    let res = await Axios.get(`${process.env.BASE_API_URL}/users/user-info/${userId}`);
-                    let result = await res.data;
-                    if (result === "عذراً ، المستخدم غير موجود") {
-                        localStorage.clear();
-                        router.push("/login");
-                    } else {
-                        setUserData(result);
-                    }
-                }
-                catch (err) {
-                    setErrorInFetchUserDataMsg("عذراً حدث خطأ ، الرجاء إعادة المحاولة");
-                }
-            }
-            fetchData(id);
-        }
-    }, []);
     return (
         // Start Service Request Page
         <div className="service-request">
@@ -288,13 +297,16 @@ export default function ServiceRequest() {
                                 {/* End Column */}
                             </div>
                             {/* End Grid System From Bootstrap */}
-                            {!isRequestingStatus && !errMsg && <button type='submit' className='btn service-request-btn w-50 p-3 mx-auto d-block'>
+                            {!isRequestingStatus && !errMsg && !isSuccessfulyStatus && <button type='submit' className='btn service-request-btn w-50 p-3 mx-auto d-block'>
                                 <span className='ms-2'>إرسال</span>
                                 <FiUserPlus />
                             </button>}
                             {isRequestingStatus && <button className='btn wait-requesting-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
                                 <span className='ms-2'>جاري الطلب ...</span>
                                 <AiOutlineClockCircle />
+                            </button>}
+                            {isSuccessfulyStatus && <button className='btn btn-success requesting-successfuly-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
+                                <span className='ms-2'>تمّ طلب الخدمة بنجاح</span>
                             </button>}
                             {errMsg && <button className='btn btn-danger error-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
                                 {errMsg}
