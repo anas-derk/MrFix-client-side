@@ -27,7 +27,7 @@
   border-radius: 15px;
 }
 
-.forget-password .page-content .container .row .forget-password-form .forget-password-btn {
+.forget-password .page-content .container .row .forget-password-form .forget-password-btn, .forget-password .page-content .container .row .forget-password-form .wait-check-btn {
   background-color: var(--main-color-one);
   color: #FFF;
 }
