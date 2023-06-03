@@ -19,9 +19,6 @@ export default function ServiceRequest() {
     const [preferredTimeOfVisit, setPreferredTimeOfVisit] = useState("");
     const [electricityTimes, setElectricityTimes] = useState("");
     const [isAlternativeEnergyExist, setIsAlternativeEnergyExist] = useState("");
-    const [inputType1, setInputType1] = useState("");
-    const [inputType2, setInputType2] = useState("");
-    const [inputType3, setInputType3] = useState("");
     const [userId, setUserId] = useState("");
     const [userData, setUserData] = useState("");
     const [errorInFetchUserDataMsg, setErrorInFetchUserDataMsg] = useState("");
@@ -191,7 +188,9 @@ export default function ServiceRequest() {
                         setIsSuccessfulyStatus(true);
                         setTimeout(() => {
                             setIsSuccessfulyStatus(false);
-                            clearTimeout(requestingStatusTimeout);
+                            setTimeout(() => {
+                                router.reload();
+                            }, 1500);
                         }, 2000);
                     }, 2000);
                 } else {
@@ -259,6 +258,7 @@ export default function ServiceRequest() {
                                             id='file1'
                                             placeholder="صورة عن الأداة المعطلة"
                                             onChange={(e) => setImageOfTheBrokenTool(e.target.files[0])}
+                                            multiple
                                         />
                                     </div>
                                     {errors["imageOfTheBrokenTool"] && <p className='error-msg text-danger'>{errors["imageOfTheBrokenTool"]}</p>}
@@ -272,6 +272,7 @@ export default function ServiceRequest() {
                                             id='file2'
                                             placeholder="صورة عن مكان العطل"
                                             onChange={(e) => setPictureOfTheVacationSpot(e.target.files[0])}
+                                            multiple
                                         />
                                     </div>
                                     {errors["pictureOfTheVacationSpot"] && <p className='error-msg text-danger'>{errors["pictureOfTheVacationSpot"]}</p>}
@@ -281,11 +282,9 @@ export default function ServiceRequest() {
                                 <div className="col-md-6">
                                     {requestType !== "طلب إسعافي" && <>
                                         <input
-                                            type={inputType3}
-                                            placeholder="تاريخ اليوم المفضل لزيارة الورشة"
+                                            type="text"
+                                            placeholder="تواريخ الأيام المفضلة لزيارة الورشة"
                                             className={`form-control p-3 ${errors["preferredDateOfVisit"] ? "border border-danger mb-2" : "mb-4"}`}
-                                            onFocus={() => setInputType3("date")}
-                                            onBlur={() => setInputType3("text")}
                                             onChange={(e) => setPreferredDateOfVisit(e.target.value)}
                                         />
                                         {errors["preferredDateOfVisit"] && <p className='error-msg text-danger'>{errors["preferredDateOfVisit"]}</p>}
