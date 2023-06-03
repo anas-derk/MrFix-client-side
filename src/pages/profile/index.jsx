@@ -24,8 +24,8 @@ export default function Profile() {
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
     const [errMsg, setErrorMsg] = useState("");
     const [userNotFoundError, setUserNotFoundError] = useState("");
-    const [defaultEmail, setDefaultEmail] = useState("");
     const [defaultMobilePhone, setDefaultMobilePhone] = useState("");
+    const [defaultEmail, setDefaultEmail] = useState("");
 
     const router = useRouter();
 
@@ -56,8 +56,8 @@ export default function Profile() {
                         setBirthday(result.birthday);
                         setCity(result.city);
                         setAddress(result.address);
-                        setDefaultEmail(result.email);
                         setDefaultMobilePhone(result.mobilePhone);
+                        setDefaultEmail(result.email);
                     }
                 }
                 catch (err) {
@@ -84,18 +84,6 @@ export default function Profile() {
                             value: 30,
                             msg: "عذراً ، يجب أن يكون عدد الأحرف على الأكثر 30",
                         }
-                    },
-                },
-                {
-                    name: "email",
-                    value: email,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isEmail: {
-                            msg: "عذراً ، الإيميل الذي أدخلته غير صالح ، الرجاء إدخال إيميل صالح !!",
-                        },
                     },
                 },
                 {
@@ -167,54 +155,24 @@ export default function Profile() {
             ]
         );
         setErrors(errorsObject);
+        console.log(errorsObject);
         if (Object.keys(errorsObject).length == 0) {
             setIsUpdatingStatus(true);
             let newUserData = {};
-            if (email !== defaultEmail && mobilePhone === defaultMobilePhone) {
-                newUserData = {
-                    firstAndLastName: firstAndLastName,
-                    email: email,
-                    password: password,
-                    gender,
-                    birthday,
-                    city,
-                    address: address,
-                }
+            newUserData = {
+                firstAndLastName: firstAndLastName,
+                email: email,
+                mobilePhone: mobilePhone,
+                password: password,
+                gender,
+                birthday,
+                city,
+                address: address,
             }
-            else if (email === defaultEmail && mobilePhone !== defaultMobilePhone) {
-                newUserData = {
-                    firstAndLastName: firstAndLastName,
-                    mobilePhone: mobilePhone,
-                    password: password,
-                    gender,
-                    birthday,
-                    city,
-                    address: address,
-                }
-            }
-            else if (email !== defaultEmail && mobilePhone !== defaultMobilePhone) {
-                newUserData = {
-                    firstAndLastName: firstAndLastName,
-                    email: email,
-                    mobilePhone: mobilePhone,
-                    password: password,
-                    gender,
-                    birthday,
-                    city,
-                    address: address,
-                }
-            } else {
-                newUserData = {
-                    firstAndLastName: firstAndLastName,
-                    password: password,
-                    gender,
-                    birthday,
-                    city,
-                    address: address,
-                }
-            }
+            let isSameOfEmail = email === defaultEmail ? "yes" : "no";
+            let isSameOfMobilePhone = mobilePhone === defaultMobilePhone ? "yes" : "no";
             try {
-                let res = await Axios.put(`${process.env.BASE_API_URL}/users/update-user-info/${userId}`, newUserData);
+                let res = await Axios.put(`${process.env.BASE_API_URL}/users/update-user-info/${userId}?isSameOfEmail=${isSameOfEmail}&isSameOfMobilePhone=${isSameOfMobilePhone}`, newUserData);
                 let result = await res.data;
                 if (result === "عذراً لا يمكن تعديل بيانات الملف الشخصي لأن البريد الإلكتروني أو رقم الموبايل موجود مسبقاً !!") {
                     setTimeout(() => {
@@ -271,13 +229,12 @@ export default function Profile() {
                                 />
                                 {errors["firstAndLastName"] && <p className='error-msg text-danger'>{errors["firstAndLastName"]}</p>}
                                 <input
-                                    type="text"
-                                    placeholder="البريد الالكتروني الجديد"
-                                    className={`form-control p-3 ${errors["email"] ? "border border-danger mb-2" : "mb-4"}`}
+                                    type="email"
+                                    placeholder="البريد الالكتروني"
+                                    className={`form-control p-3 mb-4`}
                                     onChange={(e) => setEmail(e.target.value.trim().toLowerCase())}
                                     value={email}
                                 />
-                                {errors["email"] && <p className='error-msg text-danger'>{errors["email"]}</p>}
                                 <input
                                     type="number"
                                     placeholder="رقم الجوال الجديد"
@@ -324,19 +281,19 @@ export default function Profile() {
                                     value={city}
                                 >
                                     <option defaultValue="" hidden>اختر المحافظة</option>
-                                    <option value="lattakia">اللاذقية</option>
-                                    <option value="aleppo">حلب</option>
                                     <option value="damascus">دمشق</option>
+                                    <option value="rif-Damascus">ريف دمشق</option>
+                                    {/* <option value="lattakia">اللاذقية</option>
+                                    <option value="aleppo">حلب</option>
                                     <option value="tartous">طرطوس</option>
                                     <option value="daraa">درعا</option>
                                     <option value="kenitra">القنيطرة</option>
-                                    <option value="rif-Damascus">ريف دمشق</option>
                                     <option value="hams">حماة</option>
                                     <option value="idlib">إدلب</option>
                                     <option value="homs">حمص</option>
                                     <option value="al-Hasakah">الحسكة</option>
                                     <option value="deer-al-zour">دير الزور</option>
-                                    <option value="raqqa">الرقة</option>
+                                    <option value="raqqa">الرقة</option> */}
                                 </select>
                                 {errors["city"] && <p className='error-msg text-danger'>{errors["city"]}</p>}
                                 <textarea

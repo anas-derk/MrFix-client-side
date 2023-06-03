@@ -245,19 +245,19 @@ export default function Signup() {
                                     onChange={(e) => setCity(e.target.value)}
                                 >
                                     <option defaultValue="" hidden>اختر المحافظة</option>
-                                    <option value="lattakia">اللاذقية</option>
-                                    <option value="aleppo">حلب</option>
                                     <option value="damascus">دمشق</option>
+                                    <option value="rif-Damascus">ريف دمشق</option>
+                                    {/* <option value="lattakia">اللاذقية</option>
+                                    <option value="aleppo">حلب</option>
                                     <option value="tartous">طرطوس</option>
                                     <option value="daraa">درعا</option>
                                     <option value="kenitra">القنيطرة</option>
-                                    <option value="rif-Damascus">ريف دمشق</option>
                                     <option value="hams">حماة</option>
                                     <option value="idlib">إدلب</option>
                                     <option value="homs">حمص</option>
                                     <option value="al-Hasakah">الحسكة</option>
                                     <option value="deer-al-zour">دير الزور</option>
-                                    <option value="raqqa">الرقة</option>
+                                    <option value="raqqa">الرقة</option> */}
                                 </select>
                                 {errors["city"] && <p className='error-msg text-danger'>{errors["city"]}</p>}
                                 <textarea
