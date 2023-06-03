@@ -59,14 +59,12 @@ export default function ForgetPassword() {
                     let waitTimeout = setTimeout(() => {
                         setIsWaitCheckStatus(false);
                         clearTimeout(waitTimeout);
-                        console.log(result);
-                        router.push("/reset-password", {
-                            query: result,
-                        });
+                        localStorage.setItem("mr-fix-temp-reset-password-data", JSON.stringify(result));
+                        router.push("/reset-password");
                     }, 2000);
                 }
             } catch (err) {
-                console.log(err);
+                setErrorMsg(err);
             }
         }
     }

@@ -5,19 +5,28 @@ import ResetPasswordImage from "../../../public/images/ResetPassword/reset-passw
 import { AiOutlineClockCircle } from "react-icons/ai";
 import global_functions from '../../../public/global_functions/validations';
 import Axios from 'axios';
+import { useRouter } from 'next/router';
 
 export default function ResetPassword() {
-    const [code, setCode] = useState("");
+    const [realCode, setRealCode] = useState("");
+    const [typedUserCode, setTypedUserCode] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [newConfirmPassword, setNewConfirmPassword] = useState("");
     const [errors, setErrors] = useState({});
     const [isResetingPasswordStatus, setIsResetingPasswordStatus] = useState(false);
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
     const [errMsg, setErrorMsg] = useState("");
+    const router = useRouter();
     useEffect(() => {
         let header = document.querySelector("#__next .page-header"),
             pageContent = document.querySelector(".reset-password .page-content");
         pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
+        let tempResetPasswordData = JSON.parse(localStorage.getItem("mr-fix-temp-reset-password-data"));
+        if (tempResetPasswordData) {
+            setRealCode(tempResetPasswordData.code);
+        } else {
+            router.push("/forget-password");
+        }
     }, []);
     const resetPassword = async (e) => {
         e.preventDefault();
@@ -25,11 +34,15 @@ export default function ResetPassword() {
         let errorsObject = global_functions.inputValuesValidation(
             [
                 {
-                    name: "code",
-                    value: code,
+                    name: "typedUserCode",
+                    value: typedUserCode,
                     rules: {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                        },
+                        isMatch: {
+                            value: realCode,
+                            msg: "عذراً الرمز غير صحيح !!",
                         },
                     },
                 },
@@ -110,10 +123,10 @@ export default function ResetPassword() {
                                 <input
                                     type="text"
                                     placeholder="أدخل الكود"
-                                    className={`form-control p-3 ${errors["code"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setCode(e.target.value.trim())}
+                                    className={`form-control p-3 ${errors["typedUserCode"] ? "border border-danger mb-2" : "mb-4"}`}
+                                    onChange={(e) => setTypedUserCode(e.target.value.trim())}
                                 />
-                                {errors["code"] && <p className='error-msg text-danger'>{errors["code"]}</p>}
+                                {errors["typedUserCode"] && <p className='error-msg text-danger'>{errors["typedUserCode"]}</p>}
                                 <input
                                     type="password"
                                     placeholder="كلمة السر الجديدة"
@@ -124,7 +137,7 @@ export default function ResetPassword() {
                                 <input
                                     type="password"
                                     placeholder="تأكيد السر الجديدة"
-                                    className={`form-control p-3 mb-4 ${errors["newConfirmPassword"] ? "border border-danger" : ""}`}
+                                    className={`form-control p-3 ${errors["newConfirmPassword"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setNewConfirmPassword(e.target.value.trim())}
                                 />
                                 {errors["newConfirmPassword"] && <p className='error-msg text-danger'>{errors["newConfirmPassword"]}</p>}
