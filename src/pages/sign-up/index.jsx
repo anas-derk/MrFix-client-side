@@ -44,18 +44,6 @@ export default function Signup() {
                     },
                 },
                 {
-                    name: "email",
-                    value: email,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isEmail: {
-                            msg: "عذراً ، الإيميل الذي أدخلته غير صالح ، الرجاء إدخال إيميل صالح !!",
-                        },
-                    },
-                },
-                {
                     name: "mobilePhone",
                     value: mobilePhone,
                     rules: {
@@ -142,7 +130,7 @@ export default function Signup() {
             try {
                 let res = await Axios.post(`${process.env.BASE_API_URL}/users/create-new-user`, {
                     firstAndLastName: firstAndLastName.trim(),
-                    email: email.trim(),
+                    email: email ? email.trim() : "",
                     mobilePhone: mobilePhone.trim(),
                     password: password.trim(),
                     gender,
@@ -166,7 +154,7 @@ export default function Signup() {
                     }, 4000);
                 }
             } catch(err) {
-                setErrorMsg(err);
+                console.log(err);
             }
         }
     }
@@ -204,12 +192,11 @@ export default function Signup() {
                                 />
                                 {errors["firstAndLastName"] && <p className='error-msg text-danger'>{errors["firstAndLastName"]}</p>}
                                 <input
-                                    type="text"
+                                    type="email"
                                     placeholder="البريد الالكتروني"
-                                    className={`form-control p-3 ${errors["email"] ? "border border-danger mb-2" : "mb-4"}`}
+                                    className={`form-control p-3 mb-4`}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
-                                {errors["email"] && <p className='error-msg text-danger'>{errors["email"]}</p>}
                                 <input
                                     type="number"
                                     placeholder="رقم الجوال"
