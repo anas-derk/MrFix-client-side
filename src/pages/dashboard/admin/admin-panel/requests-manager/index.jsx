@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Axios from "axios";
 
-const AdminPanel = () => {
+const RequestsManager = () => {
     const router = useRouter();
     useEffect(() => {
         let adminId = localStorage.getItem("mr-fix-admin-id");
@@ -23,21 +23,21 @@ const AdminPanel = () => {
         }
     }, []);
     return (
-        // Start Admin Panel Page
-        <div className="admin-panel">
+        // Start Requests Manager Page
+        <div className="requests-manager">
             <Head>
-                <title>مستر فيكس - لوحة التحكم</title>
+                <title>مستر فيكس - إدارة الطلبات</title>
             </Head>
             {/* Start Content Section */}
             <section className="content d-flex justify-content-center align-items-center flex-column text-center">
-                <h1 className="welcome-msg mb-4">مرحباً بك في لوحة التحكم الخاصة بك في مستر فيكس</h1>
+                <h1 className="welcome-msg mb-4">مرحباً بك في صفحة إدارة الطلبات الخاصة بك في مستر فيكس</h1>
                 <Link className="btn btn-success request-manager-link w-25 mx-auto mb-4" href="/dashboard/admin/admin-panel/requests-manager">إدارة الطلبات</Link>
                 <Link className="btn btn-success manager-link w-25 mx-auto mb-4" href="/dashboard/admin/admin-panel/passwords-reset">إعادة تعيين كلمات السر</Link>
             </section>
             {/* End Content Section */}
         </div>
-        // End Admin Panel Page
+        // End Requests Manager Page
     );
 }
 
-export default AdminPanel;
+export default RequestsManager;

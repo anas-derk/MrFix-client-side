@@ -1,8 +1,4 @@
-.admin-panel {
+.admin-login {
   background-color: var(--main-color-five);
   min-height: 100vh;
-}
-
-.admin-panel .content {
-  min-height: inherit;
 }

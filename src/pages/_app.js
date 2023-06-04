@@ -2,7 +2,6 @@ import Script from "next/script";
 import Head from "next/head";
 import "../Scss/index.css";
 import "../components/Header/index.css";
-import Footer from "@/components/Footer";
 import "../pages/index.css";
 import "../pages/login/index.css";
 import "./sign-up/index.css";
@@ -12,6 +11,10 @@ import "./service-request/index.css";
 import "./forget-password/index.css";
 import "./reset-password/index.css";
 import "./profile/index.css";
+import "./dashboard/admin/login/index.css";
+import "./dashboard/admin/admin-panel/index.css";
+import "./dashboard/admin/admin-panel/requests-manager/index.css";
+import "./dashboard/admin/admin-panel/passwords-reset/index.css";
 
 export default function App({ Component, pageProps }) {
   return (
