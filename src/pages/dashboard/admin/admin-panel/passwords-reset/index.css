@@ -1,8 +1,8 @@
-.admin-panel {
+.passwords-reset {
   background-color: var(--main-color-five);
   min-height: 100vh;
 }
 
-.admin-panel .content {
+.passwords-reset .content {
   min-height: inherit;
 }

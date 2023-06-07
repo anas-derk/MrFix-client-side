@@ -1,11 +1,42 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import Axios from "axios";
 
 const PasswordsReset = () => {
     const router = useRouter();
+    const [mobilePhone, setMobilePhone] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
+    const [waitMsg, setWaitMsg] = useState("");
+    const resetPassword = async (e) => {
+        e.preventDefault();
+        setWaitMsg("الرجاء الانتظار ...");
+        try {
+            let res = await Axios.put(`${process.env.BASE_API_URL}/admin/reset-password/${mobilePhone}`);
+            let result = await res.data;
+            setTimeout(() => {
+                setWaitMsg("");
+                if (result === "عذراً ، الحساب غير موجود") {
+                    console.log(result);
+                    setErrorMsg(result);
+                    setTimeout(() => {
+                        setErrorMsg("");
+                        setMobilePhone("");
+                    }, 1500);
+                } else if (result === "تهانينا ، لقد تمّ إعادة تعيين كلمة السر لتصبح على نفس رقم الموبايل") {
+                    setSuccessMsg(result);
+                    setTimeout(() => {
+                        setSuccessMsg("");
+                        setMobilePhone("");
+                    }, 1500);
+                }
+            }, 1500);
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
     useEffect(() => {
         let adminId = localStorage.getItem("mr-fix-admin-id");
         if (!adminId) {
@@ -31,8 +62,22 @@ const PasswordsReset = () => {
             {/* Start Content Section */}
             <section className="content d-flex justify-content-center align-items-center flex-column text-center">
                 <h1 className="welcome-msg mb-4">مرحباً بك في صفحة إعادة تعيين كلمات السر الخاصة بالمستخدمين في مستر فيكس</h1>
-                <Link className="btn btn-success request-manager-link w-25 mx-auto mb-4" href="/dashboard/admin/admin-panel/requests-manager">إدارة الطلبات</Link>
-                <Link className="btn btn-success manager-link w-25 mx-auto mb-4" href="/dashboard/admin/admin-panel/passwords-reset">إعادة تعيين كلمات السر</Link>
+                <form className="reset-password-form w-50" onSubmit={resetPassword}>
+                    <input
+                        type="number"
+                        minLength={10}
+                        maxLength={10}
+                        placeholder="الرجاء إدخال رقم الموبايل للحساب"
+                        required
+                        className="form-control mb-4 p-3"
+                        onChange={(e) => setMobilePhone(e.target.value.trim())}
+                        value={mobilePhone}
+                    />
+                    {!errorMsg && !successMsg && !waitMsg && <button type="submit" className="btn btn-danger p-3">إعادة تعيين كلمة السر</button>}
+                    {waitMsg && <button type="submit" className="btn btn-warning p-3 d-block w-100 mx-auto" disabled>{ waitMsg }</button>}
+                    {errorMsg && <button type="submit" className="btn btn-danger p-3 d-block w-100 mx-auto" disabled>{ errorMsg }</button>}
+                    {successMsg && <button type="submit" className="btn btn-success p-3 d-block w-100 mx-auto" disabled>{ successMsg }</button>}
+                </form>
             </section>
             {/* End Content Section */}
         </div>

@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   env: {
-    BASE_API_URL: "https://api.mr-fix2023.com",
+    BASE_API_URL: "http://localhost:4000",
   },
   async headers() {
     return [
