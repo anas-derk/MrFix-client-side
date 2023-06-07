@@ -44,6 +44,10 @@ const RequestsManager = ({ result }) => {
                                 <table className="requests-table w-100">
                                     <tbody>
                                         <tr>
+                                            <td className="fw-bold p-3">تاريخ وساعة الطلب</td>
+                                            <td className="p-3">{request.requestPostDate}</td>
+                                        </tr>
+                                        <tr>
                                             <td className="fw-bold p-3">نوع الطلب</td>
                                             <td className="p-3">{request.requestType}</td>
                                         </tr>
@@ -72,7 +76,7 @@ const RequestsManager = ({ result }) => {
                                             <td className="p-3">{request.isAlternativeEnergyExist}</td>
                                         </tr>
                                         <tr>
-                                            <td className="fw-bold">Files</td>
+                                            <td className="fw-bold">الصور</td>
                                             {request.files.length > 0 ? <td>
                                                 {request.files.map((path, index) =>
                                                     <a href={`${process.env.BASE_API_URL}/${path}`} target="_blank" className="d-block btn btn-success mb-3" key={index}>تحميل الصورة {index + 1}</a>
