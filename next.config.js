@@ -7,14 +7,14 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: "//api.mr-fix2023.com/(.*)",
-        // source: "//localhost:4000/(.*)",
+        // source: "//api.mr-fix2023.com/(.*)",
+        source: "//localhost:4000/(.*)",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://mr-fix2023.com",
-            // value: "http://localhost:3000",
+            // value: "https://mr-fix2023.com",
+            value: "http://localhost:3000",
           },
           {
             key: "Access-Control-Allow-Methods",

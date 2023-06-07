@@ -40,6 +40,60 @@
   }
 }
 
+@media (min-width: 323px) and (max-width: 345px) {
+  .home .page-content .introduction .slider .container .slick-slider .slick-dots {
+    bottom: 40px;
+  }
+}
+
+@media (min-width: 346px) and (max-width: 356px) {
+  .home .page-content .introduction .slider .container .slick-slider .slick-dots {
+    bottom: 46px;
+  }
+}
+
+@media (min-width: 357px) and (max-width: 371px) {
+  .home .page-content .introduction .slider .container .slick-slider .slick-dots {
+    bottom: 50px;
+  }
+}
+
+@media (min-width: 372px) and (max-width: 380px) {
+  .home .page-content .introduction .slider .container .slick-slider .slick-dots {
+    bottom: 55px;
+  }
+}
+
+@media (min-width: 428px) and (max-width: 464px) {
+  .home .page-content .introduction .slider .container .slick-slider .slick-dots {
+    bottom: 40px;
+  }
+}
+
+@media (min-width: 465px) and (max-width: 504px) {
+  .home .page-content .introduction .slider .container .slick-slider .slick-dots {
+    bottom: 40px;
+  }
+}
+
+@media (min-width: 505px) and (max-width: 520px) {
+  .home .page-content .introduction .slider .container .slick-slider .slick-dots {
+    bottom: 40px;
+  }
+}
+
+@media (min-width: 545px) and (max-width: 767px) {
+  .home .page-content .introduction .slider .container .slick-slider .slick-dots {
+    bottom: 40px;
+  }
+}
+
+@media (min-width: 560px) and (max-width: 575px) {
+  .home .page-content .introduction .slider .container .slick-slider .slick-dots {
+    bottom: 40px;
+  }
+}
+
 .home .page-content .introduction .slider .container .row {
   direction: rtl;
 }
@@ -55,12 +109,25 @@
 }
 
 .home .page-content .introduction .slider .container .row .image-box {
-  text-align: left;
+  text-align: center;
+}
+
+.home .page-content .introduction .slider .container .row .image-box .home-paragraph {
+  font-size: 28px;
+}
+
+@media (max-width: 400px) {
+  .home .page-content .introduction .slider .container .row .image-box .home-paragraph {
+    margin-bottom: 10px;
+  }
 }
 
 @media (max-width: 767px) {
   .home .page-content .introduction .slider .container .row .image-box {
     text-align: center;
+  }
+  .home .page-content .introduction .slider .container .row .image-box.image-box2 p, .home .page-content .introduction .slider .container .row .image-box.image-box3 p {
+    margin: 0;
   }
 }
 
@@ -83,6 +150,12 @@
 @media (max-width: 767px) {
   .home .page-content .introduction .slider .slider-content-explain p:first-child.exeption-paragraph-3 {
     line-height: 2.4;
+  }
+}
+
+@media (min-width: 521px) and (max-width: 767px) {
+  .home .page-content .introduction .slider .slider-content-explain p.exeption-paragraph {
+    line-height: 2.5 !important;
   }
 }
 
