@@ -1,13 +1,11 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Axios from "axios";
+import Link from "next/link";
 
 const RequestsManager = ({ result }) => {
     const router = useRouter();
-    const [isWaitStatus, setIsWaitStatus] = useState(false);
-    const [requestsData, setRequestsData] = useState([]);
-    const [errorMsg, setErrorMsg] = useState("");
     useEffect(() => {
         let adminId = localStorage.getItem("mr-fix-admin-id");
         if (!adminId) {
@@ -24,6 +22,17 @@ const RequestsManager = ({ result }) => {
                 .catch((err) => console.log(err));
         }
     }, []);
+    const getDateFormated = (requestPostDate) => {
+        let requestPostInDateFormat = new Date(requestPostDate);
+        const year = requestPostInDateFormat.getFullYear();
+        const month = requestPostInDateFormat.getMonth() + 1;
+        const day = requestPostInDateFormat.getDate();
+        const hours = requestPostInDateFormat.getHours();
+        const minutes = requestPostInDateFormat.getMinutes();
+        const seconds = requestPostInDateFormat.getSeconds();
+        requestPostInDateFormat = `التاريخ: (${day}-${month}-${year}) - الوقت: (${hours}:${minutes}:${seconds})`;
+        return requestPostInDateFormat;
+    }
     return (
         // Start Requests Manager Page
         <div className="requests-manager">
@@ -45,7 +54,7 @@ const RequestsManager = ({ result }) => {
                                     <tbody>
                                         <tr>
                                             <td className="fw-bold p-3">تاريخ وساعة الطلب</td>
-                                            <td className="p-3">{request.requestPostDate}</td>
+                                            <td className="p-3">{getDateFormated(request.requestPostDate)}</td>
                                         </tr>
                                         <tr>
                                             <td className="fw-bold p-3">نوع الطلب</td>
@@ -82,6 +91,17 @@ const RequestsManager = ({ result }) => {
                                                     <a href={`${process.env.BASE_API_URL}/${path}`} target="_blank" className="d-block btn btn-success mb-3" key={index}>تحميل الصورة {index + 1}</a>
                                                 )}
                                             </td> : <td>عذراً لا يوجد أي صور</td>}
+                                        </tr>
+                                        <tr>
+                                            <td className="fw-bold p-3" colSpan="2">
+                                                <Link
+                                                    href={`/dashboard/admin/admin-panel/requests-manager/${request._id}/user-info/${request.userId}`}
+                                                    className="btn btn-success p-3"
+                                                    target="_blank"
+                                                >
+                                                    معلومات الشخص الذي أرسل الطلب
+                                                </Link>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
