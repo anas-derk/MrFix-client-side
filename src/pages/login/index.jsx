@@ -29,7 +29,7 @@ export default function Login() {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
                         },
-                        isEmailOrNumber: {
+                        isEmailOrMobilePhone: {
                             msg: "عذراً ، الإيميل أو رقم الهاتف الذي أدخلته غير صالح ، الرجاء إدخال إيميل أو رقم هاتف  !!",
                         },
                     },
@@ -40,6 +40,10 @@ export default function Login() {
                     rules: {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                        },
+                        isValidPassword: {
+                            value: password,
+                            msg: "عذراً ، يجب أن تكون كلمة السر تحتوي على الأقل 8 حروف ، بما في ذلك حرف صغير وحرف كبير.                            ",
                         },
                     },
                 },
