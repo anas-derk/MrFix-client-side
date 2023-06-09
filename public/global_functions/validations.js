@@ -7,7 +7,13 @@ function isImage(file) {
 }
 
 const isValidPassword = (password) => {
-    
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{8,}$/;
+    return passwordRegex.test(password);
+}
+
+const isValidMobilePhone = (mobilePhone) => {
+    const mobilePhoneRegex = /^(093|099|098|094|095|096)\d{7}$/;
+    return mobilePhoneRegex.test(mobilePhone);
 }
 
 const inputValuesValidation = (inputs) => {
@@ -45,6 +51,24 @@ const inputValuesValidation = (inputs) => {
             }
         }
         // التحقق من كون القاعدة داخل كائن القواعد موجودة 
+        if (typeof inputRules.isValidPassword !== "undefined") {
+            // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
+            if (!isValidPassword(input.value)) {
+                errorsObject[input.name] = inputRules.isValidPassword.msg;
+                // في حالة وجود خطأ نقوم بتجاهل كل التعليمات اللاحقة داخل التكرار الحالي للحلقة والانتقال إلى التكرار التالي
+                continue;
+            }
+        }
+        // التحقق من كون القاعدة داخل كائن القواعد موجودة 
+        if (typeof inputRules.isValidMobilePhone !== "undefined") {
+            // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
+            if (!isValidMobilePhone(input.value)) {
+                errorsObject[input.name] = inputRules.isValidMobilePhone.msg;
+                // في حالة وجود خطأ نقوم بتجاهل كل التعليمات اللاحقة داخل التكرار الحالي للحلقة والانتقال إلى التكرار التالي
+                continue;
+            }
+        }
+        // التحقق من كون القاعدة داخل كائن القواعد موجودة 
         if (typeof inputRules.isImage !== "undefined") {
             // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
             if (!isImage(input.value)) {
@@ -71,7 +95,7 @@ const inputValuesValidation = (inputs) => {
         }
         // التحقق من كون القاعدة داخل كائن القواعد موجودة 
         if (typeof inputRules.minLength !== "undefined") {
-           // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
+            // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
             if (input.value.length < inputRules.minLength.value) {
                 errorsObject[input.name] = inputRules.minLength.msg;
                 // في حالة وجود خطأ نقوم بتجاهل كل التعليمات اللاحقة داخل التكرار الحالي للحلقة والانتقال إلى التكرار التالي
@@ -100,4 +124,4 @@ const inputValuesValidation = (inputs) => {
     return errorsObject;
 }
 
-export default { isEmail,  inputValuesValidation };
+export default { isEmail, inputValuesValidation };
