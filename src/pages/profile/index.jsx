@@ -51,7 +51,6 @@ export default function Profile() {
                         setFirstAndLastName(result.firstAndLastName);
                         setEmail(result.email);
                         setMobilePhone(result.mobilePhone);
-                        setPassword(result.password);
                         setGender(result.gender);
                         setBirthday(result.birthday);
                         setCity(result.city);
@@ -93,26 +92,18 @@ export default function Profile() {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
                         },
-                        minLength: {
-                            value: 10,
-                            msg: "عذراً ، يجب أن يكون عدد الأرقام 10",
+                        isValidMobilePhone: {
+                            msg: "عذراً ، يجب يكون رقم الهاتف من 10 أرقام ويجب أن يبدأ بإحدى الأرقام التالية : (093 أو 099 أو 098 أو 094 أو 095 أو 096 )",
                         },
-                        maxLength: {
-                            value: 10,
-                            msg: "عذراً ، يجب أن يكون عدد الأرقام 10",
-                        }
                     },
                 },
                 {
                     name: "password",
                     value: password,
                     rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isPassword: {
+                        isValidPassword: {
                             value: password,
-                            msg: "عذراً ، يجب أن يكون عدد أحرف الكلمة 8 على الأقل ولا تحتوي محارف خاصة ، وتحتوي على أحرف",
+                            msg: "عذراً ، يجب أن تكون كلمة السر تحتوي على الأقل 8 حروف ، بما في ذلك حرف صغير وحرف كبير.                            ",
                         },
                     },
                 },
@@ -224,7 +215,7 @@ export default function Profile() {
                                     placeholder='الاسم والكنية الجديد'
                                     className={`form-control p-3 ${errors["firstAndLastName"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setFirstAndLastName(e.target.value.trim())}
-                                    value={firstAndLastName}
+                                    defaultValue={firstAndLastName}
                                 />
                                 {errors["firstAndLastName"] && <p className='error-msg text-danger'>{errors["firstAndLastName"]}</p>}
                                 <input
@@ -232,14 +223,14 @@ export default function Profile() {
                                     placeholder="البريد الالكتروني"
                                     className={`form-control p-3 mb-4`}
                                     onChange={(e) => setEmail(e.target.value.trim().toLowerCase())}
-                                    value={email}
+                                    defaultValue={email}
                                 />
                                 <input
                                     type="number"
                                     placeholder="رقم الجوال الجديد"
                                     className={`form-control p-3 ${errors["mobilePhone"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setMobilePhone(e.target.value.trim())}
-                                    value={mobilePhone}
+                                    defaultValue={mobilePhone}
                                 />
                                 {errors["mobilePhone"] && <p className='error-msg text-danger'>{errors["mobilePhone"]}</p>}
                                 <input
@@ -247,7 +238,6 @@ export default function Profile() {
                                     placeholder="كلمة السر الجديدة"
                                     className={`form-control p-3 ${errors["password"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setPassword(e.target.value.trim())}
-                                    value={password}
                                 />
                                 {errors["password"] && <p className='error-msg text-danger'>{errors["password"]}</p>}
                             </div>
@@ -271,7 +261,7 @@ export default function Profile() {
                                     onFocus={() => setInputType("date")}
                                     onBlur={() => setInputType("text")}
                                     onChange={(e) => setBirthday(e.target.value)}
-                                    value={birthday}
+                                    defaultValue={birthday}
                                 />
                                 {errors["birthday"] && <p className='error-msg text-danger'>{errors["birthday"]}</p>}
                                 <select
@@ -299,7 +289,7 @@ export default function Profile() {
                                     placeholder="العنوان الجديد بالتفصيل - مثال: شارع ميسلون, في البناء مقابل محل انكو, في الطابق الرابع"
                                     className={`form-control p-3 address ${errors["address"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setAddress(e.target.value.trim())}
-                                    value={address}
+                                    defaultValue={address}
                                 />
                                 {errors["address"] && <p className='error-msg text-danger'>{errors["address"]}</p>}
                             </div>

@@ -53,7 +53,7 @@ const inputValuesValidation = (inputs) => {
         // التحقق من كون القاعدة داخل كائن القواعد موجودة 
         if (typeof inputRules.isValidPassword !== "undefined") {
             // التحقق من أنّ القاعدة محققة ، وفي حالة لم تكن محققة فإننا نضيف الخطأ إلى مصفوفة الأخطاء
-            if (!isValidPassword(input.value)) {
+            if (!isValidPassword(input.value) && input.value !== "") {
                 errorsObject[input.name] = inputRules.isValidPassword.msg;
                 // في حالة وجود خطأ نقوم بتجاهل كل التعليمات اللاحقة داخل التكرار الحالي للحلقة والانتقال إلى التكرار التالي
                 continue;
