@@ -1,7 +1,26 @@
-.contact-us .how-to-contact-us-explain .email-link {
+.contact-us .contact-us-content-box {
+  height: 400px;
+  overflow-y: auto;
+}
+
+.contact-us .contact-us-content-box .how-to-contact-us-explain {
+  line-height: 2;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .contact-us .contact-us-content-box .how-to-contact-us-explain {
+    text-align: center;
+    font-size: 18px;
+    padding: 0 2rem !important;
+  }
+}
+
+.contact-us .contact-us-content-box .how-to-contact-us-explain .email-link {
   color: #000;
 }
 
-.contact-us .how-to-contact-us-explain .email-link:hover {
+.contact-us .contact-us-content-box .how-to-contact-us-explain .email-link:hover {
   font-weight: bold;
 }

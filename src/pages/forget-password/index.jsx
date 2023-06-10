@@ -97,6 +97,9 @@ export default function ForgetPassword() {
                                 />
                                 {errors["email"] && <p className='error-msg text-danger'>{errors["email"]}</p>}
                                 {!isWaitCheckStatus && !errMsg && <button type='submit' className='btn forget-password-btn w-100 p-3'>إرسال</button>}
+                                <p className='text-danger mt-4 mb-0 note'>تنويه: في حال لم يكن لديك إيميل يرجى التواصل على رقم الواتس
+                                    09444444444444444444
+                                </p>
                                 {isWaitCheckStatus && <button className='btn wait-check-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
                                     <span className='ms-2'>جاري التحقق ...</span>
                                     <AiOutlineClockCircle />

@@ -38,4 +38,9 @@
   .page-header .navbar .navbar-nav .nav-item .nav-link {
     text-align: center;
   }
+  .page-header .navbar .navbar-nav .nav-item .nav-link.logout-btn {
+    margin: 10px auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }

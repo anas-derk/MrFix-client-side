@@ -1,9 +1,22 @@
 .contact-us{
-    .how-to-contact-us-explain{
-        .email-link{
-            color: #000;
-            &:hover{
-                font-weight: bold;
+    .contact-us-content-box{
+        height: 400px;
+        overflow-y: auto;
+        .how-to-contact-us-explain{
+            // text-align: justify;
+            line-height: 2;
+            font-size: 20px;
+            margin-bottom: 0;
+            @media (max-width: 767px) {
+                text-align: center;
+                font-size: 18px;
+                padding: 0 2rem !important;
+            }
+            .email-link{
+                color: #000;
+                &:hover{
+                    font-weight: bold;
+                }
             }
         }
     }

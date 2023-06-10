@@ -180,7 +180,7 @@
   height: 100%;
 }
 
-.home .page-content .start-with-us-btn {
+.home .page-content .start-with-us-btn, .home .page-content .service-request-btn {
   width: fit-content;
   background-color: var(--main-color-one);
   color: #FFF;

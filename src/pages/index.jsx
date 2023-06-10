@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
 export default function Home() {
+  const [userId, setUserId] = useState("");
   const settings = {
     dots: true,
     infinite: true,
@@ -18,18 +19,17 @@ export default function Home() {
     slidesToScroll: 1,
     rtl: true,
     initialSlide: 2,
-    // autoplay: true,
+    autoplay: true,
   };
   useEffect(() => {
-
     let header = document.querySelector("#__next .page-header"),
       pageContent = document.querySelector(".home .page-content"),
       ads = document.querySelector(".home .ads"),
       introduction = document.querySelector(".home .introduction");
-
     pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
     introduction.style.minHeight = `calc(100vh - (${header.clientHeight}px + ${ads.clientHeight}px))`;
-
+    let userId = localStorage.getItem("mr-fix-user-id");
+    setUserId(userId);
   }, []);
 
   return (
@@ -113,11 +113,15 @@ export default function Home() {
             </div>
           </div>
           {/* End Slider */}
-          {/* Start Start With Us Box */}
-          <div className="start-with-us-box">
-            <Link href="/sign-up" className='d-block mt-3 btn mx-auto start-with-us-btn pt-2 pe-5 ps-5'>إبدأ معنا</Link>
-          </div>
-          {/* End Start With Us Box */}
+          {/* Start Start With Us Button */}
+          {!userId && <Link href="/sign-up" className='d-block btn start-with-us-btn mt-3 mx-auto pt-2 pe-5 ps-5'>
+            <span>إبدأ معنا</span>
+          </Link>}
+          {/* End Start With Us Button */}
+          {/* Start Start With Us Button */}
+          {userId && <Link className='d-block btn service-request-btn mt-3 mx-auto pt-2 pe-5 ps-5' href="/service-request">
+            <span className='ms-2'>طلب خدمة</span>
+          </Link>}
         </section>
         {/* End Introduction Section */}
       </div>

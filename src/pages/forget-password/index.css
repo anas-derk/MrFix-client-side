@@ -32,6 +32,12 @@
   color: #FFF;
 }
 
+.forget-password .page-content .container .row .forget-password-form .note {
+  text-align: justify;
+  line-height: 2.2;
+  font-size: 18px;
+}
+
 .forget-password .page-content .container .row .forget-password-img {
   max-width: 100%;
   height: 100%;

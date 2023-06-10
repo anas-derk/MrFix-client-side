@@ -30,6 +30,13 @@
                     }
                     @media (max-width: 991px) {
                         text-align: center;
+                        &.logout-btn{
+                            margin: 10px auto;
+                            padding: {
+                                left: 10px;
+                                right: 10px;
+                            };
+                        }
                     }
                 }
             }

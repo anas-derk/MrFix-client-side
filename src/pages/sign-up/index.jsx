@@ -256,7 +256,7 @@ export default function Signup() {
                                 </select>
                                 {errors["city"] && <p className='error-msg text-danger'>{errors["city"]}</p>}
                                 <textarea
-                                    placeholder="العنوان بالتفصيل - مثال: شارع ميسلون, في البناء مقابل محل انكو, في الطابق الرابع"
+                                    placeholder="محافظة دمشق، الميدان، امتداد شارع المول, بناء الغاردينيا، مقابل/ قرب محل الملكي، الطابق الرابع"
                                     className={`form-control p-3 address ${errors["address"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setAddress(e.target.value)}
                                 />

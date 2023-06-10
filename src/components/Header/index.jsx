@@ -83,7 +83,7 @@ export default function Header() {
                                 </li>
                                 <li className="nav-item">
                                     <button
-                                        className="nav-link btn btn-danger"
+                                        className="nav-link btn btn-danger logout-btn"
                                         onClick={logout}
                                     >
                                         <TbLogout />

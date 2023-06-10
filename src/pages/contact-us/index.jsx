@@ -29,20 +29,35 @@ export default function ContactUs() {
                     <div className="row align-items-center">
                         {/* Start Column */}
                         <div className="col-md-6">
-                            <p className='how-to-contact-us-explain page-content-explain pe-4 ps-4'>
-                                نهتم بشكل كبير في النمو والتطور والريادة ولنكون الأفضل دائماً نحن بحاجة أن نتعلم منك ما هي الآراء والأفكار أو المفاهيم التي قد تجعلك في راحة أكثر لذا أخبرنا كيف من خلال التواصل معنا.
-                                <br />
-                                <br />
-                                و كذلك التعليقات والشكاوي ستظل دائمًا مرحبا   بها في مستر فيكس
-                                <br />
-                                <br />
-                                كلنا آذان صاغية على :
-                                <br />
-                                <span>الإيميل : </span>
-                                <a href="mailto:mr.fix.support@gmail.com" className='email-link'>mr.fix.support@gmail.com .</a>
-                                <br />
-                                <span>رقم الجوال: 09444444444444</span>
-                            </p>
+                            <div className="contact-us-content-box">
+                                <p className='how-to-contact-us-explain pe-4 ps-4 mb-5'>
+                                    نهتم بشكل كبير في النمو والتطور والريادة ولنكون الأفضل دائماً نحن بحاجة أن نتعلم منك ما هي الآراء والأفكار أو المفاهيم التي قد تجعلك في راحة أكثر لذا أخبرنا كيف من خلال التواصل معنا.
+                                </p>
+                                <p className='how-to-contact-us-explain pe-4 ps-4 mb-5'>
+                                    و كذلك التعليقات والشكاوي ستظل دائمًا مرحبا   بها في مستر فيكس
+                                </p>
+                                <p className='how-to-contact-us-explain pe-4 ps-4'>
+                                    كلنا آذان صاغية على :
+                                </p>
+                                <p className='how-to-contact-us-explain pe-4 ps-4 mb-4'>
+                                    E-mail:
+                                    <a href="mailto:mrfix.help@gmail.com" className='email-link'> mrfix.help@gmail.com</a>
+                                </p>
+                                <p className='how-to-contact-us-explain pe-4 ps-4'>
+                                    كافة ما يتعلق بالموقع ومشاكل التسجيل والإشتراك والطلبات عبر الموقع  والاستفسارات حول الاشتراك وكذلك الشكاوي
+                                </p>
+                                <p className='how-to-contact-us-explain pe-4 ps-4 mb-4'>
+                                    Mobile/whatsapp: 09444444444444
+                                    Mobile/whatsapp: 09444444444444
+                                </p>
+                                <p className='how-to-contact-us-explain pe-4 ps-4'>
+                                    كافة ما يتعلق بالمهام المتفق عليها بعد طلب الخدمة وتعديلها أو إلغائها أو تعديل الوقت أو الاستفسار بتفاصيل تخص إنجاز الخدمة
+                                </p>
+                                <p className='how-to-contact-us-explain pe-4 ps-4 mb-5'>
+                                    Mobile/whatsapp: 09444444444444
+                                    Mobile/whatsapp: 09444444444444
+                                </p>
+                            </div>
                         </div>
                         {/* End Column */}
                         {/* Start Column */}
