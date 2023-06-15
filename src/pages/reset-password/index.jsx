@@ -77,9 +77,8 @@ export default function ResetPassword() {
         setErrors(errorsObject);
         if (Object.keys(errorsObject).length == 0) {
             setIsResetingPasswordStatus(true);
-            console.log(errorsObject);
             try {
-                let res = await Axios.put(`${process.env.BASE_API_URL}/users/reset-password/${tempResetPasswordData.userId}?newPassword=${newPassword}`);
+                let res = await Axios.put(`${process.env.BASE_API_URL}/users/reset-password/${tempResetPasswordData.userIdAndType.userId}?userType=${tempResetPasswordData.userIdAndType.userType}&newPassword=${newPassword}`);
                 let result = await res.data;
                 if (result === "لقد تمّت عملية إعادة تعيين كلمة المرور الخاصة بك بنجاح !!") {
                     let resetPasswordStatusTimeout = setTimeout(() => {

@@ -1,5 +1,6 @@
 import Axios from "axios";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -52,7 +53,8 @@ const AdminLogin = () => {
                         required
                         onChange={(e) => setPassword(e.target.value.trim())}
                     />
-                    <button type="submit" className="btn btn-success">تسجيل الدخول</button>
+                    <button type="submit" className="btn btn-success ms-4">تسجيل الدخول</button>
+                    <Link href="/forget-password" className="btn btn-danger">نسيت كلمة المرور</Link>
                 </form>
                 {errMsg && <p className="alert alert-danger">{errMsg}</p>}
             </div>
