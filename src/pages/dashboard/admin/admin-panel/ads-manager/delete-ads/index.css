@@ -1,0 +1,18 @@
+.delete-and-edit-ads {
+  background-color: var(--main-color-five);
+  min-height: 100vh;
+}
+
+.delete-and-edit-ads .content {
+  min-height: inherit;
+}
+
+.delete-and-edit-ads .content .ads-list-table {
+  width: 100%;
+  background-color: #FFF;
+}
+
+.delete-and-edit-ads .content .ads-list-table td, .delete-and-edit-ads .content .ads-list-table th {
+  border: 3px solid #000;
+  padding: 15px;
+}

@@ -32,7 +32,7 @@ export default function AdsManager() {
             <section className="content d-flex justify-content-center align-items-center flex-column text-center">
                 <h1 className="welcome-msg mb-4">مرحباً بك في صفحة إدارة الإعلانات الخاصة بك في مستر فيكس</h1>
                 <Link className="btn btn-success request-manager-link w-25 mx-auto mb-4" href="/dashboard/admin/admin-panel/ads-manager/add-ads">إضافة إعلان</Link>
-                <Link className="btn btn-danger manager-link w-25 mx-auto mb-4" href="/dashboard/admin/admin-panel/ads-manager/delete-and-edit-ads">حذف / تعديل إعلان</Link>
+                <Link className="btn btn-danger manager-link w-25 mx-auto mb-4" href="/dashboard/admin/admin-panel/ads-manager/delete-ads">حذف إعلان</Link>
             </section>
             {/* End Content Section */}
         </div>
