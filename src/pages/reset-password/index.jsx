@@ -53,9 +53,9 @@ export default function ResetPassword() {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
                         },
-                        isPassword: {
+                        isValidPassword: {
                             value: newPassword,
-                            msg: "عذراً ، يجب أن يكون عدد أحرف الكلمة 8 على الأقل ولا تحتوي محارف خاصة ، وتحتوي على أحرف",
+                            msg: "عذراً ، يجب أن تكون كلمة السر تحتوي على الأقل 8 حروف أو أرقام أو كلاهما.",
                         },
                     },
                 },

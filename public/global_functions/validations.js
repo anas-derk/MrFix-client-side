@@ -7,8 +7,7 @@ function isImage(file) {
 }
 
 const isValidPassword = (password) => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{8,}$/;
-    return passwordRegex.test(password);
+    return password.length >= 8;
 }
 
 const isValidMobilePhone = (mobilePhone) => {
