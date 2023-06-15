@@ -1,0 +1,8 @@
+.ads-manager {
+  background-color: var(--main-color-five);
+  min-height: 100vh;
+}
+
+.ads-manager .content {
+  min-height: inherit;
+}

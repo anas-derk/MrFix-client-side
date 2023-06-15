@@ -65,8 +65,8 @@ const RequestsManager = ({ result }) => {
                                             <td className="p-3">{request.serviceType}</td>
                                         </tr>
                                         <tr>
-                                            <td className="fw-bold p-3">العنوان الجديد</td>
-                                            <td className="p-3">{request.newAddress}</td>
+                                            <td className="fw-bold p-3">شرح الطلب  / العنوان الجديد</td>
+                                            <td className="p-3">{request.explainAndNewAddress}</td>
                                         </tr>
                                         <tr>
                                             <td className="fw-bold p-3">تواريخ الأيام المفضلة</td>

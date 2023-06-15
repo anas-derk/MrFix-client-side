@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { FiUserPlus } from "react-icons/fi";
 import { RiFileUploadLine } from "react-icons/ri";
 import ourServicesData from "../../../public/data/index";
@@ -12,9 +12,9 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 export default function ServiceRequest() {
     const [requestType, setRequestType] = useState("");
     const [serviceType, setServiceType] = useState("");
-    const [newAddress, setNewAddress] = useState("");
-    const [imageOfTheBrokenTool, setImageOfTheBrokenTool] = useState("");
-    const [pictureOfTheVacationSpot, setPictureOfTheVacationSpot] = useState("");
+    const [explainAndNewAddress, setExplainAndNewAddress] = useState("");
+    const [fileList1, setFileList1] = useState("");
+    const [fileList2, setFileList2] = useState("");
     const [preferredDateOfVisit, setPreferredDateOfVisit] = useState("");
     const [preferredTimeOfVisit, setPreferredTimeOfVisit] = useState("");
     const [electricityTimes, setElectricityTimes] = useState("");
@@ -26,9 +26,20 @@ export default function ServiceRequest() {
     const [isRequestingStatus, setIsRequestingStatus] = useState(false);
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
     const [errMsg, setErrorMsg] = useState("");
-
+    const filesCaption = {
+        "الكهربائيات والالكترونيات": ["صور عن الأداة المعطلة", "صور عن مكان العطل"],
+        "الصحية ( السباكة )": ["صور عن الأداة المعطلة", "صور عن مكان العطل"],
+        "الطاقة البديلة": ["صور عن الأداة المعطلة", "صور عن مكان العطل"],
+        "الخشبيات والمفروشات": ["صور عن الأداة المعطلة", "صور عن مكان العطل"],
+        "الألمنيوم": ["صور عن الأداة المعطلة", "صور عن مكان العطل"],
+        "دهان وعزل": ["صور عن المكان المُراد دهانه أو عزله"],
+        "نقل الأثاث": ["صور الأثاث المطلوب نقله"],
+        "التنظيف": ["صور عن المكان المراد تنظيفه"],
+        "صيانة المنازل المؤجرة قبل الانتقال إليها": ["صور عن المنزل المُراد استئجاره", "صور عن مكان الأعطال الظاهرة"],
+        "اقتراحات تغيير ديكور واستغلال المساحات": ["صور عن المكان المُراد تغيير ديكوره"],
+        "استفسار عن تكلفة الإصلاح": ["صور عن الأداة المعطلة", "صور عن مكان العطل"],
+    }
     const router = useRouter();
-
     useEffect(() => {
         let header = document.querySelector("#__next .page-header"),
             pageContent = document.querySelector(".service-request .page-content");
@@ -81,8 +92,17 @@ export default function ServiceRequest() {
                     },
                 },
                 {
-                    name: "imageOfTheBrokenTool",
-                    value: imageOfTheBrokenTool,
+                    name: "explainAndNewAddress",
+                    value: explainAndNewAddress,
+                    rules: {
+                        isRequired: {
+                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                        },
+                    },
+                },
+                {
+                    name: "fileList1",
+                    value: fileList1,
                     rules: {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
@@ -92,9 +112,14 @@ export default function ServiceRequest() {
                         },
                     },
                 },
-                {
-                    name: "pictureOfTheVacationSpot",
-                    value: pictureOfTheVacationSpot,
+                serviceType !== "دهان وعزل"
+                && serviceType !== "نقل الأثاث"
+                && serviceType !== "التنظيف"
+                && serviceType !== "صيانة المنازل المؤجرة قبل الانتقال إليها"
+                && serviceType !== "اقتراحات تغيير ديكور واستغلال المساحات"  
+                ? {
+                    name: "fileList2",
+                    value: fileList2,
                     rules: {
                         isRequired: {
                             msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
@@ -102,6 +127,12 @@ export default function ServiceRequest() {
                         isImages: {
                             msg: "عذراً ، يجب أن يكون الملف أو الملفات صور من امتداد png أو jpg !!"
                         },
+                    },
+                }: {
+                    name: "fileList2",
+                    value: fileList2,
+                    rules: {
+                        isRequired: undefined,
                     },
                 },
                 {
@@ -151,6 +182,7 @@ export default function ServiceRequest() {
                 },
             ]
         );
+        console.log(errorsObject)
         setErrors(errorsObject);
         if (Object.keys(errorsObject).length == 0 ||
             (requestType === "طلب إسعافي"
@@ -163,12 +195,12 @@ export default function ServiceRequest() {
             let formData = new FormData();
             formData.append("requestType", requestType);
             formData.append("serviceType", serviceType);
-            formData.append("newAddress", newAddress);
-            for(let i = 0; i < imageOfTheBrokenTool.length; i++) {
-                formData.append(`imageOfTheBrokenTool${i}`, imageOfTheBrokenTool[i]);
+            formData.append("explainAndNewAddress", explainAndNewAddress);
+            for (let i = 0; i < fileList1.length; i++) {
+                formData.append(`file${i}`, fileList1[i]);
             }
-            for(let i = 0; i < pictureOfTheVacationSpot.length; i++) {
-                formData.append(`pictureOfTheVacationSpot${i}`, pictureOfTheVacationSpot[i]);
+            for (let i = 0; i < fileList2.length; i++) {
+                formData.append(`file${i}`, fileList2[i]);
             }
             if (requestType === "طلب عادي") {
                 formData.append("preferredDateOfVisit", preferredDateOfVisit);
@@ -246,38 +278,28 @@ export default function ServiceRequest() {
                                 {/* Start Column */}
                                 <div className="col-md-6">
                                     <textarea
-                                        placeholder="العنوان بالتفصيل في حالة إختلافه عن العنوان المسجل"
-                                        className='form-control p-3 mb-4'
-                                        onChange={(e) => setNewAddress(e.target.value)}
+                                        placeholder="شرح مبسط عن المشكلة التي تواجهها أو شرح مبسط عن الطلب المرغوب بالتحديد، وكذلك يمكن إضافة العنوان بالتفصيل في حالة إختلافه عن العنوان المسجل"
+                                        className={`form-control p-3 explain-and-new-address ${errors["explainAndNewAddress"] ? "border border-danger mb-2" : "mb-4"}`}
+                                        onChange={(e) => setExplainAndNewAddress(e.target.value)}
                                     ></textarea>
-                                    <div className={`file-box form-control p-3 ${errors["imageOfTheBrokenTool"] ? "border border-danger mb-2" : "mb-4"}`}>
-                                        <label htmlFor="file1" className='file-label d-flex justify-content-between'>
-                                            <p className='caption'>صور عن الأداة المعطلة</p>
-                                            <RiFileUploadLine className="upload-file-icon" />
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id='file1'
-                                            placeholder="صورة عن الأداة المعطلة"
-                                            onChange={(e) => setImageOfTheBrokenTool(e.target.files)}
-                                            multiple
-                                        />
-                                    </div>
-                                    {errors["imageOfTheBrokenTool"] && <p className='error-msg text-danger'>{errors["imageOfTheBrokenTool"]}</p>}
-                                    <div className={`file-box form-control p-3 ${errors["pictureOfTheVacationSpot"] ? "border border-danger mb-2" : "mb-4"}`}>
-                                        <label htmlFor="file2" className='file-label d-flex justify-content-between'>
-                                            <p className='caption'>صور عن مكان العطل</p>
-                                            <RiFileUploadLine className="upload-file-icon" />
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id='file2'
-                                            placeholder="صورة عن مكان العطل"
-                                            onChange={(e) => setPictureOfTheVacationSpot(e.target.files)}
-                                            multiple
-                                        />
-                                    </div>
-                                    {errors["pictureOfTheVacationSpot"] && <p className='error-msg text-danger'>{errors["pictureOfTheVacationSpot"]}</p>}
+                                    {errors["explainAndNewAddress"] && <p className='error-msg text-danger'>{errors["explainAndNewAddress"]}</p>}
+                                    {serviceType !== "" && filesCaption[serviceType].map((el, index) => (
+                                        <Fragment key={index}>
+                                            <div className={`file-box form-control p-3 ${errors[`fileList${index + 1}`] ? "border border-danger mb-2" : "mb-4"}`}>
+                                                <label htmlFor={`file${index + 1}`} className='file-label d-flex justify-content-between'>
+                                                    <p className='caption'>{el}</p>
+                                                    <RiFileUploadLine className="upload-file-icon" />
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    id={`file${index + 1}`}
+                                                    onChange={(e) => index == 0 ? setFileList1(e.target.files) : setFileList2(e.target.files)}
+                                                    multiple
+                                                />
+                                            </div>
+                                            {errors[`fileList${index + 1}`] && <p className='error-msg text-danger'>{errors[`fileList${index + 1}`]}</p>}
+                                        </Fragment>
+                                    ))}
                                 </div>
                                 {/* End Column */}
                                 {/* Start Column */}

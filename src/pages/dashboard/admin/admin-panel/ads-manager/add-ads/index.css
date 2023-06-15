@@ -1,0 +1,8 @@
+.add-ads {
+  background-color: var(--main-color-five);
+  min-height: 100vh;
+}
+
+.add-ads .content {
+  min-height: inherit;
+}

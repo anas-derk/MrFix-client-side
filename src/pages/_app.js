@@ -16,6 +16,8 @@ import "./dashboard/admin/admin-panel/index.css";
 import "./dashboard/admin/admin-panel/requests-manager/index.css";
 import "./dashboard/admin/admin-panel/passwords-reset/index.css";
 import "./dashboard/admin/admin-panel/requests-manager/[request_Id]/user-info/index.css";
+import "./dashboard/admin/admin-panel/ads-manager/index.css";
+import "./dashboard/admin/admin-panel/ads-manager/add-ads/index.css";
 
 export default function App({ Component, pageProps }) {
   return (

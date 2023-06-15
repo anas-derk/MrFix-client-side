@@ -8,7 +8,7 @@ const servicesData = [
     {
         name: "الصحية ( السباكة )",
         detailsInfoLink: "/our-services/plumbing",
-        optionValue: "الصحية",
+        optionValue: "الصحية ( السباكة )",
         explain: "صيانة شبكات التغذية، الأدوات الصحية، الصرف الصحي، الفلاترو جميع الأعطال بأقل الأضرار و التكاليف الممكنة، مع إمكانية تأمين شراء أدوات صحية و فلاتر بأسعار منافسة في حال الطلب حسب الإمكانية .",
     },
     {
@@ -50,13 +50,13 @@ const servicesData = [
     {
         name: "صيانة المنازل المؤجرة قبل الانتقال إليها",
         detailsInfoLink: "/our-services/rental-home-maintenance",
-        optionValue: "صيانة المنازل المؤجرة",
+        optionValue: "صيانة المنازل المؤجرة قبل الانتقال إليها",
         explain: "تأمين ورش متكاملة من جميع ما يحتاجه المنزل قبل الانتقال إليه",
     },
     {
         name: "اقتراحات تغيير ديكور واستغلال المساحات",
         detailsInfoLink: "/our-services/suggestions-for-changing-the-decor",
-        optionValue: "اقتراحات تغيير ديكور",
+        optionValue: "اقتراحات تغيير ديكور واستغلال المساحات",
         explain: "استشارات و نصائح مجانية لتغيرات في المنزل نفسه و استغلال المساحات، تنفيذ المقتراحات حسب الإتفاق",
     },
     {
