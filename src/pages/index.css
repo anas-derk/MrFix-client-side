@@ -3,6 +3,20 @@
   cursor: pointer;
 }
 
+.home .page-content .ads .carousel {
+  position: static;
+}
+
+.home .page-content .ads .carousel .carousel-caption {
+  position: static;
+  padding: 0;
+}
+
+.home .page-content .ads .carousel .carousel-caption .ads-content {
+  margin: 0;
+  font-size: 20px;
+}
+
 .home .page-content .introduction .slider {
   background-color: var(--main-color-five);
   min-height: inherit;

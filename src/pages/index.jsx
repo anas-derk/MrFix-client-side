@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Axios from "axios";
+import Carousel from 'react-bootstrap/Carousel';
 
 export default function Home({ result }) {
   const [userId, setUserId] = useState("");
@@ -45,11 +46,16 @@ export default function Home({ result }) {
         {/* Start Ads Section */}
         <section className="ads text-center p-3">
           {result.length === 0 && <p className='m-0'>شريط الإعلانات</p>}
-          {result.length > 0 && <ul>
+          {result.length > 0 && <Carousel indicators={false} controls={false}>
             {result.map((ads, index) => (
-              <li className='ads-content' key={index}>{ ads.content }</li>
+              <Carousel.Item key={index}>
+                <Carousel.Caption>
+                  <p className='ads-content'>{ ads.content }</p>
+                </Carousel.Caption>
+              </Carousel.Item>
             ))}
-          </ul>}
+          </Carousel>
+          }
         </section>
         {/* End Ads Section */}
         {/* Start Introduction Section */}
@@ -132,7 +138,7 @@ export default function Home({ result }) {
         {/* End Introduction Section */}
       </div>
       {/* End Page Content Section */}
-    </div>
+    </div >
     // End Home Page
   );
 }
@@ -141,6 +147,6 @@ export async function getServerSideProps() {
   let res = await Axios.get(`${process.env.BASE_API_URL}/admin/ads/all-ads`);
   let result = await res.data;
   return {
-      props: { result },
+    props: { result },
   };
 }
