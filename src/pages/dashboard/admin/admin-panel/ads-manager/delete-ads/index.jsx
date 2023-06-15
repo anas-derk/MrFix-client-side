@@ -21,6 +21,14 @@ export default function DeleteAds({ result }) {
                 .catch((err) => console.log(err));
         }
     }, []);
+    const deleteAds = (e, adsId) => {
+        e.preventDefault();
+        Axios.delete(`${process.env.BASE_API_URL}/admin/ads/delete-ads/${adsId}`)
+            .then((res) => {
+                router.reload();
+            })
+            .catch((err) => console.log(err));
+    };
     return (
         // Start Delete And Edit Ads Page
         <div className="delete-and-edit-ads">
