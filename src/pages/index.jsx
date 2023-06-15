@@ -8,8 +8,9 @@ import Link from 'next/link';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import Axios from "axios";
 
-export default function Home() {
+export default function Home({ result }) {
   const [userId, setUserId] = useState("");
   const settings = {
     dots: true,
@@ -43,7 +44,12 @@ export default function Home() {
       <div className="page-content pb-3">
         {/* Start Ads Section */}
         <section className="ads text-center p-3">
-          <p className='m-0'>شريط الإعلانات</p>
+          {result.length === 0 && <p className='m-0'>شريط الإعلانات</p>}
+          {result.length > 0 && <ul>
+            {result.map((ads, index) => (
+              <li className='ads-content' key={index}>{ ads.content }</li>
+            ))}
+          </ul>}
         </section>
         {/* End Ads Section */}
         {/* Start Introduction Section */}
@@ -129,4 +135,12 @@ export default function Home() {
     </div>
     // End Home Page
   );
+}
+
+export async function getServerSideProps() {
+  let res = await Axios.get(`${process.env.BASE_API_URL}/admin/ads/all-ads`);
+  let result = await res.data;
+  return {
+      props: { result },
+  };
 }
