@@ -150,7 +150,7 @@ export default function ResetPassword() {
                                     <span className='ms-2'>جاري إعادة التعيين ...</span>
                                     <AiOutlineClockCircle />
                                 </button>}
-                                {isSuccessfulyStatus && <button className='btn wait-reset-password-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
+                                {isSuccessfulyStatus && <button className='btn btn-success success-reset-password-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
                                     <span className='ms-2'>تمت عملية إعادة تعيين كلمة السر بنجاح ...</span>
                                 </button>}
                                 {errMsg && <button className='btn btn-danger error-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
