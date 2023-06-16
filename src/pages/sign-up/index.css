@@ -10,6 +10,10 @@
   resize: none;
 }
 
+.sign-up .page-content .container .sign-up-form .address {
+  height: calc(116px + 1.5rem);
+}
+
 .sign-up .page-content .container .sign-up-form .sign-up-btn, .sign-up .page-content .container .sign-up-form .wait-sign-up-btn {
   background-color: var(--main-color-one);
   color: #FFF;

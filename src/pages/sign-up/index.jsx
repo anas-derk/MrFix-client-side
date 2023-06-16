@@ -1,3 +1,4 @@
+// استيراد المكتبات المطلوبة + صورة صفحة إنشاء الحساب
 import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
@@ -8,8 +9,9 @@ import global_functions from '../../../public/global_functions/validations';
 import Link from 'next/link';
 import Axios from 'axios';
 
+// تعريف دالة صفحة إنشاء الحساب 
 export default function Signup() {
-    
+    // تعريف المتغيرات المطلوب كــ state
     const [firstAndLastName, setFirstAndLastName] = useState("");
     const [email, setEmail] = useState("");
     const [mobilePhone, setMobilePhone] = useState("");
@@ -24,10 +26,20 @@ export default function Signup() {
     const [isSignupStatus, setIsSignupStatus] = useState(false);
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
     const [errMsg, setErrorMsg] = useState("");
-
+    // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
+    useEffect(() => {
+        // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
+        const header = document.querySelector("#__next .page-header"),
+            pageContent = document.querySelector(".sign-up .page-content");
+        // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
+        pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
+    }, []);
     const createAccount = async (e) => {
+        // منع إرسال المعلومات لنفس الصفحة
         e.preventDefault();
+        // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
         setErrors({});
+        // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
         let errorsObject = global_functions.inputValuesValidation(
             [
                 {
@@ -119,105 +131,130 @@ export default function Signup() {
                 },
             ]
         );
+        // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
         setErrors(errorsObject);
+        // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
         if (Object.keys(errorsObject).length == 0) {
+            // تعديل قيمة ال state المسماة isSignupStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
             setIsSignupStatus(true);
+            // بداية محاولة إرسال الطلب
             try {
-                let res = await Axios.post(`${process.env.BASE_API_URL}/users/create-new-user`, {
-                    firstAndLastName: firstAndLastName.trim(),
-                    email: email ? email.trim() : "",
-                    mobilePhone: mobilePhone.trim(),
-                    password: password.trim(),
+                // إرسال الطلب وتخزين الاستجابة في متغير
+                const res = await Axios.post(`${process.env.BASE_API_URL}/users/create-new-user`, {
+                    firstAndLastName,
+                    email: email ? email : "",
+                    mobilePhone,
+                    password,
                     gender,
                     birthday,
                     city,
-                    address: address.trim(),
+                    address,
                 });
-                let result = await res.data;
+                // جلب البيانات الناتجة عن الاستجابة
+                const result = await res.data;
+                // التحقق من البيانات  المُرسلة كاستجابة
                 if (result === "تم بنجاح إنشاء الحساب") {
+                    // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
                     let successStatusTimeout = setTimeout(() => {
+                        // تعديل قيمة ال state المسماة isSignupStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                         setIsSignupStatus(false);
+                        // تعديل قيمة ال state المسماة isSuccessfulyStatus من أجل استخدامه لاحقاً في إظهار رسالة نجاح العملية
                         setIsSuccessfulyStatus(true);
+                        // حذف المتغير الذي يحتوي المؤقت
                         clearTimeout(successStatusTimeout);
                     }, 2000);
                 } else {
+                    // تعديل قيمة ال state المسماة isSignupStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                     setIsSignupStatus(false);
+                    // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
                     setErrorMsg(result);
+                    // تعيين مؤقت ليتم تنفيذ تعليمات بعد أربع ثواني
                     let errMsgTimeout = setTimeout(() => {
+                        // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
                         setErrorMsg("");
+                        // حذف المتغير الذي يحتوي المؤقت
                         clearTimeout(errMsgTimeout);
                     }, 4000);
                 }
             } catch(err) {
+                // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
                 console.log(err);
             }
         }
     }
-
-    useEffect(() => {
-        let header = document.querySelector("#__next .page-header"),
-            pageContent = document.querySelector(".sign-up .page-content");
-        pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
-        let address = document.querySelector(".sign-up .sign-up-form .address");
-        address.style.height = `calc(116px + 1.5rem)`;
-    }, []);
-
     return (
-        // Start Who Are We Page
+        // بداية كتابة كود ال jsx لصفحة إنشاء الحساب
         <div className="sign-up">
+            {/* بداية كتابة معلومات عنصر ال head في ال html */}
             <Head>
                 <title>مستر فيكس - إنشاء حساب</title>
             </Head>
+            {/* نهاية كتابة معلومات عنصر ال head في ال html */}
+            {/* بداية عرض مكون الرأس الذي أنشأناه */}
             <Header />
-            {/* Start Page Content Section */}
+            {/* نهاية عرض مكون الرأس الذي أنشأناه */}
+            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
             <section className="page-content pt-4 pb-4">
-                {/* Start Container From Bootstrap */}
+                {/* بداية مكون الحاوية من البوتستراب */}
                 <div className="container">
                     <h1 className='page-title mb-4'>أهلاً وسهلاً بك في مستر فيكس</h1>
                     <form className="sign-up-form" onSubmit={createAccount}>
-                        {/* Start Grid System From Bootstrap */}
+                        {/* بداية مكون الشبكة من البوتستراب */}
                         <div className="row">
-                            {/* Start Column */}
+                            {/* بداية مكون العمود */}
                             <div className="col-md-6">
                                 <input
                                     type="text"
                                     placeholder='الاسم والكنية'
+                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                     className={`form-control p-3 ${errors["firstAndLastName"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setFirstAndLastName(e.target.value)}
+                                    onChange={(e) => setFirstAndLastName(e.target.value.trim())}
                                 />
+                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["firstAndLastName"] && <p className='error-msg text-danger'>{errors["firstAndLastName"]}</p>}
+                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 <input
                                     type="email"
                                     placeholder="البريد الالكتروني"
                                     className={`form-control p-3 mb-4`}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChange={(e) => setEmail(e.target.value.trim())}
                                 />
                                 <input
                                     type="number"
                                     placeholder="رقم الجوال"
+                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                     className={`form-control p-3 ${errors["mobilePhone"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setMobilePhone(e.target.value)}
+                                    onChange={(e) => setMobilePhone(e.target.value.trim())}
                                 />
+                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["mobilePhone"] && <p className='error-msg text-danger'>{errors["mobilePhone"]}</p>}
+                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 <input
                                     type="password"
                                     placeholder="كلمة السر"
+                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                     className={`form-control p-3 ${errors["password"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) => setPassword(e.target.value.trim())}
                                 />
+                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["password"] && <p className='error-msg text-danger'>{errors["password"]}</p>}
+                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 <input
                                     type="password"
                                     placeholder="تأكيد كلمة السر"
+                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                     className={`form-control p-3 ${errors["confirmPassword"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    onChange={(e) => setConfirmPassword(e.target.value.trim())}
                                 />
+                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["confirmPassword"] && <p className='error-msg text-danger'>{errors["confirmPassword"]}</p>}
+                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                             </div>
-                            {/* End Column */}
-                            {/* Start Column */}
+                            {/* نهاية مكون العمود */}
+                            {/* بداية مكون العمود */}
                             <div className="col-md-6">
                                 <select
+                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                     className={`form-control p-3 ${errors["gender"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setGender(e.target.value)}
                                 >
@@ -225,64 +262,73 @@ export default function Signup() {
                                     <option value="male">ذكر</option>
                                     <option value="female">أنثى</option>
                                 </select>
+                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["gender"] && <p className='error-msg text-danger'>{errors["gender"]}</p>}
+                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 <input
                                     type={inputType}
                                     placeholder="تاريخ الميلاد"
+                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                     className={`form-control p-3 ${errors["birthday"] ? "border border-danger mb-2" : "mb-4"}`}
+                                    // تغيير نوع المدخل إلى تاريخ عند التركيز على المدخل
                                     onFocus={() => setInputType("date")}
+                                    // تغيير نوع المدخل إلى نص عند إزالة التركيز عن المدخل
                                     onBlur={() => setInputType("text")}
                                     onChange={(e) => setBirthday(e.target.value)}
                                 />
+                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["birthday"] && <p className='error-msg text-danger'>{errors["birthday"]}</p>}
+                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 <select
+                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                     className={`form-control p-3 ${errors["city"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setCity(e.target.value)}
                                 >
                                     <option defaultValue="" hidden>اختر المحافظة</option>
                                     <option value="damascus">دمشق</option>
                                     <option value="rif-Damascus">ريف دمشق</option>
-                                    {/* <option value="lattakia">اللاذقية</option>
-                                    <option value="aleppo">حلب</option>
-                                    <option value="tartous">طرطوس</option>
-                                    <option value="daraa">درعا</option>
-                                    <option value="kenitra">القنيطرة</option>
-                                    <option value="hams">حماة</option>
-                                    <option value="idlib">إدلب</option>
-                                    <option value="homs">حمص</option>
-                                    <option value="al-Hasakah">الحسكة</option>
-                                    <option value="deer-al-zour">دير الزور</option>
-                                    <option value="raqqa">الرقة</option> */}
                                 </select>
+                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["city"] && <p className='error-msg text-danger'>{errors["city"]}</p>}
+                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 <textarea
                                     placeholder="محافظة دمشق، الميدان، امتداد شارع المول, بناء الغاردينيا، مقابل/ قرب محل الملكي، الطابق الرابع"
+                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                     className={`form-control p-3 address ${errors["address"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setAddress(e.target.value)}
+                                    onChange={(e) => setAddress(e.target.value.trim())}
                                 />
+                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["address"] && <p className='error-msg text-danger'>{errors["address"]}</p>}
+                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                             </div>
-                            {/* End Column */}
+                            {/* نهاية مكون العمود */}
                         </div>
-                        {/* End Grid System From Bootstrap */}
+                        {/* نهاية مكون الشبكة من البوتستراب */}
+                        {/* في حالة لم يكن لدينا حالة إنشاء الحساب في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
                         {!isSignupStatus && !errMsg && <button className='btn sign-up-btn w-50 p-3 mt-4 mx-auto d-block'>
                             <span className='ms-2'>تسجيل</span>
                             <FiUserPlus />
                         </button>}
+                        {/* في حالة لم يكن لدينا حالة إنشاء الحساب في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
+                        {/* في حالة كان لدينا حالة إنشاء الحساب في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
                         {isSignupStatus && <button className='btn wait-sign-up-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
                             <span className='ms-2'>جاري التسجيل ...</span>
                             <AiOutlineClockCircle />
                         </button>}
+                        {/* في حالة كان لدينا حالة إنشاء الحساب في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
+                        {/* في حالة كان لدينا خطأ نظهر المكون التالي */}                        
                         {errMsg && <button className='btn btn-danger error-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
                             {errMsg}
                         </button>}
+                        {/* في حالة كان لدينا خطأ نظهر المكون التالي */}                        
                     </form>
                 </div>
-                {/* End Container From Bootstrap */}
+                {/* نهاية مكون الحاوية من البوتستراب */}
             </section>
-            {/* End Page Content Section */}
+            {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
+            {/* في حالة كان لدينا حالة النجاح نظهر المكون التالي */}
             {isSuccessfulyStatus &&
-                /* Start Popup Box */
+                /* بداية كتابة كود ال jsx لعنصر ال html المسمى popup-box */
                 <div className="popup-box">
                     <div className="popup d-flex flex-column align-items-center justify-content-center">
                         <h3 className='text-center welcome-msg mb-4'>
@@ -293,11 +339,11 @@ export default function Signup() {
                         <h5 className='happy-msg mb-5'>نحن مسرورون بانضمامك لدينا</h5>
                         <Link className='btn btn-success' href="/login">تسجيل الدخول الآن</Link>
                     </div>
-
                 </div>
-                /* End Popup Box */
+                /* نهاية كتابة كود ال jsx لعنصر ال html المسمى popup-box */
             }
+            {/* في حالة كان لدينا حالة النجاح نظهر المكون التالي */}
         </div>
-        // End Who Are We Page
+        // نهاية كتابة كود ال jsx لصفحة إنشاء الحساب
     );
 }

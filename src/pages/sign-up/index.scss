@@ -7,6 +7,9 @@
                 textarea {
                     resize: none;
                 }
+                .address{
+                    height: calc(116px + 1.5rem);
+                }
                 .sign-up-btn, .wait-sign-up-btn {
                     background-color: var(--main-color-one);
                     color: #FFF;

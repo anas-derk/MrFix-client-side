@@ -1,33 +1,37 @@
+// استيراد المكتبات المطلوبة + صورة صفحة من نحن
 import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect } from 'react';
 import whoAreWeImage from "../../../public/images/WhoAreWe/who-are-we.png";
 
+// تعريف دالة مكون من نحن
 export default function WhoAreWe() {
-
+    // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
-
-        let header = document.querySelector("#__next .page-header"),
+        // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
+        const header = document.querySelector("#__next .page-header"),
             pageContent = document.querySelector(".who-are-we .page-content");
-
+        // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
         pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
-
     }, []);
-
     return (
-        // Start Who Are We Page
+        // بداية كتابة كود ال jsx لصفحة من نحن
         <div className="who-are-we shared-pages-with-styles">
+            {/* بداية كتابة معلومات عنصر ال head في ال html */}
             <Head>
                 <title>مستر فيكس - من نحن ؟</title>
             </Head>
+            {/* نهاية كتابة معلومات عنصر ال head في ال html */}
+            {/* بداية عرض مكون الرأس الذي أنشأناه */}
             <Header />
-            {/* Start Page Content Section */}
+            {/* نهاية عرض مكون الرأس الذي أنشأناه */}
+            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
             <section className="page-content p-4">
-                {/* Start Container From Bootstrap */}
+                {/* بداية مكون الحاوية من البوتستراب */}
                 <div className="container">
-                    {/* Start Grid System From Bootstrap */}
+                    {/* بداية مكون الشبكة من البوتستراب */}
                     <div className="row align-items-center">
-                        {/* Start Column */}
+                        {/* بداية مكون العمود */}
                         <div className="col-md-6">
                             <p className='who-are-we-explain page-content-explain pe-4 ps-4'>
                                 من الألف إلى الياء ، أردنا بناء خدمة من خلال شركة وسيطة تمنح مفهوم آخر وطرق جديدة لإجراء عملية الصيانة، شركة هدفها الإرتباط بعملائها، ودائمًا نحو الأفضل لجعل حياتك أسهل في إدارتها.
@@ -47,21 +51,21 @@ export default function WhoAreWe() {
                                 العناية بالصيانة ليست مجرد خدمة، نحن نتفهم أن ما نقدمه هو جزء من حياتك اليومية، هدفنا هو أن نكون موثوقين ومفيدين ونأمل أن نكون مبدعين في تحقيق رغباتك لتعيش حياة رغيدة في منزلك لذا سنبقى مكرسين للتأكد من أن راحتك وأمانك في منزلك محقق من خلال الاهتمام المستمر و خدمة ما بعد البيع.
                             </p>
                         </div>
-                        {/* End Column */}
-                        {/* Start Column */}
+                        {/* نهاية مكون العمود */}
+                        {/* بداية مكون العمود */}
                         <div className="col-md-6">
                             <div className='image-box'>
                                 <img src={whoAreWeImage.src} alt="Who Are We Image !!" className='who-are-we-img page-img' />
                             </div>
                         </div>
-                        {/* End Column */}
+                        {/* نهاية مكون العمود */}
                     </div>
-                    {/* End Grid System From Bootstrap */}
+                    {/* نهاية مكون الشبكة من البوتستراب */}
                 </div>
-                {/* End Container From Bootstrap */}
+                {/* نهاية مكون الحاوية من البوتستراب */}
             </section>
-            {/* End Page Content Section */}
+            {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
         </div>
-        // End Who Are We Page
+        // نهاية كتابة كود ال jsx لصفحة من نحن
     );
 }
