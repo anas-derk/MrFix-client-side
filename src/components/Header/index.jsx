@@ -1,3 +1,4 @@
+// استيراد المكتبات المطلوبة + اللوغو
 import Link from "next/link";
 import { AiOutlineMenu, AiOutlineHome, AiOutlineQuestionCircle, AiOutlineUserAdd } from "react-icons/ai";
 import { MdOutlineMedicalServices, MdOutlineContactPhone } from "react-icons/md";
@@ -8,22 +9,30 @@ import Logo from "../../../public/images/Logo/logo.png";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
+// تعريف دالة مكون الرأس
 export default function Header() {
+    // تعريف المتغيرات المطلوبة
     const [userId, setUserId] = useState("");
     const router = useRouter();
+    // تعريف دالة لعملية تسجيل الخروج
     const logout = () => {
+        // حذف المفتاح الذي يحوي رقم معرّف المستخدم من التخزين المحلي
         localStorage.removeItem("mr-fix-user-id");
+        // إعادة تحميل الصفحة بعد االحذف لحذف وإظهار الأزرار المناسبة بناءً على حالة عدم تسجيل الدخول
         router.reload();
     }
+    // التصريح عن دالة ال useEffect المطلوبة لجلب رقم معرّف المستخدم عند تحميل الصفحة
     useEffect(() => {
+        // جلب معرّف المستخدم من التخزين المحلي
         let userId = localStorage.getItem("mr-fix-user-id");
+        // إسناد قيمة المعرّف لل state المعرّفة سابقاً
         setUserId(userId);
     }, []);
     return (
-        // Start Page Header
+        // بداية مكون رأس الصفحة
         <header className="page-header text-white">
             <nav className="navbar navbar-expand-lg pt-3 pb-3">
-                {/* Start Container Component From Bootstrap */}
+                {/* بدء مكون الحاوية من البوتستراب */}
                 <div className="container">
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <AiOutlineMenu />
@@ -54,6 +63,7 @@ export default function Header() {
                                     <span className="me-2">اتصل بنا</span>
                                 </Link>
                             </li>
+                            {/* إخفاء أو إظهار أزرار تسجيل الدخول والخروج بناءً على رقم معرّف المستخدم هل هو موجود أم لا */}
                             {!userId && <>
                                 <li className="nav-item">
                                     <Link className="nav-link" href="/login">
@@ -68,6 +78,7 @@ export default function Header() {
                                     </Link>
                                 </li>
                             </>}
+                            {/* إخفاء أو إظهار أزرار الملف الشخصي الدخول وطلب الخدمة بناءً على رقم معرّف المستخدم هل هو موجود أم لا */}
                             {userId && <>
                                 <li className="nav-item">
                                     <Link className="nav-link" href="/profile">
@@ -99,9 +110,9 @@ export default function Header() {
                         </Link>
                     </div>
                 </div>
-                {/* End Container Component From Bootstrap */}
+                {/* نهاية مكون الحاوية من البوتستراب  */}
             </nav>
         </header>
-        // End Page Header
+        // نهاية مكون رأس الصفحة
     );
 } 

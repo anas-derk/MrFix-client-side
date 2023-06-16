@@ -1,21 +1,27 @@
-const isEmail = (email) => {
+// تعريف دالة للتحقق من الإيميل هل صالح أم لا
+function isEmail (email) {
     return email.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
 }
 
+// تعريف دالة لمعرفة هل الملف هو صورة أم لا
 function isImage(file) {
+    // التحقق من كون نوع الملف هو صورة من امتداد jpg or png 
     return file.type === "image/png" || file.type === "image/jpeg";
 }
 
-const isValidPassword = (password) => {
+// تعريف دالة للتحقق من كلمة السر هل صالحة أم لا
+function isValidPassword (password) {
     return password.length >= 8;
 }
 
-const isValidMobilePhone = (mobilePhone) => {
+// تعريف دالة للتحقق من رقم الموبايل هو رقم صالح أم لا ( رقم سوري أم لا )
+function isValidMobilePhone(mobilePhone) {
     const mobilePhoneRegex = /^(093|099|098|094|095|096)\d{7}$/;
     return mobilePhoneRegex.test(mobilePhone);
 }
 
-const inputValuesValidation = (inputs) => {
+// تعريف دالة للتحقق من قيم المدخلات
+function inputValuesValidation(inputs) {
     // تعريف المصفوفة التي ستخزن الأخطاء
     let errorsObject = {};
     // إنشاء حلقة للمرور على كل المدخلات المرسلة إلى التابع وعمل التحقق المطلوب بناء على القواعد المرسلة
@@ -123,4 +129,5 @@ const inputValuesValidation = (inputs) => {
     return errorsObject;
 }
 
+// تصدير الدوال المطلوبة
 export default { isEmail, inputValuesValidation };

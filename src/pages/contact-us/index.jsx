@@ -1,33 +1,35 @@
+// استيراد المكتبات المطلوبة + صورة صفحة تواصل معنا
 import Head from 'next/head';
 import Header from '@/components/Header';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import contactUsImage from "../../../public/images/ContactUs/contact-us.png";
 
+// تعريف دالة مكون تواصل معنا
 export default function ContactUs() {
-
+    // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
-
-        let header = document.querySelector("#__next .page-header"),
+        // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
+        const header = document.querySelector("#__next .page-header"),
             pageContent = document.querySelector(".contact-us .page-content");
-
+        // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
         pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
-
     }, []);
-
     return (
-        // Start Contact Us Page
+        // كتابة كود ال jsx لصفحة تواصل معنا
         <div className="contact-us shared-pages-with-styles">
+            {/* بداية كتابة معلومات عنصر ال head في ال html */}
             <Head>
                 <title>مستر فيكس - اتصل بنا</title>
             </Head>
+            {/* نهاية كتابة معلومات عنصر ال head في ال html */}
             <Header />
-            {/* Start Page Content Section */}
+            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
             <section className="page-content p-4">
-                {/* Start Container From Bootstrap */}
+                {/* بداية مكون الحاوية من البوتستراب */}
                 <div className="container">
-                    {/* Start Grid System From Bootstrap */}
+                    {/* بداية مكون الشبكة من البوتستراب */}
                     <div className="row align-items-center">
-                        {/* Start Column */}
+                        {/* بداية مكون العمود */}
                         <div className="col-md-6">
                             <div className="contact-us-content-box">
                                 <p className='how-to-contact-us-explain pe-4 ps-4 mb-5'>
@@ -59,21 +61,21 @@ export default function ContactUs() {
                                 </p>
                             </div>
                         </div>
-                        {/* End Column */}
-                        {/* Start Column */}
+                        {/* نهاية مكون العمود */}
+                        {/* بداية مكون العمود */}
                         <div className="col-md-6">
                             <div className="image-box">
                                 <img src={contactUsImage.src} alt="Contact Us Image !!" className='contact-us-img page-img' />
                             </div>
                         </div>
-                        {/* End Column */}
+                        {/* نهاية مكون العمود */}
                     </div>
-                    {/* End Grid System From Bootstrap */}
+                    {/* نهاية مكون الشبكة من البوتستراب */}
                 </div>
-                {/* End Container From Bootstrap */}
+                {/* نهاية مكون الحاوية من البوتستراب */}
             </section>
-            {/* End Page Content Section */}
+            {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
         </div>
-        // End Contact Us Page
+        // نهاية كود ال jsx لصفحة تواصل معنا
     );
 }
