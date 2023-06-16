@@ -22,7 +22,9 @@ export default function ContactUs() {
                 <title>مستر فيكس - اتصل بنا</title>
             </Head>
             {/* نهاية كتابة معلومات عنصر ال head في ال html */}
+            {/* بداية عرض مكون الرأس الذي أنشأناه */}
             <Header />
+            {/* نهاية عرض مكون الرأس الذي أنشأناه */}
             {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
             <section className="page-content p-4">
                 {/* بداية مكون الحاوية من البوتستراب */}

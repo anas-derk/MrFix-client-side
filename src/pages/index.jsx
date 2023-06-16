@@ -29,6 +29,7 @@ export default function Home({ result }) {
     introduction.style.minHeight = `calc(100vh - (${header.clientHeight}px + ${ads.clientHeight}px))`;
     // جلب معرّف المستخدم من التخزين المحلي
     const userId = localStorage.getItem("mr-fix-user-id");
+    // تخزينه في متغير معرف المستخدم كــ state
     setUserId(userId);
   }, []);
   // كتابة إعدادات السلايدر
@@ -50,7 +51,9 @@ export default function Home({ result }) {
         <title>مستر فيكس - الصفحة الرئيسية</title>
       </Head>
       {/* نهاية كتابة معلومات عنصر ال head في ال html */}
+      {/* بداية عرض مكون الرأس الذي أنشأناه */}
       <Header />
+      {/* نهاية عرض مكون الرأس الذي أنشأناه */}
       {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
       <div className="page-content pb-3">
         {/* بداية كتابة كود ال jsx عنصر الإعلانات */}
