@@ -6,9 +6,6 @@ import sliderImage1 from "../../public/images/Home/slider1.png";
 import sliderImage2 from "../../public/images/Home/slider2.png";
 import sliderImage3 from "../../public/images/Home/slider3.png";
 import Link from 'next/link';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import Axios from "axios";
 import Carousel from 'react-bootstrap/Carousel';
 
@@ -32,17 +29,6 @@ export default function Home({ result }) {
     // تخزينه في متغير معرف المستخدم كــ state
     setUserId(userId);
   }, []);
-  // كتابة إعدادات السلايدر
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    rtl: true,
-    initialSlide: 2,
-    autoplay: true,
-  };
   return (
     // بداية كتابة كود ال jsx للصفحة الرئيسية
     <div className="home">
@@ -63,7 +49,7 @@ export default function Home({ result }) {
             {result.map((ads, index) => (
               <Carousel.Item key={index}>
                 <Carousel.Caption>
-                  <p className='ads-content'>{ ads.content }</p>
+                  <p className='ads-content'>{ads.content}</p>
                 </Carousel.Caption>
               </Carousel.Item>
             ))}
@@ -74,13 +60,12 @@ export default function Home({ result }) {
         {/* بداية كتابة كود ال jsx عنصر المدخل */}
         <section className="introduction">
           {/* بداية كتابة كود ال jsx عنصر السلايدر */}
-          <div className="slider">
-            {/* بداية مكون الحاوية من البوتستراب */}
-            <div className="container">
-              <Slider {...settings}>
-                <div className='slide pt-5 pb-5'>
+          <Carousel indicators={false} controls={false}>
+            <Carousel.Item>
+              <Carousel.Caption>
+                <div className="container">
                   {/* بداية مكون الشبكة من البوتستراب */}
-                  <div className="row align-items-center">
+                  <div className="row align-items-center justify-content-center">
                     {/* بداية مكون العمود */}
                     <div className="col-md-5 content-box">
                       <div className='slider-content-explain text-center'>
@@ -97,7 +82,11 @@ export default function Home({ result }) {
                   </div>
                   {/* نهاية مكون الشبكة من البوتستراب */}
                 </div>
-                <div className='slide pt-5 pb-5'>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <Carousel.Caption>
+                <div className="container">
                   {/* بداية مكون الشبكة من البوتستراب */}
                   <div className="row align-items-center">
                     {/* بداية مكون العمود */}
@@ -116,7 +105,11 @@ export default function Home({ result }) {
                   </div>
                   {/* نهاية مكون الشبكة من البوتستراب */}
                 </div>
-                <div className='slide pt-5 pb-5'>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <Carousel.Caption>
+                <div className="container">
                   {/* بداية مكون الشبكة من البوتستراب */}
                   <div className="row align-items-center">
                     {/* بداية مكون العمود */}
@@ -135,10 +128,9 @@ export default function Home({ result }) {
                   </div>
                   {/* نهاية مكون الشبكة من البوتستراب */}
                 </div>
-              </Slider>
-            </div>
-            {/* نهاية مكون الحاوية من البوتستراب */}
-          </div>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
           {/* نهاية كتابة كود ال jsx عنصر السلايدر */}
           {/* بداية كتابة كود ال jsx عنصر الرابط الخاص بصفحة إنشاء حساب */}
           {/* نعرضه في حالة لم يكن يوجد معرّف للمستخدم */}

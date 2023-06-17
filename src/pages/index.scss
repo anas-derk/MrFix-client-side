@@ -16,125 +16,90 @@
             }
         }
         .introduction{
-            .slider{
-                background-color: var(--main-color-five);
+            .carousel{
                 min-height: inherit;
-                @media (max-width: 767px) {
-                    height: 527px;
-                }
-                .container{
+                background-color: var(--main-color-five);
+                position: static;
+                .carousel-inner{
                     min-height: inherit;
-                    .slick-slider{
+                    .carousel-item{
                         min-height: inherit;
-                        .slide{
-                            padding-top: 15px !important;
-                        }
-                        .slick-arrow{
-                            display: none !important;
-                        }
-                        .slick-dots{
-                            bottom: 20px;
-                            @media (max-width: 767px) {
-                                bottom: 25px;
-                            }
-                            @media (min-width: 323px) and (max-width: 345px) {
-                                bottom: 40px;
-                            }
-                            @media (min-width: 346px) and (max-width: 356px) {
-                                bottom: 46px;
-                            }
-                            @media (min-width: 357px) and (max-width: 371px) {
-                                bottom: 50px;
-                            }
-                            @media (min-width: 372px) and (max-width: 380px) {
-                                bottom: 55px;
-                            }
-                            @media (min-width: 428px) and (max-width: 464px) {
-                                bottom: 40px;
-                            }
-                            @media (min-width: 465px) and (max-width: 504px) {
-                                bottom: 40px;
-                            }
-                            @media (min-width: 505px) and (max-width: 520px) {
-                                bottom: 40px;
-                            }
-                            @media (min-width: 545px) and (max-width: 767px) {
-                                bottom: 40px;
-                            }
-                            @media (min-width: 560px) and (max-width: 575px) {
-                                bottom: 40px;
-                            }
-                        }
-                    }
-                    .row{
-                        direction: rtl;
-                        @media (max-width: 767px) {
-                            .content-box{
-                                order: 2;
-                                padding-top: 10px;
-                                p{
-                                    margin-bottom: 10px;
-                                }
-                            }
-                        }
-                        .image-box{
-                            text-align: center;
-                            .home-paragraph{
-                                font-size: 28px;
-                                @media (max-width: 400px) {
-                                    margin-bottom: 10px;
-                                }
-                            }
-                            @media (max-width: 767px) {
-                                text-align: center;
-                                &.image-box2, &.image-box3{
-                                    p{
-                                        margin: 0;
+                        .carousel-caption{
+                            position: static;
+                            padding: 0;
+                            font-size: 30px;
+                            color: #000;
+                            min-height: inherit;
+                            .container{
+                                min-height: inherit;
+                                .row{
+                                    min-height: inherit;
+                                    @media (max-width: 767px) {
+                                        .content-box{
+                                            order: 2;
+                                            padding-top: 10px;
+                                            p{
+                                                margin-bottom: 10px;
+                                            }
+                                        }
+                                    }
+                                    .slider-content-explain{
+                                        p{
+                                            font-family: 'Lemonada', cursive;
+                                            line-height: 2;
+                                            margin-bottom: 20px;
+                                            &:first-child {
+                                                @media (max-width: 767px) {
+                                                    &.exeption-paragraph-3{
+                                                        line-height: 2.4;
+                                                    }
+                                                }
+                                            }
+                                            @media (min-width: 521px) and (max-width: 767px) {
+                                                &.exeption-paragraph{
+                                                    line-height: 2.5 !important;
+                                                }
+                                            }
+                                            &:last-child {
+                                                margin-bottom: 0;
+                                                @media (max-width: 767px) {
+                                                    &.exeption-paragraph{
+                                                        line-height: 3;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        font-size: 20px;
+                                        @media (max-width: 767px) {
+                                            font-size: 18px;
+                                        }
+                                    }
+                                    .image-box{
+                                        text-align: center;
+                                        .home-paragraph{
+                                            font-size: 28px;
+                                            @media (max-width: 400px) {
+                                                margin-bottom: 10px;
+                                            }
+                                        }
+                                        @media (max-width: 767px) {
+                                            text-align: center;
+                                            &.image-box2, &.image-box3{
+                                                p{
+                                                    margin: 0;
+                                                }
+                                            }
+                                        }
+                                        .slider-image{
+                                            max-width: 90%;
+                                            display: inline-block;
+                                            margin: 0 auto;
+                                        }
                                     }
                                 }
                             }
-                            .slider-image{
-                                max-width: 90%;
-                                display: inline-block;
-                                margin: 0 auto;
-                            }
                         }
                     }
-                }
-                .slider-content-explain{
-                    p{
-                        font-family: 'Lemonada', cursive;
-                        line-height: 2;
-                        margin-bottom: 20px;
-                        &:first-child {
-                            @media (max-width: 767px) {
-                                &.exeption-paragraph-3{
-                                    line-height: 2.4;
-                                }
-                            }
-                        }
-                        @media (min-width: 521px) and (max-width: 767px) {
-                            &.exeption-paragraph{
-                                line-height: 2.5 !important;
-                            }
-                        }
-                        &:last-child {
-                            margin-bottom: 0;
-                            @media (max-width: 767px) {
-                                &.exeption-paragraph{
-                                    line-height: 3;
-                                }
-                            }
-                        }
-                    }
-                    font-size: 20px;
-                    @media (max-width: 767px) {
-                        font-size: 18px;
-                    }
-                }
-                .slider-image{
-                    max-width: 100%;
-                    height: 100%;
                 }
             }
         }
