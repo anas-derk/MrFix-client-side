@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
 import ResetPasswordImage from "../../../public/images/ResetPassword/reset-password.png";
-import { AiOutlineClockCircle } from "react-icons/ai";
+import { AiOutlineClockCircle, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import global_functions from '../../../public/global_functions/validations';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
@@ -19,6 +19,8 @@ export default function ResetPassword() {
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
     const [tempResetPasswordData, setTempResetPasswordData] = useState("");
     const [errMsg, setErrorMsg] = useState("");
+    const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+    const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] = useState(false);
     // تعريف راوتر لاستخدامه في التعامل مع روابط الصفحات
     const router = useRouter();
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
@@ -172,23 +174,35 @@ export default function ResetPassword() {
                                 {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["typedUserCode"] && <p className='error-msg text-danger'>{errors["typedUserCode"]}</p>}
                                 {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                <input
-                                    type="password"
-                                    placeholder="كلمة السر الجديدة"
-                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
-                                    className={`form-control p-3 ${errors["newPassword"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setNewPassword(e.target.value.trim())}
-                                />
+                                <div className='password-field-box'>
+                                    <input
+                                        type={isVisiblePassword ? "text" : "password"}
+                                        placeholder="كلمة السر الجديدة"
+                                        // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
+                                        className={`form-control p-3 ${errors["newPassword"] ? "border border-danger mb-2" : "mb-4"}`}
+                                        onChange={(e) => setNewPassword(e.target.value.trim())}
+                                    />
+                                    <div className='icon-box'>
+                                        {!isVisiblePassword && <AiOutlineEye className='eye-icon icon' onClick={() => setIsVisiblePassword(value => value = !value)} />}
+                                        {isVisiblePassword && <AiOutlineEyeInvisible className='invisible-eye-icon icon' onClick={() => setIsVisiblePassword(value => value = !value)} />}
+                                    </div>
+                                </div>
                                 {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["newPassword"] && <p className='error-msg text-danger'>{errors["newPassword"]}</p>}
                                 {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                <input
-                                    type="password"
-                                    placeholder="تأكيد السر الجديدة"
-                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
-                                    className={`form-control p-3 ${errors["newConfirmPassword"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setNewConfirmPassword(e.target.value.trim())}
-                                />
+                                <div className='confirm-password-field-box'>
+                                    <input
+                                        type={isVisibleConfirmPassword ? "text" : "password"}
+                                        placeholder="تأكيد كلمة السر الجديدة"
+                                        // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
+                                        className={`form-control p-3 ${errors["newConfirmPassword"] ? "border border-danger mb-2" : "mb-4"}`}
+                                        onChange={(e) => setNewConfirmPassword(e.target.value.trim())}
+                                    />
+                                    <div className='icon-box'>
+                                        {!isVisibleConfirmPassword && <AiOutlineEye className='eye-icon icon' onClick={() => setIsVisibleConfirmPassword(value => value = !value)} />}
+                                        {isVisibleConfirmPassword && <AiOutlineEyeInvisible className='invisible-eye-icon icon' onClick={() => setIsVisibleConfirmPassword(value => value = !value)} />}
+                                    </div>
+                                </div>
                                 {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["newConfirmPassword"] && <p className='error-msg text-danger'>{errors["newConfirmPassword"]}</p>}
                                 {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}

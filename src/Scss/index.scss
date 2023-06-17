@@ -41,6 +41,20 @@ input, select, textarea{
     border-radius: 15px !important;
 }
 
+.password-field-box, .confirm-password-field-box{
+    position: relative;
+    .icon-box{
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        .icon{
+            font-size: 30px;
+            cursor: pointer;
+        }
+    }
+}
+
 .shared-pages-with-styles{
     .page-content{
         .container{

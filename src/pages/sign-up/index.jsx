@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
 import { FiUserPlus } from "react-icons/fi";
-import { AiOutlineClockCircle } from "react-icons/ai";
+import { AiOutlineClockCircle, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { TfiFaceSmile } from "react-icons/tfi";
 import global_functions from '../../../public/global_functions/validations';
 import Link from 'next/link';
@@ -26,6 +26,8 @@ export default function Signup() {
     const [isSignupStatus, setIsSignupStatus] = useState(false);
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
     const [errMsg, setErrorMsg] = useState("");
+    const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+    const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] = useState(false);
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
         // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
@@ -41,7 +43,7 @@ export default function Signup() {
         // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
         setErrors({});
         // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
-        let errorsObject = global_functions.inputValuesValidation(
+        const errorsObject = global_functions.inputValuesValidation(
             [
                 {
                     name: "firstAndLastName",
@@ -177,7 +179,7 @@ export default function Signup() {
                         clearTimeout(errMsgTimeout);
                     }, 4000);
                 }
-            } catch(err) {
+            } catch (err) {
                 // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
                 console.log(err);
             }
@@ -230,23 +232,35 @@ export default function Signup() {
                                 {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["mobilePhone"] && <p className='error-msg text-danger'>{errors["mobilePhone"]}</p>}
                                 {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                <input
-                                    type="password"
-                                    placeholder="كلمة السر"
-                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
-                                    className={`form-control p-3 ${errors["password"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setPassword(e.target.value.trim())}
-                                />
+                                <div className='password-field-box'>
+                                    <input
+                                        type={isVisiblePassword ? "text" : "password"}
+                                        placeholder="كلمة السر"
+                                        // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
+                                        className={`form-control p-3 ${errors["password"] ? "border border-danger mb-2" : "mb-4"}`}
+                                        onChange={(e) => setPassword(e.target.value.trim())}
+                                    />
+                                    <div className='icon-box'>
+                                        {!isVisiblePassword && <AiOutlineEye className='eye-icon icon' onClick={() => setIsVisiblePassword(value => value = !value)} />}
+                                        {isVisiblePassword && <AiOutlineEyeInvisible className='invisible-eye-icon icon' onClick={() => setIsVisiblePassword(value => value = !value)} />}
+                                    </div>
+                                </div>
                                 {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["password"] && <p className='error-msg text-danger'>{errors["password"]}</p>}
                                 {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                <input
-                                    type="password"
-                                    placeholder="تأكيد كلمة السر"
-                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
-                                    className={`form-control p-3 ${errors["confirmPassword"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setConfirmPassword(e.target.value.trim())}
-                                />
+                                <div className='confirm-password-field-box'>
+                                    <input
+                                        type={isVisibleConfirmPassword ? "text" : "password"}
+                                        placeholder="تأكيد كلمة السر"
+                                        // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
+                                        className={`form-control p-3 ${errors["confirmPassword"] ? "border border-danger mb-2" : "mb-4"}`}
+                                        onChange={(e) => setConfirmPassword(e.target.value.trim())}
+                                    />
+                                    <div className='icon-box'>
+                                        {!isVisibleConfirmPassword && <AiOutlineEye className='eye-icon icon' onClick={() => setIsVisibleConfirmPassword(value => value = !value)} />}
+                                        {isVisibleConfirmPassword && <AiOutlineEyeInvisible className='invisible-eye-icon icon' onClick={() => setIsVisibleConfirmPassword(value => value = !value)} />}
+                                    </div>
+                                </div>
                                 {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["confirmPassword"] && <p className='error-msg text-danger'>{errors["confirmPassword"]}</p>}
                                 {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
@@ -317,11 +331,11 @@ export default function Signup() {
                             <AiOutlineClockCircle />
                         </button>}
                         {/* في حالة كان لدينا حالة إنشاء الحساب في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
-                        {/* في حالة كان لدينا خطأ نظهر المكون التالي */}                        
+                        {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
                         {errMsg && <button className='btn btn-danger error-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
                             {errMsg}
                         </button>}
-                        {/* في حالة كان لدينا خطأ نظهر المكون التالي */}                        
+                        {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
                     </form>
                 </div>
                 {/* نهاية مكون الحاوية من البوتستراب */}

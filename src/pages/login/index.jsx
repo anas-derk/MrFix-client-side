@@ -6,7 +6,7 @@ import loginImage from "../../../public/images/Login/login.png";
 import Link from 'next/link';
 import global_functions from '../../../public/global_functions/validations';
 import Axios from 'axios';
-import { AiOutlineClockCircle } from "react-icons/ai";
+import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineClockCircle } from "react-icons/ai";
 import { useRouter } from 'next/router';
 
 // تعريف دالة صفحة تسجيل الدخول 
@@ -17,6 +17,7 @@ export default function Login() {
     const [errors, setErrors] = useState({});
     const [errMsg, setErrorMsg] = useState("");
     const [isLoginStatus, setIsLoginStatus] = useState(false);
+    const [isVisiblePassword, setIsVisiblePassword] = useState(false);
     // تعريف راوتر لاستخدامه في التعامل مع روابط الصفحات
     const router = useRouter();
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
@@ -166,13 +167,19 @@ export default function Login() {
                                 {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["text"] && <p className='error-msg text-danger'>{errors["text"]}</p>}
                                 {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                <input
-                                    type="password"
-                                    placeholder="كلمة السر"
-                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
-                                    className={`form-control p-3 ${errors["password"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setPassword(e.target.value.trim())}
-                                />
+                                <div className='password-field-box'>
+                                    <input
+                                        type={isVisiblePassword ? "text" : "password"}
+                                        placeholder="كلمة السر"
+                                        // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
+                                        className={`form-control p-3 ${errors["password"] ? "border border-danger mb-2" : "mb-4"}`}
+                                        onChange={(e) => setPassword(e.target.value.trim())}
+                                    />
+                                    <div className='icon-box'>
+                                        {!isVisiblePassword && <AiOutlineEye className='eye-icon icon' onClick={() => setIsVisiblePassword(value => value = !value)} />}
+                                        {isVisiblePassword && <AiOutlineEyeInvisible className='invisible-eye-icon icon' onClick={() => setIsVisiblePassword(value => value = !value)} />}
+                                    </div>
+                                </div>
                                 {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["password"] && <p className='error-msg text-danger'>{errors["password"]}</p>}
                                 {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
