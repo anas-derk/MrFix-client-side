@@ -7,6 +7,9 @@
                 textarea{
                     resize: none;
                 }
+                .address{
+                    height: calc(116px + 1.5rem);
+                }
                 .edit-profile-btn{
                     background-color: var(--main-color-one);
                     color: #FFF;

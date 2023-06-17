@@ -10,6 +10,10 @@
   resize: none;
 }
 
+.profile .page-content .container .edit-profile-form .address {
+  height: calc(116px + 1.5rem);
+}
+
 .profile .page-content .container .edit-profile-form .edit-profile-btn {
   background-color: var(--main-color-one);
   color: #FFF;

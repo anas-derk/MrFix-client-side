@@ -167,7 +167,7 @@ export default function Signup() {
                 } else {
                     // تعديل قيمة ال state المسماة isSignupStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                     setIsSignupStatus(false);
-                    // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
+                    // إعادة قيمة ال state المسماة errMsg إلى القيمة الناتجة عن الاستجابة من أجل استخدامها لاحقاً في إظهار رسالة الخطأ
                     setErrorMsg(result);
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد أربع ثواني
                     let errMsgTimeout = setTimeout(() => {
