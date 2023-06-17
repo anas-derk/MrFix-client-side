@@ -34,6 +34,7 @@ export default function Signup() {
         // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
         pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
     }, []);
+    // تعريف دالة إرسال طلب إنشاء الحساب للباك ايند
     const createAccount = async (e) => {
         // منع إرسال المعلومات لنفس الصفحة
         e.preventDefault();
