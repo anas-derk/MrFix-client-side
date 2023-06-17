@@ -1,3 +1,4 @@
+// استيراد المكتبات المطلوبة + صورة صفحة إعادة ضبط كلمة السر
 import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
@@ -7,7 +8,9 @@ import global_functions from '../../../public/global_functions/validations';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
 
+// تعريف دالة صفحة إعادة ضبط كلمة السر 
 export default function ResetPassword() {
+    // تعريف المتغيرات المطلوب كــ state
     const [typedUserCode, setTypedUserCode] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [newConfirmPassword, setNewConfirmPassword] = useState("");
@@ -16,22 +19,34 @@ export default function ResetPassword() {
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
     const [tempResetPasswordData, setTempResetPasswordData] = useState("");
     const [errMsg, setErrorMsg] = useState("");
+    // تعريف راوتر لاستخدامه في التعامل مع روابط الصفحات
     const router = useRouter();
+    // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
-        let header = document.querySelector("#__next .page-header"),
+        // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
+        const header = document.querySelector("#__next .page-header"),
             pageContent = document.querySelector(".reset-password .page-content");
+        // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
         pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
-        let tempResetPasswordData = JSON.parse(localStorage.getItem("mr-fix-temp-reset-password-data"));
+        // جلب البيانات المطلوبة لإعادة ضبط كلمة السر من التخزين المحلي
+        const tempResetPasswordData = JSON.parse(localStorage.getItem("mr-fix-temp-reset-password-data"));
+        // التحقق من كون البيانات موجودة فعلاً
         if (tempResetPasswordData) {
+            // في حالة البيانات موجودة نخزنها كــ state
             setTempResetPasswordData(tempResetPasswordData);
         } else {
+            // في حالة لم تكن موجودة نقوم بإعادة التوجيه لصفحة نسيت كلمة السر
             router.push("/forget-password");
         }
     }, []);
+    // تعريف دالة إرسال طلب للباك ايند لإعادة ضبط كلمة السر
     const resetPassword = async (e) => {
+        // منع إرسال المعلومات لنفس الصفحة
         e.preventDefault();
+        // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
         setErrors({});
-        let errorsObject = global_functions.inputValuesValidation(
+        // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
+        const errorsObject = global_functions.inputValuesValidation(
             [
                 {
                     name: "typedUserCode",
@@ -74,51 +89,74 @@ export default function ResetPassword() {
                 },
             ]
         );
+        // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
         setErrors(errorsObject);
+        // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
         if (Object.keys(errorsObject).length == 0) {
+            // تعديل قيمة ال state المسماة isResetingPasswordStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
             setIsResetingPasswordStatus(true);
+            // بداية محاولة إرسال الطلب
             try {
-                let res = await Axios.put(`${process.env.BASE_API_URL}/users/reset-password/${tempResetPasswordData.userIdAndType.userId}?userType=${tempResetPasswordData.userIdAndType.userType}&newPassword=${newPassword}`);
-                let result = await res.data;
+                // إرسال الطلب وتخزين الاستجابة في متغير
+                const res = await Axios.put(`${process.env.BASE_API_URL}/users/reset-password/${tempResetPasswordData.userIdAndType.userId}?userType=${tempResetPasswordData.userIdAndType.userType}&newPassword=${newPassword}`);
+                // جلب البيانات الناتجة عن الاستجابة
+                const result = await res.data;
+                // التحقق من البيانات  المُرسلة كاستجابة
                 if (result === "لقد تمّت عملية إعادة تعيين كلمة المرور الخاصة بك بنجاح !!") {
+                    // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
                     let resetPasswordStatusTimeout = setTimeout(() => {
+                        // تعديل قيمة ال state المسماة isResetingPasswordStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                         setIsResetingPasswordStatus(false);
+                        // تعديل قيمة ال state المسماة isSuccessfulyStatus من أجل استخدامه لاحقاً في إظهار رسالة نجاح العملية
                         setIsSuccessfulyStatus(true);
+                        // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين ونصف
                         let successStatusTimeout = setTimeout(() => {
+                            // حذف المتغيرات التي تحتوي المؤقتات
                             clearTimeout(resetPasswordStatusTimeout);
                             clearTimeout(successStatusTimeout);
+                            // إعادة تحميل الصفحة من أجل تسجيل الدخول
                             router.push("/login");
                         }, 2500);
                     }, 2000);
                 } else {
+                    // تعديل قيمة ال state المسماة isResetingPasswordStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                     setIsResetingPasswordStatus(false);
+                    // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
                     setErrorMsg(result);
+                    // تعيين مؤقت ليتم تنفيذ تعليمات بعد أربع ثواني
                     let errMsgTimeout = setTimeout(() => {
+                        // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
                         setErrorMsg("");
+                        // حذف المتغير الذي يحتوي المؤقت
                         clearTimeout(errMsgTimeout);
                     }, 4000);
                 }
             } catch (err) {
+                // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
                 setErrorMsg(err);
             }
         }
     }
     return (
-        // Start Reset Password Page
+        // بداية كتابة كود ال jsx لصفحة إعادة ضبط كلمة السر
         <div className="reset-password shared-pages-with-styles">
+            {/* بداية كتابة معلومات عنصر ال head في ال html */}
             <Head>
                 <title>مستر فيكس - إعادة تعيين كلمة السر</title>
             </Head>
+            {/* نهاية كتابة معلومات عنصر ال head في ال html */}
+            {/* بداية عرض مكون الرأس الذي أنشأناه */}
             <Header />
-            {/* Start Page Content Section */}
+            {/* نهاية عرض مكون الرأس الذي أنشأناه */}
+            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
             <div className="page-content pt-4 pb-4">
-                {/* Start Container From Bootstrap */}
+                {/* بداية مكون الحاوية من البوتستراب */}
                 <div className="container">
-                    {/* Start Grid System From Bootstrap */}
+                    {/* بداية مكون الشبكة من البوتستراب */}
                     <div className="row align-items-center">
-                        {/* Start Column */}
+                        {/* بداية مكون العمود */}
                         <div className="col-md-6 p-5">
-                            {/* Start Login Form */}
+                            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى reset-password-form */}
                             <form
                                 className="reset-password-form bg-white p-4 text-center"
                                 onSubmit={resetPassword}
@@ -127,51 +165,68 @@ export default function ResetPassword() {
                                 <input
                                     type="text"
                                     placeholder="أدخل الكود"
+                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                     className={`form-control p-3 ${errors["typedUserCode"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setTypedUserCode(e.target.value.trim())}
                                 />
+                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["typedUserCode"] && <p className='error-msg text-danger'>{errors["typedUserCode"]}</p>}
+                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 <input
                                     type="password"
                                     placeholder="كلمة السر الجديدة"
+                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                     className={`form-control p-3 ${errors["newPassword"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setNewPassword(e.target.value.trim())}
                                 />
+                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["newPassword"] && <p className='error-msg text-danger'>{errors["newPassword"]}</p>}
+                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 <input
                                     type="password"
                                     placeholder="تأكيد السر الجديدة"
+                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                     className={`form-control p-3 ${errors["newConfirmPassword"] ? "border border-danger mb-2" : "mb-4"}`}
                                     onChange={(e) => setNewConfirmPassword(e.target.value.trim())}
                                 />
+                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                 {errors["newConfirmPassword"] && <p className='error-msg text-danger'>{errors["newConfirmPassword"]}</p>}
+                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
+                                {/* في حالة لم يكن لدينا حالة إنشاء طلب إعادة تعيين كملة السر في الانتظار ولا يوجد أي خطأ أو حالة نجاح نظهر المكون التالي */}
                                 {!isResetingPasswordStatus && !errMsg && !isSuccessfulyStatus && <button type='submit' className='btn reset-password-btn w-100 p-3'>إرسال</button>}
+                                {/* في حالة لم يكن لدينا حالة إنشاء طلب إعادة تعيين كملة السر في الانتظار ولا يوجد أي خطأ أو حالة نجاح نظهر المكون التالي */}
+                                {/* في حالة كان لدينا حالة إنشاء طلب إعادة تعيين كلمة السر في الانتظار نظهر المكون التالي */}
                                 {isResetingPasswordStatus && <button className='btn wait-reset-password-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
                                     <span className='ms-2'>جاري إعادة التعيين ...</span>
                                     <AiOutlineClockCircle />
                                 </button>}
+                                {/* في حالة كان لدينا حالة إنشاء طلب إعادة تعيين كلمة السر في الانتظار نظهر المكون التالي */}
+                                {/* في حالة كان لدينا حالة النجاح نظهر المكون التالي */}
                                 {isSuccessfulyStatus && <button className='btn btn-success success-reset-password-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
                                     <span className='ms-2'>تمت عملية إعادة تعيين كلمة السر بنجاح ...</span>
                                 </button>}
+                                {/* في حالة كان لدينا حالة النجاح نظهر المكون التالي */}
+                                {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
                                 {errMsg && <button className='btn btn-danger error-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
                                     {errMsg}
                                 </button>}
+                                {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
                             </form>
-                            {/* End Login Form */}
+                            {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى reset-password-form */}
                         </div>
-                        {/* End Column */}
-                        {/* Start Column */}
+                        {/* بداية مكون العمود */}
+                        {/* بداية مكون العمود */}
                         <div className="col-md-6">
                             <img src={ResetPasswordImage.src} alt="Reset Password Image !!" className='reset-password-img' />
                         </div>
-                        {/* End Column */}
+                        {/* نهاية مكون العمود */}
                     </div>
-                    {/* End Grid System From Bootstrap */}
+                    {/* نهاية مكون الشبكة من البوتستراب */}
                 </div>
-                {/* End Container From Bootstrap */}
+                {/* نهاية مكون الحاوية من البوتستراب */}
             </div>
-            {/* End Page Content Section */}
+            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
         </div>
-        // End Forget Password Page
+        // نهاية كتابة كود ال jsx لصفحة إعادة ضبط كلمة السر
     );
 }

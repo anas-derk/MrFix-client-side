@@ -87,7 +87,7 @@ export default function ServiceRequest() {
         // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
         setErrors({});
         // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
-        let errorsObject = global_functions.inputValuesValidation(
+        const errorsObject = global_functions.inputValuesValidation(
             [
                 {
                     name: "requestType",
@@ -257,7 +257,7 @@ export default function ServiceRequest() {
                         setIsSuccessfulyStatus(false);
                             // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانية ونصف
                             setTimeout(() => {
-                                // إعادة تحميل الصفحة
+                                // إعادة تحميل الصفحة من أجل حذف بيانات الحقول لإتاحة الإمكانية للمستخدم من إرسال طلب جديد إن أراد
                                 router.reload();
                             }, 1500);
                         }, 2000);
