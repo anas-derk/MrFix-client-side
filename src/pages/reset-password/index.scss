@@ -4,6 +4,14 @@
             min-height: inherit;
             .row{
                 min-height: inherit;
+                .reset-password-form-box{
+                    @media (max-width: 767px) {
+                        padding: 0 !important;
+                    }
+                    @media (min-width: 768px) and (max-width: 991px) {
+                        padding: 30px !important;
+                    }
+                }
                 .reset-password-form{
                     box-shadow: 1px 1px 10px #FFF;
                     border-radius: 15px;

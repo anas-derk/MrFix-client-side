@@ -157,7 +157,7 @@ export default function ResetPassword() {
                     {/* بداية مكون الشبكة من البوتستراب */}
                     <div className="row align-items-center">
                         {/* بداية مكون العمود */}
-                        <div className="col-md-6 p-5">
+                        <div className="col-md-6 p-5 reset-password-form-box">
                             {/* بداية كتابة كود ال jsx لعنصر ال html المسمى reset-password-form */}
                             <form
                                 className="reset-password-form bg-white p-4 text-center"

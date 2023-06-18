@@ -6,6 +6,18 @@
   min-height: inherit;
 }
 
+@media (max-width: 767px) {
+  .reset-password .page-content .container .row .reset-password-form-box {
+    padding: 0 !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .reset-password .page-content .container .row .reset-password-form-box {
+    padding: 30px !important;
+  }
+}
+
 .reset-password .page-content .container .row .reset-password-form {
   box-shadow: 1px 1px 10px #FFF;
   border-radius: 15px;
