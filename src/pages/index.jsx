@@ -60,7 +60,7 @@ export default function Home({ result }) {
         {/* بداية كتابة كود ال jsx عنصر المدخل */}
         <section className="introduction">
           {/* بداية كتابة كود ال jsx عنصر السلايدر */}
-          <Carousel indicators={false} controls={false}>
+          <Carousel indicators={false} controls={true}>
             <Carousel.Item>
               <Carousel.Caption>
                 <div className="container">

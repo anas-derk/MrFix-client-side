@@ -19,8 +19,8 @@
 
 .home .page-content .introduction .carousel {
   min-height: inherit;
-  background-color: var(--main-color-five);
-  position: static;
+  background-color: #97d4ed;
+  position: relative;
 }
 
 .home .page-content .introduction .carousel .carousel-inner {
