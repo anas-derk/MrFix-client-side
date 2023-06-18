@@ -50,7 +50,9 @@ export default function Home({ result }) {
             {result.map((ads, index) => (
               <Carousel.Item key={index}>
                 <Carousel.Caption>
-                  <p className='ads-content'>{ads.content}</p>
+                  <Link href="/ads" className='text-white'>
+                    <p className='ads-content'>{ads.content}</p>
+                  </Link>
                 </Carousel.Caption>
               </Carousel.Item>
             ))}
