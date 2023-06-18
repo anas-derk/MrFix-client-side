@@ -13,6 +13,7 @@ import "./service-request/index.css";
 import "./forget-password/index.css";
 import "./reset-password/index.css";
 import "./profile/index.css";
+import "./ads/index.css";
 import "./dashboard/admin/login/index.css";
 import "./dashboard/admin/admin-panel/index.css";
 import "./dashboard/admin/admin-panel/requests-manager/index.css";

@@ -1,0 +1,14 @@
+.ads{
+    .page-content{
+        .container{
+            .ads-box{
+                background-color: var(--main-color-four);
+                border-radius: 15px;
+                .ad-content{
+                    border-radius: 10px;
+                    background-color: var(--main-color-one);
+                }
+            }
+        }
+    }
+}
