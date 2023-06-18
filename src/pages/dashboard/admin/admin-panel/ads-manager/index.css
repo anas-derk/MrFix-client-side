@@ -6,3 +6,9 @@
 .ads-manager .content {
   min-height: inherit;
 }
+
+@media (max-width: 767px) {
+  .ads-manager .content .link {
+    width: 100% !important;
+  }
+}

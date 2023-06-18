@@ -33,7 +33,7 @@ const PasswordsReset = () => {
                 }
             }, 1500);
         }
-        catch(err) {
+        catch (err) {
             console.log(err);
         }
     }
@@ -61,23 +61,25 @@ const PasswordsReset = () => {
             </Head>
             {/* Start Content Section */}
             <section className="content d-flex justify-content-center align-items-center flex-column text-center">
-                <h1 className="welcome-msg mb-4">مرحباً بك في صفحة إعادة تعيين كلمات السر الخاصة بالمستخدمين في مستر فيكس</h1>
-                <form className="reset-password-form w-50" onSubmit={resetPassword}>
-                    <input
-                        type="number"
-                        minLength={10}
-                        maxLength={10}
-                        placeholder="الرجاء إدخال رقم الموبايل للحساب"
-                        required
-                        className="form-control mb-4 p-3"
-                        onChange={(e) => setMobilePhone(e.target.value.trim())}
-                        value={mobilePhone}
-                    />
-                    {!errorMsg && !successMsg && !waitMsg && <button type="submit" className="btn btn-danger p-3">إعادة تعيين كلمة السر</button>}
-                    {waitMsg && <button type="submit" className="btn btn-warning p-3 d-block w-100 mx-auto" disabled>{ waitMsg }</button>}
-                    {errorMsg && <button type="submit" className="btn btn-danger p-3 d-block w-100 mx-auto" disabled>{ errorMsg }</button>}
-                    {successMsg && <button type="submit" className="btn btn-success p-3 d-block w-100 mx-auto" disabled>{ successMsg }</button>}
-                </form>
+                <div className="container">
+                    <h1 className="welcome-msg mb-4">مرحباً بك في صفحة إعادة تعيين كلمات السر الخاصة بالمستخدمين في مستر فيكس</h1>
+                    <form className="reset-password-form w-100" onSubmit={resetPassword}>
+                        <input
+                            type="number"
+                            minLength={10}
+                            maxLength={10}
+                            placeholder="الرجاء إدخال رقم الموبايل للحساب"
+                            required
+                            className="form-control mb-4 p-3"
+                            onChange={(e) => setMobilePhone(e.target.value.trim())}
+                            value={mobilePhone}
+                        />
+                        {!errorMsg && !successMsg && !waitMsg && <button type="submit" className="btn btn-danger p-3">إعادة تعيين كلمة السر</button>}
+                        {waitMsg && <button type="submit" className="btn btn-warning p-3 d-block w-100 mx-auto" disabled>{waitMsg}</button>}
+                        {errorMsg && <button type="submit" className="btn btn-danger p-3 d-block w-100 mx-auto" disabled>{errorMsg}</button>}
+                        {successMsg && <button type="submit" className="btn btn-success p-3 d-block w-100 mx-auto" disabled>{successMsg}</button>}
+                    </form>
+                </div>
             </section>
             {/* End Content Section */}
         </div>

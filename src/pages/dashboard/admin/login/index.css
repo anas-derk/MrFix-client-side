@@ -2,3 +2,9 @@
   background-color: var(--main-color-five);
   min-height: 100vh;
 }
+
+@media (max-width: 767px) {
+  .admin-login .admin-login-form input {
+    width: 100% !important;
+  }
+}

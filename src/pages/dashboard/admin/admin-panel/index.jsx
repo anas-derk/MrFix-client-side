@@ -30,10 +30,12 @@ const AdminPanel = () => {
             </Head>
             {/* Start Content Section */}
             <section className="content d-flex justify-content-center align-items-center flex-column text-center">
-                <h1 className="welcome-msg mb-4">مرحباً بك في لوحة التحكم الخاصة بك في مستر فيكس</h1>
-                <Link className="btn btn-success request-manager-link w-25 mx-auto mb-4" href="/dashboard/admin/admin-panel/requests-manager">إدارة الطلبات</Link>
-                <Link className="btn btn-success manager-link w-25 mx-auto mb-4" href="/dashboard/admin/admin-panel/passwords-reset">إعادة تعيين كلمات السر</Link>
-                <Link className="btn btn-success manager-link w-25 mx-auto mb-4" href="/dashboard/admin/admin-panel/ads-manager">إدارة الإعلانات</Link>
+                <div className="container">
+                    <h1 className="welcome-msg mb-4">مرحباً بك في لوحة التحكم الخاصة بك في مستر فيكس</h1>
+                    <Link className="btn btn-success request-manager-link w-25 mx-auto mb-4 link d-block" href="/dashboard/admin/admin-panel/requests-manager">إدارة الطلبات</Link>
+                    <Link className="btn btn-success manager-link w-25 mx-auto mb-4 link d-block" href="/dashboard/admin/admin-panel/passwords-reset">إعادة تعيين كلمات السر</Link>
+                    <Link className="btn btn-success manager-link w-25 mx-auto mb-4 link d-block" href="/dashboard/admin/admin-panel/ads-manager">إدارة الإعلانات</Link>
+                </div>
             </section>
             {/* End Content Section */}
         </div>

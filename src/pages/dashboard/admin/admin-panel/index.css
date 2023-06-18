@@ -6,3 +6,9 @@
 .admin-panel .content {
   min-height: inherit;
 }
+
+@media (max-width: 767px) {
+  .admin-panel .content .link {
+    width: 100% !important;
+  }
+}

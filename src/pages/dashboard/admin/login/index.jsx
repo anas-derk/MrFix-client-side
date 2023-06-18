@@ -53,7 +53,7 @@ const AdminLogin = () => {
                         required
                         onChange={(e) => setPassword(e.target.value.trim())}
                     />
-                    <button type="submit" className="btn btn-success ms-4">تسجيل الدخول</button>
+                    <button type="submit" className="btn btn-success d-block mx-auto mb-4">تسجيل الدخول</button>
                     <Link href="/forget-password" className="btn btn-danger">نسيت كلمة المرور</Link>
                 </form>
                 {errMsg && <p className="alert alert-danger">{errMsg}</p>}
