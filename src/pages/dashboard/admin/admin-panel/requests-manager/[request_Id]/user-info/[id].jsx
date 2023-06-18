@@ -85,7 +85,6 @@ export async function getServerSideProps(context) {
         userId = context.params.id;
     let res = await Axios.get(`${process.env.BASE_API_URL}/admin/requests/${requestId}/users/${userId}`);
     let result = await res.data;
-    console.log(result)
     return {
         props: { result },
     };
