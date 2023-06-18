@@ -8,6 +8,7 @@ import sliderImage3 from "../../public/images/Home/slider3.png";
 import Link from 'next/link';
 import Axios from "axios";
 import Carousel from 'react-bootstrap/Carousel';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 // تعريف دالة الصفحة الرئيسية 
 export default function Home({ result }) {
@@ -60,7 +61,12 @@ export default function Home({ result }) {
         {/* بداية كتابة كود ال jsx عنصر المدخل */}
         <section className="introduction">
           {/* بداية كتابة كود ال jsx عنصر السلايدر */}
-          <Carousel indicators={false} controls={true}>
+          <Carousel
+            indicators={false}
+            controls={true}
+            prevIcon={<IoIosArrowBack className='slider-control-icon arrow-left-icon' />}
+            nextIcon={<IoIosArrowForward className='slider-control-icon arrow-right-icon' />}
+          >
             <Carousel.Item>
               <Carousel.Caption>
                 <div className="container">

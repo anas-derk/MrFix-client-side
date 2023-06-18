@@ -18,8 +18,12 @@
         .introduction{
             .carousel{
                 min-height: inherit;
-                background-color: rgba(42, 108, 116, 0.35);
+                background-color: var(--main-color-five);
                 position: relative;
+                .slider-control-icon{
+                    color: var(--main-color-one);
+                    font-size: 35px;
+                }
                 .carousel-inner{
                     min-height: inherit;
                     .carousel-item{
