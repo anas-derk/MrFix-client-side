@@ -39,3 +39,9 @@
   border-radius: 10px;
   border: 2px solid var(--main-color-one);
 }
+
+@media (max-width: 767px) {
+  .sign-up .popup-box .popup {
+    width: 90%;
+  }
+}
