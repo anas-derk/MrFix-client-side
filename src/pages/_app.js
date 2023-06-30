@@ -30,22 +30,6 @@ export default function App({ Component, pageProps }) {
       {/* بداية كتابة معلومات عنصر ال head في ال html */}
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* بداية استيراد ملف التنسيق ا لخاص بالبوتستراب */}
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-          crossOrigin="anonymous"
-          />
-        {/* نهاية استيراد ملف التنسيق ا لخاص بالبوتستراب */}
-        {/* بداية استيراد الخطوط الخاصة بالموقع من غوغل */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Changa:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Lemonada:wght@300;400;500&display=swap" rel="stylesheet" />
-        {/* نهاية استيراد الخطوط الخاصة بالموقع من غوغل */}
       </Head>
       {/* نهاية كتابة معلومات عنصر ال head في ال html */}
       {/* بداية عرض الصفحة بناءً على الرابط الذي يضغط عليه المستخدم */}
