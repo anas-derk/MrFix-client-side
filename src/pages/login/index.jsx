@@ -109,15 +109,15 @@ export default function Login() {
                 // إرسال الطلب وتخزين الاستجابة في متغير
                 const res = await axios.get(`${process.env.BASE_API_URL}/users/login?text=${text}&password=${password}`);
                 // جلب البيانات الناتجة عن الاستجابة
-                const result = await res.data;
+                const result = res.data;
                 // التحقق من البيانات  المُرسلة كاستجابة
-                if (result === "عذراً ، الإيميل أو رقم الهاتف خاطئ أو كلمة السر خاطئة") {
+                if (result.error) {
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
                     let loginTimeout = setTimeout(() => {
                         // تعديل قيمة ال state المسماة isLoginStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                         setIsLoginStatus(false);
                         // تعديل قيمة ال state المسماة errMsg من أجل استخدامه لاحقاً في إظهار رسالة خطأ
-                        setErrorMsg(result);
+                        setErrorMsg(result.msg);
                         // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
                         let errorTimeout = setTimeout(() => {
                             // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
@@ -129,20 +129,25 @@ export default function Login() {
                     }, 2000);
                 } else {
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
-                    let loginTimeout = setTimeout(() => {
+                    let loginTimeout = setTimeout(async () => {
                         // تعديل قيمة ال state المسماة isLoginStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                         setIsLoginStatus(false);
                         // حذف المتعير الذي يحتوي المؤقت
                         clearTimeout(loginTimeout);
                         // تخزين نتيجة الاستجابة أي رقم معرّف المستخدم في التخزين المحلي
-                        localStorage.setItem("mr-fix-user-id", result);
+                        localStorage.setItem(process.env.userTokenInLocalStorage, result.data.token);
                         // إعادة التوجيه للصفحة الرئيسية بعد تسجيل الدخول
-                        router.push("/");
+                        await router.push("/");
                     }, 2000);
                 }
             } catch (err) {
                 // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
-                console.log(err);
+                setIsLoginStatus(false);
+                setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
+                let errorTimeout = setTimeout(() => {
+                    setErrorMsg("");
+                    clearTimeout(errorTimeout);
+                }, 5000);
             }
         }
     }
