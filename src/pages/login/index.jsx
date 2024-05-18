@@ -28,7 +28,7 @@ export default function Login() {
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
         // جلب رقم معرّف المستخدم من التخزين المحلي
-        const userToken = localStorage.getItem(process.env.userTokenInLocalStorage);
+        const userToken = localStorage.getItem(process.env.userTokenNameInLocalStorage);
         // التحقق من أنّ الرقم موجود من أجل التأكد هل هذا الرقم لمستخدم ما أم تمّ التلاعب به
         if (userToken) {
             getUserInfo()
@@ -36,13 +36,13 @@ export default function Login() {
                     if (!result.error) {
                         await router.push("/");
                     } else {
-                        localStorage.removeItem(process.env.userTokenInLocalStorage);
+                        localStorage.removeItem(process.env.userTokenNameInLocalStorage);
                         setIsLoadingPage(false);
                     }
                 })
                 .catch(async (err) => {
                     if (err?.response?.data?.msg === "Unauthorized Error") {
-                        localStorage.removeItem(process.env.userTokenInLocalStorage);
+                        localStorage.removeItem(process.env.userTokenNameInLocalStorage);
                         setIsLoadingPage(false);
                     } else {
                         setIsLoadingPage(false);
@@ -135,7 +135,7 @@ export default function Login() {
                         // حذف المتعير الذي يحتوي المؤقت
                         clearTimeout(loginTimeout);
                         // تخزين نتيجة الاستجابة أي رقم معرّف المستخدم في التخزين المحلي
-                        localStorage.setItem(process.env.userTokenInLocalStorage, result.data.token);
+                        localStorage.setItem(process.env.userTokenNameInLocalStorage, result.data.token);
                         // إعادة التوجيه للصفحة الرئيسية بعد تسجيل الدخول
                         await router.push("/");
                     }, 2000);

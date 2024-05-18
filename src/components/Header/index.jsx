@@ -12,21 +12,23 @@ import { useRouter } from "next/router";
 // تعريف دالة مكون الرأس
 export default function Header() {
     // تعريف المتغيرات المطلوبة
-    const [userId, setUserId] = useState("");
+    const [token, setToken] = useState("");
     const router = useRouter();
     // تعريف دالة لعملية تسجيل الخروج
-    const logout = () => {
+    const logout = async () => {
         // حذف المفتاح الذي يحوي رقم معرّف المستخدم من التخزين المحلي
-        localStorage.removeItem("mr-fix-user-id");
+        localStorage.removeItem(process.env.userTokenInLocalStorage);
         // إعادة تحميل الصفحة بعد االحذف لحذف وإظهار الأزرار المناسبة بناءً على حالة عدم تسجيل الدخول
-        router.reload();
+        await router.push("/login");
     }
     // التصريح عن دالة ال useEffect المطلوبة لجلب رقم معرّف المستخدم عند تحميل الصفحة
     useEffect(() => {
         // جلب معرّف المستخدم من التخزين المحلي
-        let userId = localStorage.getItem("mr-fix-user-id");
-        // إسناد قيمة المعرّف لل state المعرّفة سابقاً
-        setUserId(userId);
+        let userToken = localStorage.getItem(process.env.userTokenInLocalStorage);
+        if (userToken) {
+            // إسناد قيمة الرمز لل state المعرّفة سابقاً
+            setToken(userToken);
+        }
     }, []);
     return (
         // بداية مكون رأس الصفحة
@@ -64,7 +66,7 @@ export default function Header() {
                                 </Link>
                             </li>
                             {/* إخفاء أو إظهار أزرار تسجيل الدخول والخروج بناءً على رقم معرّف المستخدم هل هو موجود أم لا */}
-                            {!userId && <>
+                            {!token && <>
                                 <li className="nav-item">
                                     <Link className="nav-link" href="/login">
                                         <BiLogIn />
@@ -79,7 +81,7 @@ export default function Header() {
                                 </li>
                             </>}
                             {/* إخفاء أو إظهار أزرار الملف الشخصي الدخول وطلب الخدمة بناءً على رقم معرّف المستخدم هل هو موجود أم لا */}
-                            {userId && <>
+                            {token && <>
                                 <li className="nav-item">
                                     <Link className="nav-link" href="/profile">
                                         <CgProfile />

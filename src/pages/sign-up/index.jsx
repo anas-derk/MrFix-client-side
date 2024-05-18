@@ -35,7 +35,7 @@ export default function Signup() {
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
         // جلب رقم معرّف المستخدم من التخزين المحلي
-        const userToken = localStorage.getItem(process.env.userTokenInLocalStorage);
+        const userToken = localStorage.getItem(process.env.userTokenNameInLocalStorage);
         // التحقق من أنّ الرقم موجود من أجل التأكد هل هذا الرقم لمستخدم ما أم تمّ التلاعب به
         if (userToken) {
             getUserInfo()
@@ -43,13 +43,13 @@ export default function Signup() {
                     if (!result.error) {
                         await router.push("/");
                     } else {
-                        localStorage.removeItem(process.env.userTokenInLocalStorage);
+                        localStorage.removeItem(process.env.userTokenNameInLocalStorage);
                         setIsLoadingPage(false);
                     }
                 })
                 .catch(async (err) => {
                     if (err?.response?.data?.msg === "Unauthorized Error") {
-                        localStorage.removeItem(process.env.userTokenInLocalStorage);
+                        localStorage.removeItem(process.env.userTokenNameInLocalStorage);
                         setIsLoadingPage(false);
                     } else {
                         setIsLoadingPage(false);
@@ -189,7 +189,7 @@ export default function Signup() {
                 // جلب البيانات الناتجة عن الاستجابة
                 const result = await res.data;
                 // التحقق من البيانات  المُرسلة كاستجابة
-                if (result === "تم بنجاح إنشاء الحساب") {
+                if (!result.error) {
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
                     let successStatusTimeout = setTimeout(() => {
                         // تعديل قيمة ال state المسماة isSignupStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
@@ -214,7 +214,12 @@ export default function Signup() {
                 }
             } catch (err) {
                 // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
-                console.log(err);
+                setIsSignupStatus(false);
+                setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
+                let errorTimeout = setTimeout(() => {
+                    setErrorMsg("");
+                    clearTimeout(errorTimeout);
+                }, 5000);
             }
         }
     }
