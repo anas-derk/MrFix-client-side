@@ -11,8 +11,6 @@ import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
 export default function ContactUs() {
     const [isLoadingPage, setIsLoadingPage] = useState(true);
     const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
-    // تعريف راوتر لاستخدامه في التعامل مع روابط الصفحات
-    const router = useRouter();
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
         if (!isLoadingPage) {
