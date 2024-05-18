@@ -9,6 +9,8 @@ import axios from 'axios';
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineClockCircle } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { getUserInfo } from '../../../public/global_functions/popular';
+import LoaderPage from '@/components/LoaderPage';
+import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
 
 // تعريف دالة صفحة تسجيل الدخول 
 export default function Login() {
@@ -25,11 +27,6 @@ export default function Login() {
     const router = useRouter();
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
-        // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
-        const header = document.querySelector("#__next .page-header"),
-            pageContent = document.querySelector(".login .page-content");
-        // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
-        pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
         // جلب رقم معرّف المستخدم من التخزين المحلي
         const userToken = localStorage.getItem(process.env.userTokenInLocalStorage);
         // التحقق من أنّ الرقم موجود من أجل التأكد هل هذا الرقم لمستخدم ما أم تمّ التلاعب به
@@ -56,6 +53,15 @@ export default function Login() {
             setIsLoadingPage(false);
         }
     }, []);
+    useEffect(() => {
+        if (!isLoadingPage) {
+            // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
+            const header = document.querySelector("#__next .page-header"),
+                pageContent = document.querySelector(".login .page-content");
+            // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
+            pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
+        }
+    }, isLoadingPage);
     // تعريف دالة معالجة تسجيل الدخول
     const login = async (e) => {
         // منع إرسال المعلومات لنفس الصفحة
@@ -148,76 +154,80 @@ export default function Login() {
                 <title>مستر فيكس - تسجيل الدخول</title>
             </Head>
             {/* نهاية كتابة معلومات عنصر ال head في ال html */}
-            {/* بداية عرض مكون الرأس الذي أنشأناه */}
-            <Header />
-            {/* نهاية عرض مكون الرأس الذي أنشأناه */}
-            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
-            <div className="page-content p-4">
-                {/* بداية مكون الحاوية من البوتستراب */}
-                <div className="container">
-                    {/* بداية مكون الشبكة من البوتستراب */}
-                    <div className="row align-items-center">
-                        {/* بداية مكون العمود */}
-                        <div className="col-lg-7 p-5">
-                            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى login-form */}
-                            <form className="login-form bg-white p-4 text-center" onSubmit={login}>
-                                <h4 className='mb-4'>أهلاً بعودتك .</h4>
-                                <input
-                                    type="text"
-                                    placeholder="البريد الالكتروني أو رقم الجوال"
-                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
-                                    className={`form-control p-3 ${errors["text"] ? "border border-danger mb-2" : "mb-4"}`}
-                                    onChange={(e) => setText(e.target.value.trim())}
-                                />
-                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                {errors["text"] && <p className='error-msg text-danger'>{errors["text"]}</p>}
-                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                <div className='password-field-box'>
+            {!isLoadingPage && !isErrorMsgOnLoadingThePage && <>
+                {/* بداية عرض مكون الرأس الذي أنشأناه */}
+                <Header />
+                {/* نهاية عرض مكون الرأس الذي أنشأناه */}
+                {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
+                <div className="page-content p-4">
+                    {/* بداية مكون الحاوية من البوتستراب */}
+                    <div className="container">
+                        {/* بداية مكون الشبكة من البوتستراب */}
+                        <div className="row align-items-center">
+                            {/* بداية مكون العمود */}
+                            <div className="col-lg-7 p-5">
+                                {/* بداية كتابة كود ال jsx لعنصر ال html المسمى login-form */}
+                                <form className="login-form bg-white p-4 text-center" onSubmit={login}>
+                                    <h4 className='mb-4'>أهلاً بعودتك .</h4>
                                     <input
-                                        type={isVisiblePassword ? "text" : "password"}
-                                        placeholder="كلمة السر"
+                                        type="text"
+                                        placeholder="البريد الالكتروني أو رقم الجوال"
                                         // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
-                                        className={`form-control p-3 ${errors["password"] ? "border border-danger mb-2" : "mb-4"}`}
-                                        onChange={(e) => setPassword(e.target.value.trim())}
+                                        className={`form-control p-3 ${errors["text"] ? "border border-danger mb-2" : "mb-4"}`}
+                                        onChange={(e) => setText(e.target.value.trim())}
                                     />
-                                    <div className='icon-box'>
-                                        {!isVisiblePassword && <AiOutlineEye className='eye-icon icon' onClick={() => setIsVisiblePassword(value => value = !value)} />}
-                                        {isVisiblePassword && <AiOutlineEyeInvisible className='invisible-eye-icon icon' onClick={() => setIsVisiblePassword(value => value = !value)} />}
+                                    {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
+                                    {errors["text"] && <p className='error-msg text-danger'>{errors["text"]}</p>}
+                                    {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
+                                    <div className='password-field-box'>
+                                        <input
+                                            type={isVisiblePassword ? "text" : "password"}
+                                            placeholder="كلمة السر"
+                                            // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
+                                            className={`form-control p-3 ${errors["password"] ? "border border-danger mb-2" : "mb-4"}`}
+                                            onChange={(e) => setPassword(e.target.value.trim())}
+                                        />
+                                        <div className='icon-box'>
+                                            {!isVisiblePassword && <AiOutlineEye className='eye-icon icon' onClick={() => setIsVisiblePassword(value => value = !value)} />}
+                                            {isVisiblePassword && <AiOutlineEyeInvisible className='invisible-eye-icon icon' onClick={() => setIsVisiblePassword(value => value = !value)} />}
+                                        </div>
                                     </div>
-                                </div>
-                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                {errors["password"] && <p className='error-msg text-danger'>{errors["password"]}</p>}
-                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                <Link href="/forget-password" className='mb-3 btn w-100 text-start'>نسيت كلمة السر !</Link>
-                                {/* في حالة لم يكن لدينا حالة تسجيل الدخول في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
-                                {!isLoginStatus && !errMsg && <button type='submit' className='btn login-btn w-100 p-3'>تسجيل الدخول</button>}
-                                {/* في حالة لم يكن لدينا حالة تسجيل الدخول في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
-                                {/* في حالة كان لدينا حالة تسجيل الدخول في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
-                                {isLoginStatus && <button className='btn wait-login-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
-                                    <span className='ms-2'>جاري تسجيل الدخول ...</span>
-                                    <AiOutlineClockCircle />
-                                </button>}
-                                {/* في حالة كان لدينا حالة تسجيل الدخول في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
-                                {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
-                                {errMsg && <button className='btn btn-danger error-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
-                                    {errMsg}
-                                </button>}
-                                {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
-                            </form>
-                            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى login-form */}
+                                    {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
+                                    {errors["password"] && <p className='error-msg text-danger'>{errors["password"]}</p>}
+                                    {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
+                                    <Link href="/forget-password" className='mb-3 btn w-100 text-start'>نسيت كلمة السر !</Link>
+                                    {/* في حالة لم يكن لدينا حالة تسجيل الدخول في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
+                                    {!isLoginStatus && !errMsg && <button type='submit' className='btn login-btn w-100 p-3'>تسجيل الدخول</button>}
+                                    {/* في حالة لم يكن لدينا حالة تسجيل الدخول في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
+                                    {/* في حالة كان لدينا حالة تسجيل الدخول في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
+                                    {isLoginStatus && <button className='btn wait-login-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
+                                        <span className='ms-2'>جاري تسجيل الدخول ...</span>
+                                        <AiOutlineClockCircle />
+                                    </button>}
+                                    {/* في حالة كان لدينا حالة تسجيل الدخول في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
+                                    {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
+                                    {errMsg && <button className='btn btn-danger error-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
+                                        {errMsg}
+                                    </button>}
+                                    {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
+                                </form>
+                                {/* بداية كتابة كود ال jsx لعنصر ال html المسمى login-form */}
+                            </div>
+                            {/* نهاية مكون العمود */}
+                            {/* بداية مكون العمود */}
+                            <div className="col-lg-5">
+                                <img src={loginImage.src} alt="Login Image !!" className='login-img' />
+                            </div>
+                            {/* نهاية مكون العمود */}
                         </div>
-                        {/* نهاية مكون العمود */}
-                        {/* بداية مكون العمود */}
-                        <div className="col-lg-5">
-                            <img src={loginImage.src} alt="Login Image !!" className='login-img' />
-                        </div>
-                        {/* نهاية مكون العمود */}
+                        {/* نهاية مكون الشبكة من البوتستراب */}
                     </div>
-                    {/* نهاية مكون الشبكة من البوتستراب */}
+                    {/* نهاية مكون الحاوية من البوتستراب */}
                 </div>
-                {/* نهاية مكون الحاوية من البوتستراب */}
-            </div>
-            {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
+                {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
+            </>}
+            {isLoadingPage && !isErrorMsgOnLoadingThePage && <LoaderPage />}
+            {isErrorMsgOnLoadingThePage && <ErrorOnLoadingThePage />}
         </div>
         // نهاية كتابة كود ال jsx لصفحة تسجيل الدخول
     );

@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "mr-fix-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,10 +15,6 @@
     "react": "18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "18.2.0",
-    "react-icons": "^4.8.0"
-  },
-  "engines": {
-    "node": "18.16.0",
-    "npm": "9.5.1"
+    "react-icons": "^4.12.0"
   }
 }
