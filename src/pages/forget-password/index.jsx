@@ -7,10 +7,14 @@ import global_functions from "../../../public/global_functions/validations";
 import { useRouter } from 'next/router';
 import Axios from "axios";
 import { AiOutlineClockCircle } from "react-icons/ai";
+import LoaderPage from '@/components/LoaderPage';
+import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
 
 // تعريف دالة مكون نسيت كلمة السر
 export default function ForgetPassword() {
     // تعريف المتغيرات المطلوب كــ state
+    const [isLoadingPage, setIsLoadingPage] = useState(true);
+    const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
     const [email, setEmail] = useState("");
     const [errors, setErrors] = useState({});
     const [isWaitCheckStatus, setIsWaitCheckStatus] = useState("");
@@ -19,16 +23,41 @@ export default function ForgetPassword() {
     const router = useRouter();
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
-        // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
-        const header = document.querySelector("#__next .page-header"),
-            pageContent = document.querySelector(".forget-password .page-content");
-        // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
-        pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
-        // جلب معرّف المستخدم من التخزين المحلي
-        const userId = localStorage.getItem("mr-fix-user-id");
-        // في حالة كان هنالك معرّف للمستخدم عندها نرجع المستخدم فإننا نعيد توجيهه للصفحة الرئيسية لأنه مسجّل للدخول
-        if (userId) router.push("/");
+        // جلب رقم معرّف المستخدم من التخزين المحلي
+        const userToken = localStorage.getItem(process.env.userTokenInLocalStorage);
+        // التحقق من أنّ الرقم موجود من أجل التأكد هل هذا الرقم لمستخدم ما أم تمّ التلاعب به
+        if (userToken) {
+            getUserInfo()
+                .then(async (result) => {
+                    if (!result.error) {
+                        await router.push("/");
+                    } else {
+                        localStorage.removeItem(process.env.userTokenInLocalStorage);
+                        setIsLoadingPage(false);
+                    }
+                })
+                .catch(async (err) => {
+                    if (err?.response?.data?.msg === "Unauthorized Error") {
+                        localStorage.removeItem(process.env.userTokenInLocalStorage);
+                        setIsLoadingPage(false);
+                    } else {
+                        setIsLoadingPage(false);
+                        setIsErrorMsgOnLoadingThePage(true);
+                    }
+                });
+        } else {
+            setIsLoadingPage(false);
+        }
     }, []);
+    useEffect(() => {
+        if (!isLoadingPage) {
+            // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
+            const header = document.querySelector("#__next .page-header"),
+                pageContent = document.querySelector(".login .page-content");
+            // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
+            pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
+        }
+    }, isLoadingPage);
     // تعريف دالة معالجة نسيان كلمة المرور
     const forgetPassword = async (e) => {
         // منع إرسال المعلومات لنفس الصفحة
@@ -108,63 +137,67 @@ export default function ForgetPassword() {
                 <title>مستر فيكس - نسيت كلمة السر</title>
             </Head>
             {/* نهاية كتابة معلومات عنصر ال head في ال html */}
-            {/* بداية عرض مكون الرأس الذي أنشأناه */}
-            <Header />
-            {/* نهاية عرض مكون الرأس الذي أنشأناه */}
-            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
-            <div className="page-content p-4">
-                {/* بداية مكون الحاوية من البوتستراب */}
-                <div className="container">
-                    {/* بداية مكون الشبكة من البوتستراب */}
-                    <div className="row align-items-center">
-                        {/* بداية مكون العمود */}
-                        <div className="col-lg-6 p-5">
-                            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى forget-password-form */}
-                            <form
-                                className="forget-password-form bg-white p-4 pt-5 pb-5 text-center mt-4"
-                                onSubmit={forgetPassword}
-                            >
-                                <h4 className='mb-5'>نسيت كلمة السر !</h4>
-                                <input
-                                    type="text"
-                                    placeholder="البريد الالكتروني"
-                                    // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
-                                    className={`form-control p-3 ${errors["email"] ? "border border-danger mb-2" : "mb-5"}`}
-                                    onChange={(e) => setEmail(e.target.value.trim())}
-                                />
-                                {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                {errors["email"] && <p className='error-msg text-danger'>{errors["email"]}</p>}
-                                {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                {/* في حالة لم يكن لدينا حالة التحقق في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
-                                {!isWaitCheckStatus && !errMsg && <button type='submit' className='btn forget-password-btn w-100 p-3'>إرسال</button>}
-                                <p className='text-danger mt-4 mb-0 note'>تنويه: في حال لم يكن لديك إيميل يرجى التواصل على رقم الواتس
-                                    09444444444444444444
-                                </p>
-                                {/* في حالة كان لدينا حالة التحقق في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
-                                {isWaitCheckStatus && <button className='btn wait-check-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
-                                    <span className='ms-2'>جاري التحقق ...</span>
-                                    <AiOutlineClockCircle />
-                                </button>}
-                                {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
-                                {errMsg && <button className='btn btn-danger error-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
-                                    {errMsg}
-                                </button>}
-                                {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
-                            </form>
-                            {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى forget-password-form */}
+            {!isLoadingPage && !isErrorMsgOnLoadingThePage && <>
+                {/* بداية عرض مكون الرأس الذي أنشأناه */}
+                <Header />
+                {/* نهاية عرض مكون الرأس الذي أنشأناه */}
+                {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
+                <div className="page-content p-4">
+                    {/* بداية مكون الحاوية من البوتستراب */}
+                    <div className="container">
+                        {/* بداية مكون الشبكة من البوتستراب */}
+                        <div className="row align-items-center">
+                            {/* بداية مكون العمود */}
+                            <div className="col-lg-6 p-5">
+                                {/* بداية كتابة كود ال jsx لعنصر ال html المسمى forget-password-form */}
+                                <form
+                                    className="forget-password-form bg-white p-4 pt-5 pb-5 text-center mt-4"
+                                    onSubmit={forgetPassword}
+                                >
+                                    <h4 className='mb-5'>نسيت كلمة السر !</h4>
+                                    <input
+                                        type="text"
+                                        placeholder="البريد الالكتروني"
+                                        // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
+                                        className={`form-control p-3 ${errors["email"] ? "border border-danger mb-2" : "mb-5"}`}
+                                        onChange={(e) => setEmail(e.target.value.trim())}
+                                    />
+                                    {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
+                                    {errors["email"] && <p className='error-msg text-danger'>{errors["email"]}</p>}
+                                    {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
+                                    {/* في حالة لم يكن لدينا حالة التحقق في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
+                                    {!isWaitCheckStatus && !errMsg && <button type='submit' className='btn forget-password-btn w-100 p-3'>إرسال</button>}
+                                    <p className='text-danger mt-4 mb-0 note'>تنويه: في حال لم يكن لديك إيميل يرجى التواصل على رقم الواتس
+                                        09444444444444444444
+                                    </p>
+                                    {/* في حالة كان لدينا حالة التحقق في الانتظار ولا يوجد أي خطأ نظهر المكون التالي */}
+                                    {isWaitCheckStatus && <button className='btn wait-check-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
+                                        <span className='ms-2'>جاري التحقق ...</span>
+                                        <AiOutlineClockCircle />
+                                    </button>}
+                                    {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
+                                    {errMsg && <button className='btn btn-danger error-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
+                                        {errMsg}
+                                    </button>}
+                                    {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
+                                </form>
+                                {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى forget-password-form */}
+                            </div>
+                            {/* نهاية مكون العمود */}
+                            {/* بداية مكون العمود */}
+                            <div className="col-lg-6">
+                                <img src={ForgetPasswordImage.src} alt="Forget Password Image !!" className='forget-password-img' />
+                            </div>
+                            {/* نهاية مكون العمود */}
                         </div>
-                        {/* نهاية مكون العمود */}
-                        {/* بداية مكون العمود */}
-                        <div className="col-lg-6">
-                            <img src={ForgetPasswordImage.src} alt="Forget Password Image !!" className='forget-password-img' />
-                        </div>
-                        {/* نهاية مكون العمود */}
+                        {/* نهاية مكون الشبكة من البوتستراب */}
                     </div>
-                    {/* نهاية مكون الشبكة من البوتستراب */}
+                    {/* نهاية مكون الحاوية من البوتستراب */}
                 </div>
-                {/* نهاية مكون الحاوية من البوتستراب */}
-            </div>
-            {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
+                {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
+            </>}
+            {isLoadingPage && !isErrorMsgOnLoadingThePage && <LoaderPage />}
+            {isErrorMsgOnLoadingThePage && <ErrorOnLoadingThePage />}
         </div>
         // نهاية كتابة كود ال jsx لصفحة نسيت كلمة السر
     );

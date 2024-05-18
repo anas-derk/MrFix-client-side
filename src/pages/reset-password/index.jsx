@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 // تعريف دالة صفحة إعادة ضبط كلمة السر 
 export default function ResetPassword() {
     // تعريف المتغيرات المطلوب كــ state
+    const [isLoadingPage, setIsLoadingPage] = useState(true);
+    const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
     const [typedUserCode, setTypedUserCode] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [newConfirmPassword, setNewConfirmPassword] = useState("");
