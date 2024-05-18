@@ -16,8 +16,7 @@ function isValidPassword (password) {
 
 // تعريف دالة للتحقق من رقم الموبايل هو رقم صالح أم لا ( رقم سوري أم لا )
 function isValidMobilePhone(mobilePhone) {
-    const mobilePhoneRegex = /^(093|099|098|094|095|096)\d{7}$/;
-    return mobilePhoneRegex.test(mobilePhone);
+    return mobilePhone.match(/^(093|099|098|094|095|096)\d{7}$/);
 }
 
 // تعريف دالة للتحقق من قيم المدخلات
