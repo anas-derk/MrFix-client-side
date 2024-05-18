@@ -4,14 +4,17 @@ import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
 import loginImage from "../../../public/images/Login/login.png";
 import Link from 'next/link';
-import global_functions from '../../../public/global_functions/validations';
-import Axios from 'axios';
+import { inputValuesValidation } from '../../../public/global_functions/validations';
+import axios from 'axios';
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineClockCircle } from "react-icons/ai";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
+import { getUserInfo } from '../../../public/global_functions/popular';
 
 // تعريف دالة صفحة تسجيل الدخول 
 export default function Login() {
     // تعريف المتغيرات المطلوب كــ state
+    const [isLoadingPage, setIsLoadingPage] = useState(true);
+    const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
     const [text, setText] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
@@ -27,28 +30,30 @@ export default function Login() {
             pageContent = document.querySelector(".login .page-content");
         // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
         pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
-        // Start Define Function To Check If User Exist
-        async function fetchData(userId) {
-            try {
-                let res = await Axios.get(`${process.env.BASE_API_URL}/users/user-info/${userId}`);
-                let result = await res.data;
-                if (result === "عذراً ، المستخدم غير موجود") {
-                    localStorage.clear();
-                    router.push("/login");
-                } else {
-                    router.push("/");
-                }
-            }
-            catch (err) {
-                router.push("/");
-            }
-        }
         // جلب رقم معرّف المستخدم من التخزين المحلي
-        let userId = localStorage.getItem("mr-fix-user-id");
+        const userToken = localStorage.getItem(process.env.userTokenInLocalStorage);
         // التحقق من أنّ الرقم موجود من أجل التأكد هل هذا الرقم لمستخدم ما أم تمّ التلاعب به
-        if (userId) {
-            // استدعاء دالة جلب معلومات المستخدم ذو المعرّف السابق
-            fetchData(userId);
+        if (userToken) {
+            getUserInfo()
+                .then(async (result) => {
+                    if (!result.error) {
+                        await router.push("/");
+                    } else {
+                        localStorage.removeItem(process.env.userTokenInLocalStorage);
+                        setIsLoadingPage(false);
+                    }
+                })
+                .catch(async (err) => {
+                    if (err?.response?.data?.msg === "Unauthorized Error") {
+                        localStorage.removeItem(process.env.userTokenInLocalStorage);
+                        setIsLoadingPage(false);
+                    } else {
+                        setIsLoadingPage(false);
+                        setIsErrorMsgOnLoadingThePage(true);
+                    }
+                });
+        } else {
+            setIsLoadingPage(false);
         }
     }, []);
     // تعريف دالة معالجة تسجيل الدخول
@@ -58,7 +63,7 @@ export default function Login() {
         // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
         setErrors({});
         // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
-        const errorsObject = global_functions.inputValuesValidation(
+        const errorsObject = inputValuesValidation(
             [
                 {
                     name: "text",
@@ -96,7 +101,7 @@ export default function Login() {
             // بداية محاولة إرسال الطلب
             try {
                 // إرسال الطلب وتخزين الاستجابة في متغير
-                const res = await Axios.get(`${process.env.BASE_API_URL}/users/login?text=${text}&password=${password}`);
+                const res = await axios.get(`${process.env.BASE_API_URL}/users/login?text=${text}&password=${password}`);
                 // جلب البيانات الناتجة عن الاستجابة
                 const result = await res.data;
                 // التحقق من البيانات  المُرسلة كاستجابة

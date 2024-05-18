@@ -4,6 +4,8 @@ const nextConfig = {
   swcMinify: true,
   env: {
     BASE_API_URL: process.env.NODE_ENV === "development" ? "http://localhost:4000" : "https://api.mr-fix2023.com",
+    userTokenInLocalStorage: "mr-fix-user-token",
+    adminTokenInLocalStorage: "mr-fix-admin-token",
   },
   async headers() {
     return [
