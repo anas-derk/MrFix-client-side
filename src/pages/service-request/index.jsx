@@ -9,10 +9,14 @@ import Axios from "axios";
 import { useRouter } from 'next/router';
 import global_functions from "../../../public/global_functions/validations";
 import { AiOutlineClockCircle } from "react-icons/ai";
+import LoaderPage from '@/components/LoaderPage';
+import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
 
 // تعريف دالة صفحة طلب خدمة 
 export default function ServiceRequest() {
     // تعريف المتغيرات المطلوب كــ state
+    const [isLoadingPage, setIsLoadingPage] = useState(true);
+    const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
     const [requestType, setRequestType] = useState("");
     const [serviceType, setServiceType] = useState("");
     const [explainAndNewAddress, setExplainAndNewAddress] = useState("");
@@ -47,37 +51,37 @@ export default function ServiceRequest() {
     const router = useRouter();
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
-        // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
-        const header = document.querySelector("#__next .page-header"),
-            pageContent = document.querySelector(".service-request .page-content");
-        // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
-        pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
-        // جلب رقم معرّف المستخدم من التخزين المحلي
-        const id = localStorage.getItem("mr-fix-user-id");
-        // تخزينه في متغير معرف المستخدم كــ state
-        setUserId(id);
-        // التحقق من أنّ الرقم غير موجود
-        if (!id) {
-            // في حالة الرقم غير موجود نعيد التوجيه إلى صفحة تسجيل الدخول
-            router.push("/login");
-        } else {
-            // في حالة الرقم موجود نتأكد من أنّ هذا الرقم موجود فعلاً في قاعدة البيانات عن طريق جلب بيانات المستخدم ذو المعرّف السابق
-            async function fetchData(userId) {
-                try {
-                    let res = await Axios.get(`${process.env.BASE_API_URL}/users/user-info/${userId}`);
-                    let result = await res.data;
-                    if (result === "عذراً ، المستخدم غير موجود") {
-                        localStorage.clear();
-                        router.push("/login");
+        if (!isLoadingPage) {
+            // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
+            const header = document.querySelector("#__next .page-header"),
+                pageContent = document.querySelector(".service-request .page-content");
+            // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
+            pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
+        }
+    }, [isLoadingPage]);
+    useEffect(() => {
+        const userToken = localStorage.getItem(process.env.userTokenNameInLocalStorage);
+        if (userToken) {
+            getUserInfo()
+                .then(async (result) => {
+                    if (!result.error) {
+                        setIsLoadingPage(false);
                     } else {
-                        setUserData(result);
+                        localStorage.removeItem(process.env.userTokenNameInLocalStorage);
+                        await router.replace("/login");
                     }
-                }
-                catch (err) {
-                    setErrorInFetchUserDataMsg("عذراً حدث خطأ ، الرجاء إعادة المحاولة");
-                }
-            }
-            fetchData(id);
+                })
+                .catch(async (err) => {
+                    if (err?.response?.data?.msg === "Unauthorized Error") {
+                        localStorage.removeItem(process.env.userTokenNameInLocalStorage);
+                        await router.replace("/login");
+                    } else {
+                        setIsLoadingPage(false);
+                        setIsErrorMsgOnLoadingThePage(true);
+                    }
+                });
+        } else {
+            router.replace("/login");
         }
     }, []);
     // تعريف دالة إرسال طلب لطلب خدمة للباك ايند
@@ -129,28 +133,28 @@ export default function ServiceRequest() {
                     },
                 },
                 serviceType !== "دهان وعزل"
-                && serviceType !== "نقل الأثاث"
-                && serviceType !== "التنظيف"
-                && serviceType !== "صيانة المنازل المؤجرة قبل الانتقال إليها"
-                && serviceType !== "اقتراحات تغيير ديكور واستغلال المساحات"  
-                ? {
-                    name: "fileList2",
-                    value: fileList2,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                    && serviceType !== "نقل الأثاث"
+                    && serviceType !== "التنظيف"
+                    && serviceType !== "صيانة المنازل المؤجرة قبل الانتقال إليها"
+                    && serviceType !== "اقتراحات تغيير ديكور واستغلال المساحات"
+                    ? {
+                        name: "fileList2",
+                        value: fileList2,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                            isImages: {
+                                msg: "عذراً ، يجب أن يكون الملف أو الملفات صور من امتداد png أو jpg !!"
+                            },
                         },
-                        isImages: {
-                            msg: "عذراً ، يجب أن يكون الملف أو الملفات صور من امتداد png أو jpg !!"
+                    } : {
+                        name: "fileList2",
+                        value: fileList2,
+                        rules: {
+                            isRequired: undefined,
                         },
                     },
-                }: {
-                    name: "fileList2",
-                    value: fileList2,
-                    rules: {
-                        isRequired: undefined,
-                    },
-                },
                 {
                     name: "preferredDateOfVisit",
                     value: preferredDateOfVisit,
@@ -253,8 +257,8 @@ export default function ServiceRequest() {
                         setIsSuccessfulyStatus(true);
                         // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
                         setTimeout(() => {
-                        // تعديل قيمة ال state المسماة isSuccessfulyStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة النجاح
-                        setIsSuccessfulyStatus(false);
+                            // تعديل قيمة ال state المسماة isSuccessfulyStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة النجاح
+                            setIsSuccessfulyStatus(false);
                             // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانية ونصف
                             setTimeout(() => {
                                 // إعادة تحميل الصفحة من أجل حذف بيانات الحقول لإتاحة الإمكانية للمستخدم من إرسال طلب جديد إن أراد
@@ -289,7 +293,8 @@ export default function ServiceRequest() {
                 <title>مستر فيكس - طلب خدمة</title>
             </Head>
             {/* نهاية كتابة معلومات عنصر ال head في ال html */}
-            {/* بداية عرض مكون الرأس الذي أنشأناه */}
+            {!isLoadingPage && !isErrorMsgOnLoadingThePage && <>
+                {/* بداية عرض مكون الرأس الذي أنشأناه */}
             <Header />
             {/* نهاية عرض مكون الرأس الذي أنشأناه */}
             {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
@@ -441,6 +446,9 @@ export default function ServiceRequest() {
                 {/* نهاية مكون الحاوية من البوتستراب */}
             </section>
             {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
+            </>}
+            {isLoadingPage && !isErrorMsgOnLoadingThePage && <LoaderPage />}
+            {isErrorMsgOnLoadingThePage && <ErrorOnLoadingThePage />}
         </div>
         // نهاية كتابة كود ال jsx لصفحة طلب الخدمة
     );

@@ -27,6 +27,15 @@ export default function Login() {
     const router = useRouter();
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
+        if (!isLoadingPage) {
+            // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
+            const header = document.querySelector("#__next .page-header"),
+                pageContent = document.querySelector(".login .page-content");
+            // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
+            pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
+        }
+    }, isLoadingPage);
+    useEffect(() => {
         // جلب رقم معرّف المستخدم من التخزين المحلي
         const userToken = localStorage.getItem(process.env.userTokenNameInLocalStorage);
         // التحقق من أنّ الرقم موجود من أجل التأكد هل هذا الرقم لمستخدم ما أم تمّ التلاعب به
@@ -53,15 +62,6 @@ export default function Login() {
             setIsLoadingPage(false);
         }
     }, []);
-    useEffect(() => {
-        if (!isLoadingPage) {
-            // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
-            const header = document.querySelector("#__next .page-header"),
-                pageContent = document.querySelector(".login .page-content");
-            // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
-            pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
-        }
-    }, isLoadingPage);
     // تعريف دالة معالجة تسجيل الدخول
     const login = async (e) => {
         // منع إرسال المعلومات لنفس الصفحة
