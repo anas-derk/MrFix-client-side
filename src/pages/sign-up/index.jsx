@@ -64,117 +64,117 @@ export default function Signup() {
         if (!isLoadingPage) {
             // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
             const header = document.querySelector("#__next .page-header"),
-                pageContent = document.querySelector(".login .page-content");
+                pageContent = document.querySelector(".sign-up .page-content");
             // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
             pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
         }
     }, isLoadingPage);
     // تعريف دالة إرسال طلب إنشاء الحساب للباك ايند
     const createAccount = async (e) => {
-        // منع إرسال المعلومات لنفس الصفحة
-        e.preventDefault();
-        // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
-        setErrors({});
-        // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
-        const errorsObject = global_functions.inputValuesValidation(
-            [
-                {
-                    name: "firstAndLastName",
-                    value: firstAndLastName,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        maxLength: {
-                            value: 30,
-                            msg: "عذراً ، يجب أن يكون عدد الأحرف على الأكثر 30",
-                        }
-                    },
-                },
-                {
-                    name: "mobilePhone",
-                    value: mobilePhone,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isValidMobilePhone: {
-                            msg: "عذراً ، يجب يكون رقم الهاتف من 10 أرقام ويجب أن يبدأ بإحدى الأرقام التالية : (093 أو 099 أو 098 أو 094 أو 095 أو 096 )",
+        try {
+            // منع إرسال المعلومات لنفس الصفحة
+            e.preventDefault();
+            // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
+            setErrors({});
+            // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
+            const errorsObject = global_functions.inputValuesValidation(
+                [
+                    {
+                        name: "firstAndLastName",
+                        value: firstAndLastName,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                            maxLength: {
+                                value: 30,
+                                msg: "عذراً ، يجب أن يكون عدد الأحرف على الأكثر 30",
+                            }
                         },
                     },
-                },
-                {
-                    name: "password",
-                    value: password,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isValidPassword: {
-                            value: password,
-                            msg: "عذراً ، يجب أن تكون كلمة السر تحتوي على الأقل 8 حروف أو أرقام أو كلاهما",
-                        },
-                    },
-                },
-                {
-                    name: "confirmPassword",
-                    value: confirmPassword,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isMatch: {
-                            value: password,
-                            msg: "عذراً ، لا يوجد تطابق بين كلمة السر وتأكيدها !!",
+                    {
+                        name: "mobilePhone",
+                        value: mobilePhone,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                            isValidMobilePhone: {
+                                msg: "عذراً ، يجب يكون رقم الهاتف من 10 أرقام ويجب أن يبدأ بإحدى الأرقام التالية : (093 أو 099 أو 098 أو 094 أو 095 أو 096 )",
+                            },
                         },
                     },
-                },
-                {
-                    name: "gender",
-                    value: gender,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                    {
+                        name: "password",
+                        value: password,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                            isValidPassword: {
+                                value: password,
+                                msg: "عذراً ، يجب أن تكون كلمة السر تحتوي على الأقل 8 حروف أو أرقام أو كلاهما",
+                            },
                         },
                     },
-                },
-                {
-                    name: "birthday",
-                    value: birthday,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                    {
+                        name: "confirmPassword",
+                        value: confirmPassword,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                            isMatch: {
+                                value: password,
+                                msg: "عذراً ، لا يوجد تطابق بين كلمة السر وتأكيدها !!",
+                            },
                         },
                     },
-                },
-                {
-                    name: "city",
-                    value: city,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                    {
+                        name: "gender",
+                        value: gender,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
                         },
                     },
-                },
-                {
-                    name: "address",
-                    value: address,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                    {
+                        name: "birthday",
+                        value: birthday,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
                         },
                     },
-                },
-            ]
-        );
-        // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
-        setErrors(errorsObject);
-        // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
-        if (Object.keys(errorsObject).length == 0) {
-            // تعديل قيمة ال state المسماة isSignupStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
-            setIsSignupStatus(true);
-            // بداية محاولة إرسال الطلب
-            try {
+                    {
+                        name: "city",
+                        value: city,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                        },
+                    },
+                    {
+                        name: "address",
+                        value: address,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                        },
+                    },
+                ]
+            );
+            // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
+            setErrors(errorsObject);
+            // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
+            if (Object.keys(errorsObject).length == 0) {
+                // تعديل قيمة ال state المسماة isSignupStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
+                setIsSignupStatus(true);
+                // بداية محاولة إرسال الطلب
                 // إرسال الطلب وتخزين الاستجابة في متغير
                 const res = await Axios.post(`${process.env.BASE_API_URL}/users/create-new-user`, {
                     firstAndLastName,
@@ -187,7 +187,7 @@ export default function Signup() {
                     address,
                 });
                 // جلب البيانات الناتجة عن الاستجابة
-                const result = await res.data;
+                const result = res.data;
                 // التحقق من البيانات  المُرسلة كاستجابة
                 if (!result.error) {
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
@@ -212,15 +212,16 @@ export default function Signup() {
                         clearTimeout(errMsgTimeout);
                     }, 4000);
                 }
-            } catch (err) {
-                // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
-                setIsSignupStatus(false);
-                setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
-                let errorTimeout = setTimeout(() => {
-                    setErrorMsg("");
-                    clearTimeout(errorTimeout);
-                }, 5000);
             }
+        }
+        catch(err) {
+            // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
+            setIsSignupStatus(false);
+            setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
+            let errorTimeout = setTimeout(() => {
+                setErrorMsg("");
+                clearTimeout(errorTimeout);
+            }, 5000);
         }
     }
     return (
