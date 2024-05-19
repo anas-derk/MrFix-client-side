@@ -26,9 +26,6 @@ export default function ServiceRequest() {
     const [preferredTimeOfVisit, setPreferredTimeOfVisit] = useState("");
     const [electricityTimes, setElectricityTimes] = useState("");
     const [isAlternativeEnergyExist, setIsAlternativeEnergyExist] = useState("");
-    const [userId, setUserId] = useState("");
-    const [userData, setUserData] = useState("");
-    const [errorInFetchUserDataMsg, setErrorInFetchUserDataMsg] = useState("");
     const [errors, setErrors] = useState({});
     const [isRequestingStatus, setIsRequestingStatus] = useState(false);
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
@@ -86,60 +83,44 @@ export default function ServiceRequest() {
     }, []);
     // تعريف دالة إرسال طلب لطلب خدمة للباك ايند
     const serviceRequest = async (e) => {
-        // منع إرسال المعلومات لنفس الصفحة
-        e.preventDefault();
-        // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
-        setErrors({});
-        // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
-        const errorsObject = global_functions.inputValuesValidation(
-            [
-                {
-                    name: "requestType",
-                    value: requestType,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+        try {
+            // منع إرسال المعلومات لنفس الصفحة
+            e.preventDefault();
+            // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
+            setErrors({});
+            // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
+            const errorsObject = global_functions.inputValuesValidation(
+                [
+                    {
+                        name: "requestType",
+                        value: requestType,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
                         },
                     },
-                },
-                {
-                    name: "serviceType",
-                    value: serviceType,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                    {
+                        name: "serviceType",
+                        value: serviceType,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
                         },
                     },
-                },
-                {
-                    name: "explainAndNewAddress",
-                    value: explainAndNewAddress,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                    {
+                        name: "explainAndNewAddress",
+                        value: explainAndNewAddress,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
                         },
                     },
-                },
-                {
-                    name: "fileList1",
-                    value: fileList1,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isImages: {
-                            msg: "عذراً ، يجب أن يكون الملف أو الملفات صور من امتداد png أو jpg !!"
-                        },
-                    },
-                },
-                serviceType !== "دهان وعزل"
-                    && serviceType !== "نقل الأثاث"
-                    && serviceType !== "التنظيف"
-                    && serviceType !== "صيانة المنازل المؤجرة قبل الانتقال إليها"
-                    && serviceType !== "اقتراحات تغيير ديكور واستغلال المساحات"
-                    ? {
-                        name: "fileList2",
-                        value: fileList2,
+                    {
+                        name: "fileList1",
+                        value: fileList1,
                         rules: {
                             isRequired: {
                                 msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
@@ -148,107 +129,122 @@ export default function ServiceRequest() {
                                 msg: "عذراً ، يجب أن يكون الملف أو الملفات صور من امتداد png أو jpg !!"
                             },
                         },
-                    } : {
-                        name: "fileList2",
-                        value: fileList2,
+                    },
+                    serviceType !== "دهان وعزل"
+                        && serviceType !== "نقل الأثاث"
+                        && serviceType !== "التنظيف"
+                        && serviceType !== "صيانة المنازل المؤجرة قبل الانتقال إليها"
+                        && serviceType !== "اقتراحات تغيير ديكور واستغلال المساحات"
+                        ? {
+                            name: "fileList2",
+                            value: fileList2,
+                            rules: {
+                                isRequired: {
+                                    msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                                },
+                                isImages: {
+                                    msg: "عذراً ، يجب أن يكون الملف أو الملفات صور من امتداد png أو jpg !!"
+                                },
+                            },
+                        } : {
+                            name: "fileList2",
+                            value: fileList2,
+                            rules: {
+                                isRequired: undefined,
+                            },
+                        },
+                    {
+                        name: "preferredDateOfVisit",
+                        value: preferredDateOfVisit,
                         rules: {
-                            isRequired: undefined,
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
                         },
                     },
-                {
-                    name: "preferredDateOfVisit",
-                    value: preferredDateOfVisit,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                    {
+                        name: "preferredTimeOfVisit",
+                        value: preferredTimeOfVisit,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
                         },
                     },
-                },
-                {
-                    name: "preferredTimeOfVisit",
-                    value: preferredTimeOfVisit,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                    {
+                        name: "electricityTimes",
+                        value: electricityTimes,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
                         },
                     },
-                },
-                {
-                    name: "electricityTimes",
-                    value: electricityTimes,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                    {
+                        name: "isAlternativeEnergyExist",
+                        value: isAlternativeEnergyExist,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
                         },
                     },
-                },
-                {
-                    name: "isAlternativeEnergyExist",
-                    value: isAlternativeEnergyExist,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                    {
+                        name: "isAlternativeEnergyExist",
+                        value: isAlternativeEnergyExist,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
                         },
                     },
-                },
-                {
-                    name: "isAlternativeEnergyExist",
-                    value: isAlternativeEnergyExist,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                    },
-                },
-            ]
-        );
-        // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
-        setErrors(errorsObject);
-        // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
-        // أو التحقق من كون نوع الطلب إسعافي + عدد الأخطاء هو 2 ( للدلالة على أنّ الأخطاء هي عدم وجود بيانات لتاريخ يوم الزيارة المفضل والوقت المفضل للزياة )
-        if (Object.keys(errorsObject).length == 0 ||
-            (requestType === "طلب إسعافي"
-                && Object.keys(errorsObject).length == 2
-                && errorsObject["preferredDateOfVisit"] === "عذراً ، لا يجب أن يكون الحقل فارغاً !!"
-                && errorsObject["preferredTimeOfVisit"] === "عذراً ، لا يجب أن يكون الحقل فارغاً !!"
-            )
-        ) {
-            // تعديل قيمة ال state المسماة isRequestingStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
-            setIsRequestingStatus(true);
-            // إنشاء كائن من ال formData لتخزين بيانات الفورم قبل إرساله مع الطلب في جسم الطلب وذلك بسبب وجود ملفات
-            let formData = new FormData();
-            formData.append("requestType", requestType);
-            formData.append("serviceType", serviceType);
-            formData.append("explainAndNewAddress", explainAndNewAddress);
-            // إضافة كل الملفات إلى ال formData
-            for (let i = 0; i < fileList1.length; i++) {
-                formData.append(`file${i}`, fileList1[i]);
-            }
-            for (let i = 0; i < fileList2.length; i++) {
-                formData.append(`file${i}`, fileList2[i]);
-            }
-            // التحقق من نوع الطلب بحيث نضيف بيانات حقلي تاريخ اليوم المفضل للزيارة ووقت الزيارة المفضل في حالة نوع الطلب عادي فقط ( كون الطلب الإسعافي ليس بحاجتهم )
-            if (requestType === "طلب عادي") {
-                formData.append("preferredDateOfVisit", preferredDateOfVisit);
-                formData.append("preferredTimeOfVisit", preferredTimeOfVisit);
-            }
-            // إضافة باقي بيانات الحقول إلى الـ formDat
-            formData.append("electricityTimes", electricityTimes);
-            formData.append("isAlternativeEnergyExist", isAlternativeEnergyExist);
-            formData.append("userId", userId);
-            // بداية محاولة إرسال الطلب
-            try {
+                ]
+            );
+            // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
+            setErrors(errorsObject);
+            // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
+            // أو التحقق من كون نوع الطلب إسعافي + عدد الأخطاء هو 2 ( للدلالة على أنّ الأخطاء هي عدم وجود بيانات لتاريخ يوم الزيارة المفضل والوقت المفضل للزياة )
+            if (Object.keys(errorsObject).length == 0 ||
+                (requestType === "طلب إسعافي"
+                    && Object.keys(errorsObject).length == 2
+                    && errorsObject["preferredDateOfVisit"] === "عذراً ، لا يجب أن يكون الحقل فارغاً !!"
+                    && errorsObject["preferredTimeOfVisit"] === "عذراً ، لا يجب أن يكون الحقل فارغاً !!"
+                )
+            ) {
+                // تعديل قيمة ال state المسماة isRequestingStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
+                setIsRequestingStatus(true);
+                // إنشاء كائن من ال formData لتخزين بيانات الفورم قبل إرساله مع الطلب في جسم الطلب وذلك بسبب وجود ملفات
+                let formData = new FormData();
+                formData.append("requestType", requestType);
+                formData.append("serviceType", serviceType);
+                formData.append("explainAndNewAddress", explainAndNewAddress);
+                // إضافة كل الملفات إلى ال formData
+                for (let i = 0; i < fileList1.length; i++) {
+                    formData.append(`file${i}`, fileList1[i]);
+                }
+                for (let i = 0; i < fileList2.length; i++) {
+                    formData.append(`file${i}`, fileList2[i]);
+                }
+                // التحقق من نوع الطلب بحيث نضيف بيانات حقلي تاريخ اليوم المفضل للزيارة ووقت الزيارة المفضل في حالة نوع الطلب عادي فقط ( كون الطلب الإسعافي ليس بحاجتهم )
+                if (requestType === "طلب عادي") {
+                    formData.append("preferredDateOfVisit", preferredDateOfVisit);
+                    formData.append("preferredTimeOfVisit", preferredTimeOfVisit);
+                }
+                // إضافة باقي بيانات الحقول إلى الـ formDat
+                formData.append("electricityTimes", electricityTimes);
+                formData.append("isAlternativeEnergyExist", isAlternativeEnergyExist);
                 // إرسال الطلب وتخزين الاستجابة في متغير
                 const res = await Axios.post(`${process.env.BASE_API_URL}/requests/create-new-request`, formData, {
                     // إضافة header لتحدد نوع المحتوى ا لمراد إرساله بحيث يسمح بإرسال البيانات ضمن ال formData
                     headers: {
-                        "Content-Type": "multipart/form-data"
+                        "Content-Type": "multipart/form-data",
+                        "Authorization": localStorage.getItem(userTokenNameInLocalStorage)
                     }
                 });
                 // جلب البيانات الناتجة عن الاستجابة
-                const result = await res.data;
+                const result = res.data;
                 // التحقق من البيانات  المُرسلة كاستجابة
-                if (result === "تمّ طلب الخدمة بنجاح ، سوف يتم التواصل معك قريباً جداً") {
+                if (!result.error) {
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
                     let requestingStatusTimeout = setTimeout(() => {
                         // تعديل قيمة ال state المسماة isRequestingStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
@@ -279,10 +275,16 @@ export default function ServiceRequest() {
                         clearTimeout(errMsgTimeout);
                     }, 4000);
                 }
-            } catch (err) {
-                // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
-                console.log(err);
             }
+        }
+        catch (err) {
+            // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
+            setIsRequestingStatus(false);
+            setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
+            let errorTimeout = setTimeout(() => {
+                setErrorMsg("");
+                clearTimeout(errorTimeout);
+            }, 5000);
         }
     }
     return (
@@ -295,14 +297,12 @@ export default function ServiceRequest() {
             {/* نهاية كتابة معلومات عنصر ال head في ال html */}
             {!isLoadingPage && !isErrorMsgOnLoadingThePage && <>
                 {/* بداية عرض مكون الرأس الذي أنشأناه */}
-            <Header />
-            {/* نهاية عرض مكون الرأس الذي أنشأناه */}
-            {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
-            <section className="page-content pt-4 pb-4">
-                {/* بداية مكون الحاوية من البوتستراب */}
-                <div className="container">
-                    {/* في حالة لم يكن هنالك رسالة خطأ عند طلب بيانات المستخدم فإننا نعرض صفحة طلب الخدمة  */}
-                    {!errorInFetchUserDataMsg ? <>
+                <Header />
+                {/* نهاية عرض مكون الرأس الذي أنشأناه */}
+                {/* بداية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
+                <section className="page-content pt-4 pb-4">
+                    {/* بداية مكون الحاوية من البوتستراب */}
+                    <div className="container">
                         <h1 className='page-title mb-4 text-center'>طلب خدمة</h1>
                         <form className="service-request-form" onSubmit={serviceRequest}>
                             <select
@@ -441,11 +441,10 @@ export default function ServiceRequest() {
                             </button>}
                             {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
                         </form>
-                    </> : <p className='alert alert-danger'>{errorInFetchUserDataMsg}</p>}
-                </div>
-                {/* نهاية مكون الحاوية من البوتستراب */}
-            </section>
-            {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
+                    </div>
+                    {/* نهاية مكون الحاوية من البوتستراب */}
+                </section>
+                {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
             </>}
             {isLoadingPage && !isErrorMsgOnLoadingThePage && <LoaderPage />}
             {isErrorMsgOnLoadingThePage && <ErrorOnLoadingThePage />}
