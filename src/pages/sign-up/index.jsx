@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 import { FiUserPlus } from "react-icons/fi";
 import { AiOutlineClockCircle, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { TfiFaceSmile } from "react-icons/tfi";
-import global_functions from '../../../public/global_functions/validations';
+import { inputValuesValidation } from '../../../public/global_functions/validations';
 import Link from 'next/link';
-import Axios from 'axios';
+import axios from 'axios';
 import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
 import LoaderPage from '@/components/LoaderPage';
 
@@ -77,7 +77,7 @@ export default function Signup() {
             // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
             setErrors({});
             // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
-            const errorsObject = global_functions.inputValuesValidation(
+            const errorsObject = inputValuesValidation(
                 [
                     {
                         name: "firstAndLastName",
@@ -176,7 +176,7 @@ export default function Signup() {
                 setIsSignupStatus(true);
                 // بداية محاولة إرسال الطلب
                 // إرسال الطلب وتخزين الاستجابة في متغير
-                const res = await Axios.post(`${process.env.BASE_API_URL}/users/create-new-user`, {
+                const res = await axios.post(`${process.env.BASE_API_URL}/users/create-new-user`, {
                     firstAndLastName,
                     email: email ? email : "",
                     mobilePhone,
@@ -203,7 +203,7 @@ export default function Signup() {
                     // تعديل قيمة ال state المسماة isSignupStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                     setIsSignupStatus(false);
                     // إعادة قيمة ال state المسماة errMsg إلى القيمة الناتجة عن الاستجابة من أجل استخدامها لاحقاً في إظهار رسالة الخطأ
-                    setErrorMsg(result);
+                    setErrorMsg(result.msg);
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد أربع ثواني
                     let errMsgTimeout = setTimeout(() => {
                         // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
@@ -341,7 +341,7 @@ export default function Signup() {
                                     >
                                         <option defaultValue="" hidden>اختر المحافظة</option>
                                         <option value="damascus">دمشق</option>
-                                        <option value="rif-Damascus">ريف دمشق</option>
+                                        <option value="rif-damascus">ريف دمشق</option>
                                     </select>
                                     {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                     {errors["city"] && <p className='error-msg text-danger'>{errors["city"]}</p>}
