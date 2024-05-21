@@ -34,7 +34,7 @@ export default function Login() {
             // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
             pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
         }
-    }, isLoadingPage);
+    }, [isLoadingPage]);
     useEffect(() => {
         // جلب رقم معرّف المستخدم من التخزين المحلي
         const userToken = localStorage.getItem(process.env.userTokenNameInLocalStorage);
@@ -130,14 +130,12 @@ export default function Login() {
                 } else {
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
                     let loginTimeout = setTimeout(async () => {
-                        // تعديل قيمة ال state المسماة isLoginStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
-                        setIsLoginStatus(false);
-                        // حذف المتعير الذي يحتوي المؤقت
-                        clearTimeout(loginTimeout);
                         // تخزين نتيجة الاستجابة أي رقم معرّف المستخدم في التخزين المحلي
                         localStorage.setItem(process.env.userTokenNameInLocalStorage, result.data.token);
                         // إعادة التوجيه للصفحة الرئيسية بعد تسجيل الدخول
                         await router.push("/");
+                        // حذف المتعير الذي يحتوي المؤقت
+                        clearTimeout(loginTimeout);
                     }, 2000);
                 }
             } catch (err) {

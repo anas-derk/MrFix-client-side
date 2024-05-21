@@ -17,7 +17,7 @@ export default function Header() {
     // تعريف دالة لعملية تسجيل الخروج
     const logout = async () => {
         // حذف المفتاح الذي يحوي رقم معرّف المستخدم من التخزين المحلي
-        localStorage.removeItem(process.env.userTokenInLocalStorage);
+        localStorage.removeItem(process.env.userTokenNameInLocalStorage);
         // إعادة تحميل الصفحة بعد االحذف لحذف وإظهار الأزرار المناسبة بناءً على حالة عدم تسجيل الدخول
         await router.push("/login");
     }

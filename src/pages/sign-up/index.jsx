@@ -10,6 +10,8 @@ import Link from 'next/link';
 import axios from 'axios';
 import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
 import LoaderPage from '@/components/LoaderPage';
+import { getUserInfo } from '../../../public/global_functions/popular';
+import { useRouter } from 'next/router';
 
 // تعريف دالة صفحة إنشاء الحساب 
 export default function Signup() {
@@ -32,6 +34,7 @@ export default function Signup() {
     const [errMsg, setErrorMsg] = useState("");
     const [isVisiblePassword, setIsVisiblePassword] = useState(false);
     const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] = useState(false);
+    const router = useRouter();
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
         // جلب رقم معرّف المستخدم من التخزين المحلي
@@ -68,7 +71,7 @@ export default function Signup() {
             // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
             pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
         }
-    }, isLoadingPage);
+    }, [isLoadingPage]);
     // تعريف دالة إرسال طلب إنشاء الحساب للباك ايند
     const createAccount = async (e) => {
         try {
