@@ -6,6 +6,7 @@ import rentalHomeMaintenanceImageInRes from "../../../../public/images/OurServic
 import data from "../../../../public/data/index";
 import LoaderPage from '@/components/LoaderPage';
 import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
+import { getUserInfo } from '../../../../public/global_functions/popular';
 
 export default function RentalHomeMaintenance() {
     const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -22,17 +23,16 @@ export default function RentalHomeMaintenance() {
         if (userToken) {
             getUserInfo()
                 .then(async (result) => {
-                    if (!result.error) {
-                        setIsLoadingPage(false);
-                    } else {
+                    setIsLoadingPage(false);
+                    if (result.error) {
                         localStorage.removeItem(process.env.userTokenNameInLocalStorage);
                     }
                 })
                 .catch(async (err) => {
+                    setIsLoadingPage(false);
                     if (err?.response?.data?.msg === "Unauthorized Error") {
                         localStorage.removeItem(process.env.userTokenNameInLocalStorage);
                     } else {
-                        setIsLoadingPage(false);
                         setIsErrorMsgOnLoadingThePage(true);
                     }
                 });

@@ -24,7 +24,7 @@ export default function Header() {
     // التصريح عن دالة ال useEffect المطلوبة لجلب رقم معرّف المستخدم عند تحميل الصفحة
     useEffect(() => {
         // جلب معرّف المستخدم من التخزين المحلي
-        let userToken = localStorage.getItem(process.env.userTokenInLocalStorage);
+        const userToken = localStorage.getItem(process.env.userTokenNameInLocalStorage);
         if (userToken) {
             // إسناد قيمة الرمز لل state المعرّفة سابقاً
             setToken(userToken);
