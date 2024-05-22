@@ -5,12 +5,13 @@ import { Fragment, useEffect, useState } from 'react';
 import { FiUserPlus } from "react-icons/fi";
 import { RiFileUploadLine } from "react-icons/ri";
 import ourServicesData from "../../../public/data/index";
-import Axios from "axios";
+import axios from "axios";
 import { useRouter } from 'next/router';
-import global_functions from "../../../public/global_functions/validations";
+import { inputValuesValidation } from "../../../public/global_functions/validations";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import LoaderPage from '@/components/LoaderPage';
 import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
+import { getUserInfo } from '../../../public/global_functions/popular';
 
 // تعريف دالة صفحة طلب خدمة 
 export default function ServiceRequest() {
@@ -48,7 +49,7 @@ export default function ServiceRequest() {
     const router = useRouter();
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
-        if (!isLoadingPage) {
+        if (!isLoadingPage && !isErrorMsgOnLoadingThePage) {
             // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
             const header = document.querySelector("#__next .page-header"),
                 pageContent = document.querySelector(".service-request .page-content");
@@ -61,6 +62,7 @@ export default function ServiceRequest() {
         if (userToken) {
             getUserInfo()
                 .then(async (result) => {
+                    console.log(result);
                     if (!result.error) {
                         setIsLoadingPage(false);
                     } else {
@@ -89,7 +91,7 @@ export default function ServiceRequest() {
             // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
             setErrors({});
             // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
-            const errorsObject = global_functions.inputValuesValidation(
+            const errorsObject = inputValuesValidation(
                 [
                     {
                         name: "requestType",
@@ -234,11 +236,11 @@ export default function ServiceRequest() {
                 formData.append("electricityTimes", electricityTimes);
                 formData.append("isAlternativeEnergyExist", isAlternativeEnergyExist);
                 // إرسال الطلب وتخزين الاستجابة في متغير
-                const res = await Axios.post(`${process.env.BASE_API_URL}/requests/create-new-request`, formData, {
+                const res = await axios.post(`${process.env.BASE_API_URL}/requests/create-new-request`, formData, {
                     // إضافة header لتحدد نوع المحتوى ا لمراد إرساله بحيث يسمح بإرسال البيانات ضمن ال formData
                     headers: {
                         "Content-Type": "multipart/form-data",
-                        "Authorization": localStorage.getItem(userTokenNameInLocalStorage)
+                        "Authorization": localStorage.getItem(process.env.userTokenNameInLocalStorage)
                     }
                 });
                 // جلب البيانات الناتجة عن الاستجابة
@@ -278,6 +280,7 @@ export default function ServiceRequest() {
             }
         }
         catch (err) {
+            console.log(err)
             // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
             setIsRequestingStatus(false);
             setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
