@@ -19,7 +19,6 @@ export default function Home() {
 	const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
 	const [token, setToken] = useState("");
     const [allAdsInsideThePage, setAllAdsInsideThePage] = useState([]);
-    const [totalPagesCount, setTotalPagesCount] = useState(0);
     const pageSize = 10;
 	// تعريف دالة ال useEffect لعمل أشياء ما عند تحميل الصفحة
 	useEffect(() => {
@@ -48,7 +47,6 @@ export default function Home() {
 					result = await getAdsCount();
 					if (result.data > 0) {
 						setAllAdsInsideThePage((await getAllAdsInsideThePage(1, pageSize)).data);
-						setTotalPagesCount(Math.ceil(result.data / pageSize));
 					}
 					setIsLoadingPage(false);
 				})
