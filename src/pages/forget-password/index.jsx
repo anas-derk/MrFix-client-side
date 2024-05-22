@@ -3,12 +3,13 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
 import ForgetPasswordImage from "../../../public/images/ForgetPassword/forget-password.png";
-import global_functions from "../../../public/global_functions/validations";
+import { inputValuesValidation } from "../../../public/global_functions/validations";
 import { useRouter } from 'next/router';
 import axios from "axios";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import LoaderPage from '@/components/LoaderPage';
 import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
+import { getUserInfo } from '../../../public/global_functions/popular';
 
 // تعريف دالة مكون نسيت كلمة السر
 export default function ForgetPassword() {
@@ -53,11 +54,11 @@ export default function ForgetPassword() {
         if (!isLoadingPage) {
             // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
             const header = document.querySelector("#__next .page-header"),
-                pageContent = document.querySelector(".login .page-content");
+                pageContent = document.querySelector(".forget-password .page-content");
             // جعل أقل ارتفاع لعنصر pageContent هو عرض الصفحة المرأية كاملةً منقوصاً منها ارتفاع عنصر رأس الصفحة
             pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;
         }
-    }, isLoadingPage);
+    }, [isLoadingPage]);
     // تعريف دالة معالجة نسيان كلمة المرور
     const forgetPassword = async (e) => {
         try {
@@ -66,7 +67,7 @@ export default function ForgetPassword() {
             // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
             setErrors({});
             // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
-            const errorsObject = global_functions.inputValuesValidation(
+            const errorsObject = inputValuesValidation(
                 [
                     {
                         name: "email",
@@ -100,7 +101,7 @@ export default function ForgetPassword() {
                         // تعديل قيمة ال state المسماة isWaitCheckStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                         setIsWaitCheckStatus(false);
                         // تعديل قيمة ال state المسماة errMsg من أجل استخدامه لاحقاً في إظهار رسالة خطأ
-                        setErrorMsg(result);
+                        setErrorMsg(result.msg);
                         // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
                         let errorTimeout = setTimeout(() => {
                             // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
@@ -118,7 +119,7 @@ export default function ForgetPassword() {
                         // حذف المتعير الذي يحتوي المؤقت
                         clearTimeout(waitTimeout);
                         // إعادة التوجيه لصفحة إعادة ضبط كلمة السر بعد التحقق من الإيميل أنه موجود
-                        await router.push("/reset-password");
+                        await router.push(`/reset-password?email=${email}`);
                     }, 2000);
                 }
             }
