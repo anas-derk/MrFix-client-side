@@ -28,7 +28,29 @@ async function getAdminInfo() {
     }
 }
 
+const getAdsCount = async () => {
+    try {
+        const res = await axios.get(`${process.env.BASE_API_URL}/ads/ads-count`);
+        return res.data;
+    }
+    catch (err) {
+        throw Error(err);
+    }
+}
+
+const getAllAdsInsideThePage = async (pageNumber, pageSize) => {
+    try {
+        const res = await axios.get(`${process.env.BASE_API_URL}/ads/all-ads-inside-the-page?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+        return res.data;
+    }
+    catch (err) {
+        throw Error(err);
+    }
+}
+
 export {
     getUserInfo,
     getAdminInfo,
+    getAdsCount,
+    getAllAdsInsideThePage,
 }
