@@ -4,19 +4,19 @@ import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
 import ResetPasswordImage from "../../../public/images/ResetPassword/reset-password.png";
 import { AiOutlineClockCircle, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import global_functions, { isEmail } from '../../../public/global_functions/validations';
-import Axios from 'axios';
+import { inputValuesValidation, isEmail } from '../../../public/global_functions/validations';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import { getUserInfo } from '../../../public/global_functions/popular';
 import LoaderPage from '@/components/LoaderPage';
 import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
 
 // تعريف دالة صفحة إعادة ضبط كلمة السر 
-export default function ResetPassword() {
+export default function ResetPassword({ email }) {
     // تعريف المتغيرات المطلوب كــ state
     const [isLoadingPage, setIsLoadingPage] = useState(true);
     const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
-    const [typedUserCode, setTypedUserCode] = useState("");
+    const [code, setCode] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [newConfirmPassword, setNewConfirmPassword] = useState("");
     const [errors, setErrors] = useState({});
@@ -67,68 +67,64 @@ export default function ResetPassword() {
     }, [isLoadingPage]);
     // تعريف دالة إرسال طلب للباك ايند لإعادة ضبط كلمة السر
     const resetPassword = async (e) => {
-        // منع إرسال المعلومات لنفس الصفحة
-        e.preventDefault();
-        // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
-        setErrors({});
-        // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
-        const errorsObject = global_functions.inputValuesValidation(
-            [
-                {
-                    name: "typedUserCode",
-                    value: typedUserCode,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isMatch: {
-                            value: tempResetPasswordData.code,
-                            msg: "عذراً الرمز غير صحيح !!",
+        try {
+            // منع إرسال المعلومات لنفس الصفحة
+            e.preventDefault();
+            // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
+            setErrors({});
+            // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
+            const errorsObject = inputValuesValidation(
+                [
+                    {
+                        name: "code",
+                        value: code,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
                         },
                     },
-                },
-                {
-                    name: "newPassword",
-                    value: newPassword,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isValidPassword: {
-                            value: newPassword,
-                            msg: "عذراً ، يجب أن تكون كلمة السر تحتوي على الأقل 8 حروف أو أرقام أو كلاهما.",
-                        },
-                    },
-                },
-                {
-                    name: "newConfirmPassword",
-                    value: newConfirmPassword,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isMatch: {
-                            value: newPassword,
-                            msg: "عذراً ، لا يوجد تطابق بين كلمة السر وتأكيدها !!",
+                    {
+                        name: "newPassword",
+                        value: newPassword,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                            isValidPassword: {
+                                value: newPassword,
+                                msg: "عذراً ، يجب أن تكون كلمة السر تحتوي على الأقل 8 حروف أو أرقام أو كلاهما.",
+                            },
                         },
                     },
-                },
-            ]
-        );
-        // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
-        setErrors(errorsObject);
-        // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
-        if (Object.keys(errorsObject).length == 0) {
-            // تعديل قيمة ال state المسماة isResetingPasswordStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
-            setIsResetingPasswordStatus(true);
-            // بداية محاولة إرسال الطلب
-            try {
+                    {
+                        name: "newConfirmPassword",
+                        value: newConfirmPassword,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                            isMatch: {
+                                value: newPassword,
+                                msg: "عذراً ، لا يوجد تطابق بين كلمة السر وتأكيدها !!",
+                            },
+                        },
+                    },
+                ]
+            );
+            // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
+            setErrors(errorsObject);
+            // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
+            if (Object.keys(errorsObject).length == 0) {
+                // تعديل قيمة ال state المسماة isResetingPasswordStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
+                setIsResetingPasswordStatus(true);
+                // بداية محاولة إرسال الطلب
                 // إرسال الطلب وتخزين الاستجابة في متغير
-                const res = await Axios.put(`${process.env.BASE_API_URL}/users/reset-password/${tempResetPasswordData.userIdAndType.userId}?userType=${tempResetPasswordData.userIdAndType.userType}&newPassword=${newPassword}`);
+                const res = await axios.put(`${process.env.BASE_API_URL}/users/reset-password?email=${email}&code=${code}&newPassword=${newPassword}`);
                 // جلب البيانات الناتجة عن الاستجابة
-                const result = await res.data;
+                const result = res.data;
                 // التحقق من البيانات  المُرسلة كاستجابة
-                if (result === "لقد تمّت عملية إعادة تعيين كلمة المرور الخاصة بك بنجاح !!") {
+                if (!result.error) {
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
                     let resetPasswordStatusTimeout = setTimeout(() => {
                         // تعديل قيمة ال state المسماة isResetingPasswordStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
@@ -136,19 +132,19 @@ export default function ResetPassword() {
                         // تعديل قيمة ال state المسماة isSuccessfulyStatus من أجل استخدامه لاحقاً في إظهار رسالة نجاح العملية
                         setIsSuccessfulyStatus(true);
                         // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين ونصف
-                        let successStatusTimeout = setTimeout(() => {
+                        let successStatusTimeout = setTimeout(async () => {
                             // حذف المتغيرات التي تحتوي المؤقتات
                             clearTimeout(resetPasswordStatusTimeout);
                             clearTimeout(successStatusTimeout);
                             // إعادة تحميل الصفحة من أجل تسجيل الدخول
-                            router.push("/login");
+                            await router.push("/login");
                         }, 2500);
                     }, 2000);
                 } else {
                     // تعديل قيمة ال state المسماة isResetingPasswordStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                     setIsResetingPasswordStatus(false);
                     // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
-                    setErrorMsg(result);
+                    setErrorMsg(result.msg);
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد أربع ثواني
                     let errMsgTimeout = setTimeout(() => {
                         // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
@@ -157,10 +153,16 @@ export default function ResetPassword() {
                         clearTimeout(errMsgTimeout);
                     }, 4000);
                 }
-            } catch (err) {
-                // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
-                setErrorMsg(err);
             }
+        }
+        catch (err) {
+            // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
+            setIsResetingPasswordStatus(false);
+            setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
+            let errorTimeout = setTimeout(() => {
+                setErrorMsg("");
+                clearTimeout(errorTimeout);
+            }, 5000);
         }
     }
     return (
@@ -193,11 +195,11 @@ export default function ResetPassword() {
                                         type="text"
                                         placeholder="أدخل الكود"
                                         // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
-                                        className={`form-control p-3 ${errors["typedUserCode"] ? "border border-danger mb-2" : "mb-4"}`}
-                                        onChange={(e) => setTypedUserCode(e.target.value.trim())}
+                                        className={`form-control p-3 ${errors["code"] ? "border border-danger mb-2" : "mb-4"}`}
+                                        onChange={(e) => setCode(e.target.value.trim())}
                                     />
                                     {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
-                                    {errors["typedUserCode"] && <p className='error-msg text-danger'>{errors["typedUserCode"]}</p>}
+                                    {errors["code"] && <p className='error-msg text-danger'>{errors["code"]}</p>}
                                     {/* نهاية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                     <div className='password-field-box'>
                                         <input
@@ -246,7 +248,7 @@ export default function ResetPassword() {
                                     </button>}
                                     {/* في حالة كان لدينا حالة النجاح نظهر المكون التالي */}
                                     {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
-                                    {errMsg && <button className='btn btn-danger error-btn w-50 p-3 mt-4 mx-auto d-block' disabled>
+                                    {errMsg && <button className='btn btn-danger error-btn w-100 p-3 mt-4 mx-auto d-block' disabled>
                                         {errMsg}
                                     </button>}
                                     {/* في حالة كان لدينا خطأ نظهر المكون التالي */}
