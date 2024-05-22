@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import ForgetPasswordImage from "../../../public/images/ForgetPassword/forget-password.png";
 import global_functions from "../../../public/global_functions/validations";
 import { useRouter } from 'next/router';
-import Axios from "axios";
+import axios from "axios";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import LoaderPage from '@/components/LoaderPage';
 import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
@@ -60,41 +60,41 @@ export default function ForgetPassword() {
     }, isLoadingPage);
     // تعريف دالة معالجة نسيان كلمة المرور
     const forgetPassword = async (e) => {
-        // منع إرسال المعلومات لنفس الصفحة
-        e.preventDefault();
-        // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
-        setErrors({});
-        // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
-        const errorsObject = global_functions.inputValuesValidation(
-            [
-                {
-                    name: "email",
-                    value: email,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isEmail: {
-                            msg: "عذراً ، الإيميل الذي أدخلته غير صالح ، الرجاء إدخال إيميل صالح !!",
+        try {
+            // منع إرسال المعلومات لنفس الصفحة
+            e.preventDefault();
+            // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
+            setErrors({});
+            // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
+            const errorsObject = global_functions.inputValuesValidation(
+                [
+                    {
+                        name: "email",
+                        value: email,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                            isEmail: {
+                                msg: "عذراً ، الإيميل الذي أدخلته غير صالح ، الرجاء إدخال إيميل صالح !!",
+                            },
                         },
                     },
-                },
-            ]
-        );
-        // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
-        setErrors(errorsObject);
-        // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
-        if (Object.keys(errorsObject).length == 0) {
-            // تعديل قيمة ال state المسماة isWaitCheckStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
-            setIsWaitCheckStatus(true);
-            // بداية محاولة إرسال الطلب
-            try {
+                ]
+            );
+            // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
+            setErrors(errorsObject);
+            // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
+            if (Object.keys(errorsObject).length == 0) {
+                // تعديل قيمة ال state المسماة isWaitCheckStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
+                setIsWaitCheckStatus(true);
+                // بداية محاولة إرسال الطلب
                 // إرسال الطلب وتخزين الاستجابة في متغير
-                const res = await Axios.get(`${process.env.BASE_API_URL}/users/forget-password?email=${email}`);
+                const res = await axios.get(`${process.env.BASE_API_URL}/users/forget-password?email=${email}`);
                 // جلب البيانات الناتجة عن الاستجابة
-                const result = await res.data;
+                const result = res.data;
                 // التحقق من البيانات  المُرسلة كاستجابة
-                if (result === "عذراً البريد الالكتروني الذي أدخلته غير موجود !!") {
+                if (result.error) {
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
                     let waitTimeout = setTimeout(() => {
                         // تعديل قيمة ال state المسماة isWaitCheckStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
@@ -112,21 +112,25 @@ export default function ForgetPassword() {
                     }, 2000);
                 } else {
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
-                    let waitTimeout = setTimeout(() => {
+                    let waitTimeout = setTimeout(async () => {
                         // تعديل قيمة ال state المسماة isWaitCheckStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                         setIsWaitCheckStatus(false);
                         // حذف المتعير الذي يحتوي المؤقت
                         clearTimeout(waitTimeout);
-                        // تخزين نتيجة الاستجابة أي البيانات المطلوب لعملية إعادة تعيين كلمة السر في التخزين المحلي
-                        localStorage.setItem("mr-fix-temp-reset-password-data", JSON.stringify(result));
                         // إعادة التوجيه لصفحة إعادة ضبط كلمة السر بعد التحقق من الإيميل أنه موجود
-                        router.push("/reset-password");
+                        await router.push("/reset-password");
                     }, 2000);
                 }
-            } catch (err) {
-                // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
-                console.log(err);
             }
+        }
+        catch (err) {
+            // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
+            setIsWaitCheckStatus(false);
+            setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
+            let errorTimeout = setTimeout(() => {
+                setErrorMsg("");
+                clearTimeout(errorTimeout);
+            }, 5000);
         }
     }
     return (
