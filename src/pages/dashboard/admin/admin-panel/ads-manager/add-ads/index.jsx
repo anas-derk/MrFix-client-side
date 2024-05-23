@@ -14,7 +14,7 @@ export default function AddAds() {
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [waitMsg, setWaitMsg] = useState("");
-    const addAds = async (e) => {
+    const addAd = async (e) => {
         try {
             e.preventDefault();
             setWaitMsg("الرجاء الانتظار ...");
@@ -85,7 +85,7 @@ export default function AddAds() {
                 <section className="content d-flex justify-content-center align-items-center flex-column text-center">
                     <div className="container">
                         <h1 className="welcome-msg mb-4">مرحباً بك في صفحة إضافة إعلان الخاصة بالمستخدمين في مستر فيكس</h1>
-                        <form className="add-ads-form w-100" onSubmit={addAds}>
+                        <form className="add-ads-form w-100" onSubmit={addAd}>
                             <input
                                 type="text"
                                 placeholder="الرجاء إدخال نص الإعلان"
