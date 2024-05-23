@@ -12,7 +12,7 @@ export default function RentalHomeMaintenance() {
     const [isLoadingPage, setIsLoadingPage] = useState(true);
     const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
     useEffect(() => {
-        if (!isLoadingPage) {
+        if (!isLoadingPage && !isErrorMsgOnLoadingThePage) {
             let header = document.querySelector("#__next .page-header"),
                 pageContent = document.querySelector(".rental-home-maintenance-services .page-content");
             pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;

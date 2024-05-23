@@ -12,7 +12,7 @@ export default function ElectricalsAndElectronics() {
     const [isLoadingPage, setIsLoadingPage] = useState(true);
     const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
     useEffect(() => {
-        if (!isLoadingPage) {
+        if (!isLoadingPage && !isErrorMsgOnLoadingThePage) {
             let header = document.querySelector("#__next .page-header"),
                 pageContent = document.querySelector(".electricals-and-electronics-services .page-content");
             pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;

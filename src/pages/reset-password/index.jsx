@@ -22,7 +22,6 @@ export default function ResetPassword({ email }) {
     const [errors, setErrors] = useState({});
     const [isResetingPasswordStatus, setIsResetingPasswordStatus] = useState(false);
     const [isSuccessfulyStatus, setIsSuccessfulyStatus] = useState(false);
-    const [tempResetPasswordData, setTempResetPasswordData] = useState("");
     const [errMsg, setErrorMsg] = useState("");
     const [isVisiblePassword, setIsVisiblePassword] = useState(false);
     const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] = useState(false);
@@ -57,7 +56,7 @@ export default function ResetPassword({ email }) {
         }
     }, []);
     useEffect(() => {
-        if (!isLoadingPage) {
+        if (!isLoadingPage && !isErrorMsgOnLoadingThePage) {
             // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
             const header = document.querySelector("#__next .page-header"),
                 pageContent = document.querySelector(".reset-password .page-content");

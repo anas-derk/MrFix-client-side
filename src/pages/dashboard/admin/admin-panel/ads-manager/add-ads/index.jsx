@@ -14,6 +14,30 @@ export default function AddAds() {
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [waitMsg, setWaitMsg] = useState("");
+    useEffect(() => {
+        const adminToken = localStorage.getItem(process.env.adminTokenNameInLocalStorage);
+        if (adminToken) {
+            getAdminInfo()
+                .then(async (result) => {
+                    if (result.error) {
+                        localStorage.removeItem(process.env.adminTokenNameInLocalStorage);
+                        await router.replace("/dashboard/admin/login");
+                    } else {
+                        setIsLoadingPage(false);
+                    }
+                })
+                .catch(async (err) => {
+                    if (err?.response?.data?.msg === "Unauthorized Error") {
+                        localStorage.removeItem(process.env.adminTokenNameInLocalStorage);
+                        await router.replace("/dashboard/admin/login");
+                    }
+                    else {
+                        setIsLoadingPage(false);
+                        setIsErrorMsgOnLoadingThePage(true);
+                    }
+                });
+        } else router.push("/dashboard/admin/login");
+    }, []);
     const addAd = async (e) => {
         try {
             e.preventDefault();
@@ -55,30 +79,6 @@ export default function AddAds() {
             }, 5000);
         }
     }
-    useEffect(() => {
-        const adminToken = localStorage.getItem(process.env.adminTokenNameInLocalStorage);
-        if (adminToken) {
-            getAdminInfo()
-                .then(async (result) => {
-                    if (result.error) {
-                        localStorage.removeItem(process.env.adminTokenNameInLocalStorage);
-                        await router.replace("/dashboard/admin/login");
-                    } else {
-                        setIsLoadingPage(false);
-                    }
-                })
-                .catch(async (err) => {
-                    if (err?.response?.data?.msg === "Unauthorized Error") {
-                        localStorage.removeItem(process.env.adminTokenNameInLocalStorage);
-                        await router.replace("/dashboard/admin/login");
-                    }
-                    else {
-                        setIsLoadingPage(false);
-                        setIsErrorMsgOnLoadingThePage(true);
-                    }
-                });
-        } else router.push("/dashboard/admin/login");
-    }, []);
     return (
         // Start Add Ads Page
         <div className="add-ads">

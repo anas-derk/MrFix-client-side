@@ -2,7 +2,6 @@
 import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
-import Axios from "axios";
 import { getAdsCount, getAllAdsInsideThePage, getUserInfo } from '../../../public/global_functions/popular';
 import LoaderPage from '@/components/LoaderPage';
 import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
@@ -18,7 +17,7 @@ export default function Ads({ result }) {
     const pageSize = 5;
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
-        if (!isLoadingPage) {
+        if (!isLoadingPage && !isErrorMsgOnLoadingThePage) {
             // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
             const header = document.querySelector("#__next .page-header"),
                 pageContent = document.querySelector(".ads .page-content");

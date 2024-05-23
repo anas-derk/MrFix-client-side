@@ -12,7 +12,7 @@ export default function MovingFurniture() {
     const [isLoadingPage, setIsLoadingPage] = useState(true);
     const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
     useEffect(() => {
-        if (!isLoadingPage) {
+        if (!isLoadingPage && !isErrorMsgOnLoadingThePage) {
             let header = document.querySelector("#__next .page-header"),
                 pageContent = document.querySelector(".moving-furniture-services .page-content");
             pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;

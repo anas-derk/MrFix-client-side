@@ -12,7 +12,7 @@ export default function PaintAndInsulation() {
     const [isLoadingPage, setIsLoadingPage] = useState(true);
     const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
     useEffect(() => {
-        if (!isLoadingPage) {
+        if (!isLoadingPage && !isErrorMsgOnLoadingThePage) {
             let header = document.querySelector("#__next .page-header"),
                 pageContent = document.querySelector(".paint-and-insulation-services .page-content");
             pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;

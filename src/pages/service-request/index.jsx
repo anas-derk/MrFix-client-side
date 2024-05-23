@@ -285,6 +285,11 @@ export default function ServiceRequest() {
             }
         }
         catch (err) {
+            if (err?.response?.data?.msg === "Unauthorized Error") {
+                localStorage.removeItem(process.env.userTokenNameInLocalStorage);
+                await router.replace("/dashboard/admin/login");
+                return;
+            }
             // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
             setIsRequestingStatus(false);
             setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");

@@ -12,7 +12,7 @@ export default function AlternativeEnergy() {
     const [isLoadingPage, setIsLoadingPage] = useState(true);
     const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
     useEffect(() => {
-        if (!isLoadingPage) {
+        if (!isLoadingPage && !isErrorMsgOnLoadingThePage) {
             let header = document.querySelector("#__next .page-header"),
                 pageContent = document.querySelector(".alternative-energy-services .page-content");
             pageContent.style.minHeight = `calc(100vh - ${header.clientHeight}px)`;

@@ -9,23 +9,14 @@ import LoaderPage from "@/components/LoaderPage";
 import ErrorOnLoadingThePage from "@/components/ErrorOnLoadingThePage";
 
 const AdminLogin = () => {
-
     const [isLoadingPage, setIsLoadingPage] = useState(true);
-
     const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
-
     const [email, setEmail] = useState("");
-
     const [password, setPassword] = useState("");
-
     const [isLoginingStatus, setIsLoginingStatus] = useState(false);
-
     const [errMsg, setErrorMsg] = useState("");
-
     const [formValidationErrors, setFormValidationErrors] = useState({});
-
     const router = useRouter();
-
     useEffect(() => {
         const adminToken = localStorage.getItem(process.env.adminTokenNameInLocalStorage);
         if (adminToken) {
@@ -48,7 +39,6 @@ const AdminLogin = () => {
                 });
         } else setIsLoadingPage(false);
     }, []);
-
     const adminLogin = async (e) => {
         try {
             e.preventDefault();
@@ -100,7 +90,6 @@ const AdminLogin = () => {
             }, 3000);
         }
     }
-
     return (
         <div className="admin-login text-center p-5">
             <Head>

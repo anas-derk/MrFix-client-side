@@ -51,7 +51,7 @@ export default function ForgetPassword() {
         }
     }, []);
     useEffect(() => {
-        if (!isLoadingPage) {
+        if (!isLoadingPage && !isErrorMsgOnLoadingThePage) {
             // جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
             const header = document.querySelector("#__next .page-header"),
                 pageContent = document.querySelector(".forget-password .page-content");

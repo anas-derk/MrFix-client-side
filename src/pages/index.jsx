@@ -22,7 +22,7 @@ export default function Home() {
 	const pageSize = 5;
 	// تعريف دالة ال useEffect لعمل أشياء ما عند تحميل الصفحة
 	useEffect(() => {
-		if (!isLoadingPage) {
+		if (!isLoadingPage && !isErrorMsgOnLoadingThePage) {
 			// جلب بعض العناصر من صفحة الويب باستخدام الجافا سكربت
 			const header = document.querySelector("#__next .page-header"),
 				pageContent = document.querySelector(".home .page-content"),
@@ -66,7 +66,7 @@ export default function Home() {
 				}
 				setIsLoadingPage(false);
 			})
-				.catch((err) => {
+				.catch(() => {
 					setIsLoadingPage(false);
 					setIsErrorMsgOnLoadingThePage(true);
 				});
