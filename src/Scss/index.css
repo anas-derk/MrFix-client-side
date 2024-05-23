@@ -211,6 +211,22 @@ input, select, textarea {
   animation: fillBaloon 1s ease-in-out infinite alternate;
 }
 
+.error-msg-on-loading-the-page {
+  min-height: calc(100vh - 59px);
+}
+
+.error-msg-on-loading-the-page .error-icon {
+  font-size: 120px;
+}
+
+.error-msg-on-loading-the-page .error-msg-on-loading-box {
+  font-size: 30px;
+}
+
+.loading-box, .error-msg-on-loading-the-page {
+  background-color: #263038;
+}
+
 @keyframes fillBaloon {
   0% {
     transform: scale(1);
