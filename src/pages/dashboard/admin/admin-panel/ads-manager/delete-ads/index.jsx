@@ -28,7 +28,6 @@ export default function DeleteAds() {
                         await router.replace("/dashboard/admin/login");
                     } else {
                         result = await getAdsCount();
-                        console.log(result)
                         if (result.data > 0) {
                             setAllAdsInsideThePage((await getAllAdsInsideThePage(1, pageSize)).data);
                             setTotalPagesCount(Math.ceil(result.data / pageSize));

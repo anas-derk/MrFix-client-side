@@ -28,7 +28,7 @@ async function getAdminInfo() {
     }
 }
 
-const getAdsCount = async () => {
+async function getAdsCount() {
     try {
         const res = await axios.get(`${process.env.BASE_API_URL}/ads/ads-count`);
         return res.data;
@@ -38,9 +38,37 @@ const getAdsCount = async () => {
     }
 }
 
-const getAllAdsInsideThePage = async (pageNumber, pageSize) => {
+async function getAllAdsInsideThePage(pageNumber, pageSize) {
     try {
         const res = await axios.get(`${process.env.BASE_API_URL}/ads/all-ads-inside-the-page?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+        return res.data;
+    }
+    catch (err) {
+        throw Error(err);
+    }
+}
+
+async function getRequestsCount() {
+    try {
+        const res = await axios.get(`${process.env.BASE_API_URL}/requests/requests-count`, {
+            headers: {
+                Authorization: localStorage.getItem(process.env.adminTokenNameInLocalStorage)
+            }
+        });
+        return res.data;
+    }
+    catch (err) {
+        throw Error(err);
+    }
+}
+
+async function getAllRequestsInsideThePage(pageNumber, pageSize) {
+    try {
+        const res = await axios.get(`${process.env.BASE_API_URL}/requests/all-requests-inside-the-page?pageNumber=${pageNumber}&pageSize=${pageSize}`,{
+            headers: {
+                Authorization: localStorage.getItem(process.env.adminTokenNameInLocalStorage)
+            }
+        });
         return res.data;
     }
     catch (err) {
@@ -52,5 +80,7 @@ export {
     getUserInfo,
     getAdminInfo,
     getAdsCount,
+    getRequestsCount,
     getAllAdsInsideThePage,
+    getAllRequestsInsideThePage
 }
