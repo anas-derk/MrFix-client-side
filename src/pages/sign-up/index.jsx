@@ -193,15 +193,10 @@ export default function Signup() {
                 const result = res.data;
                 // التحقق من البيانات  المُرسلة كاستجابة
                 if (!result.error) {
-                    // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
-                    let successStatusTimeout = setTimeout(() => {
-                        // تعديل قيمة ال state المسماة isSignupStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
-                        setIsSignupStatus(false);
-                        // تعديل قيمة ال state المسماة isSuccessfulyStatus من أجل استخدامه لاحقاً في إظهار رسالة نجاح العملية
-                        setIsSuccessfulyStatus(true);
-                        // حذف المتغير الذي يحتوي المؤقت
-                        clearTimeout(successStatusTimeout);
-                    }, 2000);
+                    // تعديل قيمة ال state المسماة isSignupStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
+                    setIsSignupStatus(false);
+                    // تعديل قيمة ال state المسماة isSuccessfulyStatus من أجل استخدامه لاحقاً في إظهار رسالة نجاح العملية
+                    setIsSuccessfulyStatus(true);
                 } else {
                     // تعديل قيمة ال state المسماة isSignupStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
                     setIsSignupStatus(false);
@@ -217,7 +212,7 @@ export default function Signup() {
                 }
             }
         }
-        catch(err) {
+        catch (err) {
             // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
             setIsSignupStatus(false);
             setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");

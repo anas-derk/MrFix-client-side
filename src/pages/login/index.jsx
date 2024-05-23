@@ -112,31 +112,24 @@ export default function Login() {
                 const result = res.data;
                 // التحقق من البيانات  المُرسلة كاستجابة
                 if (result.error) {
+                    // تعديل قيمة ال state المسماة isLoginStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
+                    setIsLoginStatus(false);
+                    // تعديل قيمة ال state المسماة errMsg من أجل استخدامه لاحقاً في إظهار رسالة خطأ
+                    setErrorMsg(result.msg);
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
-                    let loginTimeout = setTimeout(() => {
-                        // تعديل قيمة ال state المسماة isLoginStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
-                        setIsLoginStatus(false);
-                        // تعديل قيمة ال state المسماة errMsg من أجل استخدامه لاحقاً في إظهار رسالة خطأ
-                        setErrorMsg(result.msg);
-                        // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
-                        let errorTimeout = setTimeout(() => {
-                            // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
-                            setErrorMsg("");
-                            // حذف المتغيرات التي تحتوي المؤقت
-                            clearTimeout(errorTimeout);
-                            clearTimeout(loginTimeout);
-                        }, 2000);
+                    let errorTimeout = setTimeout(() => {
+                        // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
+                        setErrorMsg("");
+                        // حذف المتغيرات التي تحتوي المؤقت
+                        clearTimeout(errorTimeout);
                     }, 2000);
+
                 } else {
-                    // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
-                    let loginTimeout = setTimeout(async () => {
-                        // تخزين نتيجة الاستجابة أي رقم معرّف المستخدم في التخزين المحلي
-                        localStorage.setItem(process.env.userTokenNameInLocalStorage, result.data.token);
-                        // إعادة التوجيه للصفحة الرئيسية بعد تسجيل الدخول
-                        await router.push("/");
-                        // حذف المتعير الذي يحتوي المؤقت
-                        clearTimeout(loginTimeout);
-                    }, 2000);
+                    // تخزين نتيجة الاستجابة أي رقم معرّف المستخدم في التخزين المحلي
+                    localStorage.setItem(process.env.userTokenNameInLocalStorage, result.data.token);
+                    // إعادة التوجيه للصفحة الرئيسية بعد تسجيل الدخول
+                    await router.push("/");
+                    // حذف المتعير الذي يحتوي المؤقت
                 }
             } catch (err) {
                 // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر

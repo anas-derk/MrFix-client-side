@@ -247,22 +247,27 @@ export default function ServiceRequest() {
                 const result = res.data;
                 // التحقق من البيانات  المُرسلة كاستجابة
                 if (!result.error) {
+                    // تعديل قيمة ال state المسماة isRequestingStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
+                    setIsRequestingStatus(false);
+                    // تعديل قيمة ال state المسماة isSuccessfulyStatus من أجل استخدامه لاحقاً في إظهار رسالة نجاح العملية
+                    setIsSuccessfulyStatus(true);
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
-                    let requestingStatusTimeout = setTimeout(() => {
-                        // تعديل قيمة ال state المسماة isRequestingStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
-                        setIsRequestingStatus(false);
-                        // تعديل قيمة ال state المسماة isSuccessfulyStatus من أجل استخدامه لاحقاً في إظهار رسالة نجاح العملية
-                        setIsSuccessfulyStatus(true);
-                        // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
+                    setTimeout(() => {
+                        // تعديل قيمة ال state المسماة isSuccessfulyStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة النجاح
+                        setIsSuccessfulyStatus(false);
+                        // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانية ونصف
                         setTimeout(() => {
-                            // تعديل قيمة ال state المسماة isSuccessfulyStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة النجاح
-                            setIsSuccessfulyStatus(false);
-                            // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانية ونصف
-                            setTimeout(() => {
-                                // إعادة تحميل الصفحة من أجل حذف بيانات الحقول لإتاحة الإمكانية للمستخدم من إرسال طلب جديد إن أراد
-                                router.reload();
-                            }, 1500);
-                        }, 2000);
+                            // إعادة تحميل الصفحة من أجل حذف بيانات الحقول لإتاحة الإمكانية للمستخدم من إرسال طلب جديد إن أراد
+                            setRequestType("");
+                            setServiceType("");
+                            setExplainAndNewAddress("");
+                            setFileList1("");
+                            setFileList2("");
+                            setPreferredDateOfVisit("");
+                            setPreferredTimeOfVisit("");
+                            setElectricityTimes("");
+                            setIsAlternativeEnergyExist("");
+                        }, 1500);
                     }, 2000);
                 } else {
                     // تعديل قيمة ال state المسماة isRequestingStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
@@ -311,6 +316,7 @@ export default function ServiceRequest() {
                                 // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                 className={`form-control p-3 request-type-select ${errors["requestType"] ? "border border-danger mb-2" : "mb-4"}`}
                                 onChange={(e) => setRequestType(e.target.value)}
+                                value={requestType}
                             >
                                 <option value="" hidden>نوع الطلب</option>
                                 <option value="طلب عادي">طلب عادي</option>
@@ -323,6 +329,7 @@ export default function ServiceRequest() {
                                 // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                 className={`form-control p-3 service-type-select ${errors["serviceType"] ? "border border-danger mb-2" : "mb-4"}`}
                                 onChange={(e) => setServiceType(e.target.value)}
+                                value={serviceType}
                             >
                                 <option value="" hidden>نوع الخدمة</option>
                                 {/* عمل حلقة تكرارية على بيانات الخدمات بحيث نعرض كل أسماء الخدمات داخل option */}
@@ -342,6 +349,7 @@ export default function ServiceRequest() {
                                         // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                         className={`form-control p-3 explain-and-new-address ${errors["explainAndNewAddress"] ? "border border-danger mb-2" : "mb-4"}`}
                                         onChange={(e) => setExplainAndNewAddress(e.target.value)}
+                                        value={explainAndNewAddress}
                                     ></textarea>
                                     {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                     {errors["explainAndNewAddress"] && <p className='error-msg text-danger'>{errors["explainAndNewAddress"]}</p>}
@@ -360,6 +368,7 @@ export default function ServiceRequest() {
                                                     id={`file${index + 1}`}
                                                     onChange={(e) => index == 0 ? setFileList1(e.target.files) : setFileList2(e.target.files)}
                                                     multiple
+                                                    value={`fileList${index + 1}`}
                                                 />
                                             </div>
                                             {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
@@ -379,6 +388,7 @@ export default function ServiceRequest() {
                                             // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                             className={`form-control p-3 ${errors["preferredDateOfVisit"] ? "border border-danger mb-2" : "mb-4"}`}
                                             onChange={(e) => setPreferredDateOfVisit(e.target.value)}
+                                            value={preferredDateOfVisit}
                                         />
                                         {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                         {errors["preferredDateOfVisit"] && <p className='error-msg text-danger'>{errors["preferredDateOfVisit"]}</p>}
@@ -389,6 +399,7 @@ export default function ServiceRequest() {
                                             // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                             className={`form-control p-3 ${errors["preferredTimeOfVisit"] ? "border border-danger mb-2" : "mb-4"}`}
                                             onChange={(e) => setPreferredTimeOfVisit(e.target.value)}
+                                            value={preferredTimeOfVisit}
                                         />
                                         {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                         {errors["preferredTimeOfVisit"] && <p className='error-msg text-danger'>{errors["preferredTimeOfVisit"]}</p>}
@@ -400,6 +411,7 @@ export default function ServiceRequest() {
                                         // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                         className={`form-control p-3 ${errors["electricityTimes"] ? "border border-danger mb-2" : "mb-4"}`}
                                         onChange={(e) => setElectricityTimes(e.target.value)}
+                                        value={electricityTimes}
                                     />
                                     {/* بداية رسالة الخطأ بالإدخال للمُدخل المحدد */}
                                     {errors["electricityTimes"] && <p className='error-msg text-danger'>{errors["electricityTimes"]}</p>}
@@ -408,6 +420,7 @@ export default function ServiceRequest() {
                                         // في حالة يوجد خطأ بالإدخال نجعل الحواف بلون أحمر
                                         className={`form-control p-3 ${errors["isAlternativeEnergyExist"] ? "border border-danger mb-2" : "mb-4"}`}
                                         onChange={(e) => setIsAlternativeEnergyExist(e.target.value)}
+                                        value={isAlternativeEnergyExist}
                                     >
                                         <option value="" hidden>هل يوجد طاقة بديلة ؟</option>
                                         <option value="yes">نعم</option>
