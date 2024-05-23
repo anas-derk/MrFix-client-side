@@ -18,8 +18,8 @@ export default function Home() {
 	const [isLoadingPage, setIsLoadingPage] = useState(true);
 	const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
 	const [token, setToken] = useState("");
-    const [allAdsInsideThePage, setAllAdsInsideThePage] = useState([]);
-    const pageSize = 10;
+	const [allAdsInsideThePage, setAllAdsInsideThePage] = useState([]);
+	const pageSize = 5;
 	// تعريف دالة ال useEffect لعمل أشياء ما عند تحميل الصفحة
 	useEffect(() => {
 		if (!isLoadingPage) {
@@ -59,7 +59,17 @@ export default function Home() {
 					}
 				});
 		} else {
-			setIsLoadingPage(false);
+			getAdsCount()
+			.then(async (result) => {
+				if (result.data > 0) {
+					setAllAdsInsideThePage((await getAllAdsInsideThePage(1, pageSize)).data);
+				}
+				setIsLoadingPage(false);
+			})
+				.catch((err) => {
+					setIsLoadingPage(false);
+					setIsErrorMsgOnLoadingThePage(true);
+				});
 		}
 	}, []);
 	return (

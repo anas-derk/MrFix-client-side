@@ -52,7 +52,7 @@ const AdminPanel = () => {
                 </section>
                 {/* End Content Section */}
             </>}
-            {isLoadingPage && !isErrorMsgOnLoadingThePage && <LoaderPage/>}
+            {isLoadingPage && !isErrorMsgOnLoadingThePage && <LoaderPage />}
             {isErrorMsgOnLoadingThePage && <ErrorOnLoadingThePage />}
         </div>
         // End Admin Panel Page

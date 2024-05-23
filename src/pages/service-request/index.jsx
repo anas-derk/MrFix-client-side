@@ -280,7 +280,6 @@ export default function ServiceRequest() {
             }
         }
         catch (err) {
-            console.log(err)
             // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
             setIsRequestingStatus(false);
             setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");

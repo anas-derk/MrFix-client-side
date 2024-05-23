@@ -15,7 +15,7 @@ export default function Ads({ result }) {
     const [isGetAds, setIsGetAds] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPagesCount, setTotalPagesCount] = useState(0);
-    const pageSize = 10;
+    const pageSize = 5;
     // تعريف دالة useEffect من أجل عمل شيء ما عند تحميل الصفحة في جانب العميل أي المتصفح
     useEffect(() => {
         if (!isLoadingPage) {
@@ -51,8 +51,18 @@ export default function Ads({ result }) {
                     }
                 });
         } else {
-            setIsGetAds(false);
-            setIsLoadingPage(false);
+            getAdsCount()
+                .then(async (result) => {
+                    if (result.data > 0) {
+                        setAllAdsInsideThePage((await getAllAdsInsideThePage(1, pageSize)).data);
+                    }
+                    setIsGetAds(false);
+                    setIsLoadingPage(false);
+                })
+                .catch((err) => {
+                    setIsLoadingPage(false);
+                    setIsErrorMsgOnLoadingThePage(true);
+                });
         }
     }, []);
     return (
@@ -74,11 +84,11 @@ export default function Ads({ result }) {
                         <h1 className="welcome-msg text-center mb-4">مرحباً بك في صفحة الإعلانات</h1>
                         {/* بداية مكون الشبكة من البوتستراب */}
                         {allAdsInsideThePage.length === 0 && !isGetAds && <p className='alert alert-danger'>عذراً ، لا توجد إعلانات حالياً !!</p>}
-                        {/* <div className="ads-box align-items-center p-4">
+                        <div className="ads-box align-items-center p-4">
                             {allAdsInsideThePage.map((ad, index) => (
-                                <p className={`ad-content p-3 text-white ${index !== result.length - 1 ? "mb-4" : ""}`} key={index}>{ad.content}</p>
+                                <p className={`ad-content p-3 text-white ${index !== allAdsInsideThePage.length - 1 ? "mb-4" : ""}`} key={ad._id}>{ad.content}</p>
                             ))}
-                        </div> */}
+                        </div>
                         {/* نهاية مكون الشبكة من البوتستراب */}
                     </div>
                     {/* نهاية مكون الحاوية من البوتستراب */}
@@ -86,7 +96,7 @@ export default function Ads({ result }) {
                 {/* نهاية كتابة كود ال jsx لعنصر ال html المسمى page-content */}
             </>}
             {isLoadingPage && !isErrorMsgOnLoadingThePage && <LoaderPage />}
-			{isErrorMsgOnLoadingThePage && <ErrorOnLoadingThePage />}
+            {isErrorMsgOnLoadingThePage && <ErrorOnLoadingThePage />}
         </div>
         // نهاية كتابة كود ال jsx لصفحة من نحن
     );
