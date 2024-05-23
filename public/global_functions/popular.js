@@ -18,7 +18,7 @@ async function getAdminInfo() {
     try{
         const res = await axios.get(`${process.env.BASE_API_URL}/admins/user-info`, {
             headers: {
-                "Authorization": localStorage.getItem(process.env.adminTokenInLocalStorage),
+                "Authorization": localStorage.getItem(process.env.adminTokenNameInLocalStorage),
             },
         });
         return res.data;
