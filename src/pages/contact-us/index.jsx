@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { useEffect, useState } from 'react';
 import contactUsImage from "../../../public/images/ContactUs/contact-us.png";
-import { useRouter } from 'next/router';
 import LoaderPage from '@/components/LoaderPage';
 import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
 import { getUserInfo } from '../../../public/global_functions/popular';

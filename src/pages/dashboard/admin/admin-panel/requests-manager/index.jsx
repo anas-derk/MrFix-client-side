@@ -56,8 +56,7 @@ const RequestsManager = ({ result }) => {
         const hours = requestPostInDateFormat.getHours();
         const minutes = requestPostInDateFormat.getMinutes();
         const seconds = requestPostInDateFormat.getSeconds();
-        requestPostInDateFormat = `التاريخ: (${day}-${month}-${year}) - الوقت: (${hours}:${minutes}:${seconds})`;
-        return requestPostInDateFormat;
+        return `التاريخ: (${day}-${month}-${year}) - الوقت: (${hours}:${minutes}:${seconds})`;
     }
     return (
         // Start Requests Manager Page

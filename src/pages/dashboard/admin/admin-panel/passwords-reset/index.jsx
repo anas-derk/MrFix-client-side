@@ -1,8 +1,10 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { getAdminInfo } from "../../../../../../public/global_functions/popular";
+import LoaderPage from "@/components/LoaderPage";
+import ErrorOnLoadingThePage from "@/components/ErrorOnLoadingThePage";
 
 const PasswordsReset = () => {
     const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -107,6 +109,8 @@ const PasswordsReset = () => {
                 </section>
                 {/* End Content Section */}
             </>}
+            {isLoadingPage && !isErrorMsgOnLoadingThePage && <LoaderPage />}
+            {isErrorMsgOnLoadingThePage && <ErrorOnLoadingThePage />}
         </div>
         // End Passwords Reset Page
     );

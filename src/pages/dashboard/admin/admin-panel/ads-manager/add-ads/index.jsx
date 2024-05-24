@@ -9,11 +9,11 @@ import ErrorOnLoadingThePage from "@/components/ErrorOnLoadingThePage";
 export default function AddAds() {
     const [isLoadingPage, setIsLoadingPage] = useState(true);
     const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
-    const router = useRouter();
     const [adContent, setAdContent] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [waitMsg, setWaitMsg] = useState("");
+    const router = useRouter();
     useEffect(() => {
         const adminToken = localStorage.getItem(process.env.adminTokenNameInLocalStorage);
         if (adminToken) {

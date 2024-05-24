@@ -14,13 +14,6 @@ export default function Header() {
     // تعريف المتغيرات المطلوبة
     const [token, setToken] = useState("");
     const router = useRouter();
-    // تعريف دالة لعملية تسجيل الخروج
-    const logout = async () => {
-        // حذف المفتاح الذي يحوي رقم معرّف المستخدم من التخزين المحلي
-        localStorage.removeItem(process.env.userTokenNameInLocalStorage);
-        // إعادة تحميل الصفحة بعد االحذف لحذف وإظهار الأزرار المناسبة بناءً على حالة عدم تسجيل الدخول
-        await router.push("/login");
-    }
     // التصريح عن دالة ال useEffect المطلوبة لجلب رقم معرّف المستخدم عند تحميل الصفحة
     useEffect(() => {
         // جلب معرّف المستخدم من التخزين المحلي
@@ -30,6 +23,13 @@ export default function Header() {
             setToken(userToken);
         }
     }, []);
+    // تعريف دالة لعملية تسجيل الخروج
+    const logout = async () => {
+        // حذف المفتاح الذي يحوي رقم معرّف المستخدم من التخزين المحلي
+        localStorage.removeItem(process.env.userTokenNameInLocalStorage);
+        // إعادة تحميل الصفحة بعد االحذف لحذف وإظهار الأزرار المناسبة بناءً على حالة عدم تسجيل الدخول
+        await router.push("/login");
+    }
     return (
         // بداية مكون رأس الصفحة
         <header className="page-header text-white">

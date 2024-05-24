@@ -96,31 +96,22 @@ export default function ForgetPassword() {
                 const result = res.data;
                 // التحقق من البيانات  المُرسلة كاستجابة
                 if (result.error) {
+                    // تعديل قيمة ال state المسماة isWaitCheckStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
+                    setIsWaitCheckStatus(false);
+                    // تعديل قيمة ال state المسماة errMsg من أجل استخدامه لاحقاً في إظهار رسالة خطأ
+                    setErrorMsg(result.msg);
                     // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
-                    let waitTimeout = setTimeout(() => {
-                        // تعديل قيمة ال state المسماة isWaitCheckStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
-                        setIsWaitCheckStatus(false);
-                        // تعديل قيمة ال state المسماة errMsg من أجل استخدامه لاحقاً في إظهار رسالة خطأ
-                        setErrorMsg(result.msg);
-                        // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
-                        let errorTimeout = setTimeout(() => {
-                            // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
-                            setErrorMsg("");
-                            // حذف المتغيرات التي تحتوي المؤقت
-                            clearTimeout(errorTimeout);
-                            clearTimeout(waitTimeout);
-                        }, 2000);
+                    let errorTimeout = setTimeout(() => {
+                        // إعادة قيمة ال state المسماة errMsg إلى القيمة الفارغة الافتراضية من أجل استخدامها لاحقاً في إخفاء رسالة الخطأ
+                        setErrorMsg("");
+                        // حذف المتغيرات التي تحتوي المؤقت
+                        clearTimeout(errorTimeout);
                     }, 2000);
                 } else {
-                    // تعيين مؤقت ليتم تنفيذ تعليمات بعد ثانيتين
-                    let waitTimeout = setTimeout(async () => {
-                        // تعديل قيمة ال state المسماة isWaitCheckStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
-                        setIsWaitCheckStatus(false);
-                        // حذف المتعير الذي يحتوي المؤقت
-                        clearTimeout(waitTimeout);
-                        // إعادة التوجيه لصفحة إعادة ضبط كلمة السر بعد التحقق من الإيميل أنه موجود
-                        await router.push(`/reset-password?email=${email}`);
-                    }, 2000);
+                    // تعديل قيمة ال state المسماة isWaitCheckStatus لتصبح false من أجل استخدامه لاحقاً في إخفاء رسالة الانتظار
+                    setIsWaitCheckStatus(false);
+                    // إعادة التوجيه لصفحة إعادة ضبط كلمة السر بعد التحقق من الإيميل أنه موجود
+                    await router.push(`/reset-password?email=${email}`);
                 }
             }
         }

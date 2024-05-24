@@ -7,7 +7,7 @@ import LoaderPage from '@/components/LoaderPage';
 import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
 
 // تعريف دالة مكون من نحن
-export default function Ads({ result }) {
+export default function Ads() {
     const [isLoadingPage, setIsLoadingPage] = useState(true);
     const [isErrorMsgOnLoadingThePage, setIsErrorMsgOnLoadingThePage] = useState(false);
     const [allAdsInsideThePage, setAllAdsInsideThePage] = useState([]);
@@ -58,7 +58,7 @@ export default function Ads({ result }) {
                     setIsGetAds(false);
                     setIsLoadingPage(false);
                 })
-                .catch((err) => {
+                .catch(() => {
                     setIsLoadingPage(false);
                     setIsErrorMsgOnLoadingThePage(true);
                 });

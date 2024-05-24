@@ -64,48 +64,48 @@ export default function Login() {
     }, []);
     // تعريف دالة معالجة تسجيل الدخول
     const login = async (e) => {
-        // منع إرسال المعلومات لنفس الصفحة
-        e.preventDefault();
-        // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
-        setErrors({});
-        // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
-        const errorsObject = inputValuesValidation(
-            [
-                {
-                    name: "text",
-                    value: text,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isEmailOrMobilePhone: {
-                            msg: "عذراً ، الإيميل أو رقم الهاتف الذي أدخلته غير صالح ، الرجاء إدخال إيميل أو رقم هاتف  !!",
-                        },
-                    },
-                },
-                {
-                    name: "password",
-                    value: password,
-                    rules: {
-                        isRequired: {
-                            msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
-                        },
-                        isValidPassword: {
-                            value: password,
-                            msg: "عذراً ، يجب أن تكون كلمة السر تحتوي على الأقل 8 حروف أو أرقام أو كلاهما.                            ",
+        try {
+            // منع إرسال المعلومات لنفس الصفحة
+            e.preventDefault();
+            // إعادة تعيين كائن الأخطاء الخاصة بالمدخلات إلى كائن فارغ لتصفير كل الأخطاء وإعادة التحقق من كل الأخطاء للمدخلات الجديدة
+            setErrors({});
+            // إرسال المدخلات إلى دالة inputValuesValidation للتحقق منها قبل إرسال الطلب إلى الباك ايند وتخزينها في المتغير errorsObject
+            const errorsObject = inputValuesValidation(
+                [
+                    {
+                        name: "text",
+                        value: text,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                            isEmailOrMobilePhone: {
+                                msg: "عذراً ، الإيميل أو رقم الهاتف الذي أدخلته غير صالح ، الرجاء إدخال إيميل أو رقم هاتف  !!",
+                            },
                         },
                     },
-                },
-            ]
-        );
-        // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
-        setErrors(errorsObject);
-        // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
-        if (Object.keys(errorsObject).length == 0) {
-            // تعديل قيمة ال state المسماة isLoginStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
-            setIsLoginStatus(true);
-            // بداية محاولة إرسال الطلب
-            try {
+                    {
+                        name: "password",
+                        value: password,
+                        rules: {
+                            isRequired: {
+                                msg: "عذراً ، لا يجب أن يكون الحقل فارغاً !!",
+                            },
+                            isValidPassword: {
+                                value: password,
+                                msg: "عذراً ، يجب أن تكون كلمة السر تحتوي على الأقل 8 حروف أو أرقام أو كلاهما.                            ",
+                            },
+                        },
+                    },
+                ]
+            );
+            // تخزين الأخطاء الناتجة في ال state الخاص بالأخطاء
+            setErrors(errorsObject);
+            // التحقق من أنّ الكائن الخاص بالأخطاء فارغ أي لا يوجد أخطاء
+            if (Object.keys(errorsObject).length == 0) {
+                // تعديل قيمة ال state المسماة isLoginStatus لتصبح true من أجل استخدامه لاحقاً في إظهار رسالة انتظار
+                setIsLoginStatus(true);
+                // بداية محاولة إرسال الطلب
                 // إرسال الطلب وتخزين الاستجابة في متغير
                 const res = await axios.get(`${process.env.BASE_API_URL}/users/login?text=${text}&password=${password}`);
                 // جلب البيانات الناتجة عن الاستجابة
@@ -129,17 +129,17 @@ export default function Login() {
                     localStorage.setItem(process.env.userTokenNameInLocalStorage, result.data.token);
                     // إعادة التوجيه للصفحة الرئيسية بعد تسجيل الدخول
                     await router.push("/");
-                    // حذف المتعير الذي يحتوي المؤقت
                 }
-            } catch (err) {
-                // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
-                setIsLoginStatus(false);
-                setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
-                let errorTimeout = setTimeout(() => {
-                    setErrorMsg("");
-                    clearTimeout(errorTimeout);
-                }, 5000);
             }
+        }
+        catch (err) {
+            // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر
+            setIsLoginStatus(false);
+            setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
+            let errorTimeout = setTimeout(() => {
+                setErrorMsg("");
+                clearTimeout(errorTimeout);
+            }, 5000);
         }
     }
     return (
