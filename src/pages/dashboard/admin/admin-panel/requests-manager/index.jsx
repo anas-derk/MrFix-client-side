@@ -140,9 +140,9 @@ const RequestsManager = ({ result }) => {
                     {/* End Container Component From Bootstrap */}
                 </section>
                 {/* End Content Section */}
-                {isLoadingPage && !isErrorMsgOnLoadingThePage && <LoaderPage />}
-                {isErrorMsgOnLoadingThePage && <ErrorOnLoadingThePage />}
             </>}
+            {isLoadingPage && !isErrorMsgOnLoadingThePage && <LoaderPage />}
+            {isErrorMsgOnLoadingThePage && <ErrorOnLoadingThePage />}
         </div>
         // End Requests Manager Page
     );
