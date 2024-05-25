@@ -5,6 +5,7 @@ import axios from "axios";
 import { getAdminInfo, getAdsCount, getAllAdsInsideThePage } from "../../../../../../../public/global_functions/popular";
 import LoaderPage from "@/components/LoaderPage";
 import ErrorOnLoadingThePage from "@/components/ErrorOnLoadingThePage";
+import PaginationBar from "@/components/PaginationBar";
 
 export default function DeleteAds() {
     const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -71,6 +72,26 @@ export default function DeleteAds() {
             }, 5000);
         }
     }
+    const getPreviousPage = async () => {
+        setIsGetAds(true);
+        const newCurrentPage = currentPage - 1;
+        setAllAdsInsideThePage((await getAllAdsInsideThePage(newCurrentPage, pageSize)).data);
+        setCurrentPage(newCurrentPage);
+        setIsGetAds(false);
+    }
+    const getNextPage = async () => {
+        setIsGetAds(true);
+        const newCurrentPage = currentPage + 1;
+        setAllAdsInsideThePage((await getAllAdsInsideThePage(newCurrentPage, pageSize)).data);
+        setCurrentPage(newCurrentPage);
+        setIsGetAds(false);
+    }
+    const getSpecificPage = async (pageNumber) => {
+        setIsGetAds(true);
+        setAllAdsInsideThePage((await getAllAdsInsideThePage(pageNumber, pageSize)).data);
+        setCurrentPage(pageNumber);
+        setIsGetAds(false);
+    }
     return (
         // Start Delete And Edit Ads Page
         <div className="delete-and-edit-ads">
@@ -85,7 +106,7 @@ export default function DeleteAds() {
                         <h1 className="welcome-msg mb-4">مرحباً بك في صفحة حذف الإعلانات الخاصة بك في مستر فيكس</h1>
                         <hr />
                         {allAdsInsideThePage.length > 0 ? (
-                            <table className="ads-list-table">
+                            <table className="ads-list-table mb-4">
                                 <tbody>
                                     {allAdsInsideThePage.map((ad) => (
                                         <tr key={ad._id}>
@@ -109,6 +130,21 @@ export default function DeleteAds() {
                         ) : (
                             <p className="alert alert-danger">عذراً لا يوجد أي إعلانات حالياً</p>
                         )}
+                        {totalPagesCount > 1 && !isGetAds &&
+                            <PaginationBar
+                                totalPagesCount={totalPagesCount}
+                                currentPage={currentPage}
+                                getPreviousPage={getPreviousPage}
+                                getNextPage={getNextPage}
+                                getSpecificPage={getSpecificPage}
+                                paginationButtonTextColor={"#FFF"}
+                                paginationButtonBackgroundColor={"var(--main-color-one)"}
+                                activePaginationButtonColor={"#FFF"}
+                                activePaginationButtonBackgroundColor={"#000"}
+                                isDisplayCurrentPageNumberAndCountOfPages={false}
+                                isDisplayNavigateToSpecificPageForm={false}
+                            />
+                        }
                     </div>
                     {/* End Container Component From Bootstrap */}
                 </section>

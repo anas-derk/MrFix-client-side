@@ -151,6 +151,35 @@ input, select, textarea{
     }
 }
 
+.pagination-bar{
+    .current-page-number-and-count-of-pages{
+        font-size: 14px;
+    }
+    .pagination-icon{
+        font-size: 25px;
+        cursor: pointer;
+        &:hover{
+            background-color: #dc3545;
+            color: #FFF;
+            font-size: 25px;
+        }
+    }
+    .pagination-button{
+        font-size: 14px;
+        border: none;
+        font-weight: bold;
+        &.selection{
+            background-color: var(--main-color-one);
+            color: #FFF;
+        }
+    }
+    .navigate-to-specific-page-form{
+        .page-number-input{
+            font-size: 14px;
+        }
+    }
+}
+
 .loading-box{
     height: 100vh;
     background-color: var(--main-color-one);

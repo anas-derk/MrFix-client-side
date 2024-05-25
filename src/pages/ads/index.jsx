@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getAdsCount, getAllAdsInsideThePage, getUserInfo } from '../../../public/global_functions/popular';
 import LoaderPage from '@/components/LoaderPage';
 import ErrorOnLoadingThePage from '@/components/ErrorOnLoadingThePage';
+import PaginationBar from '@/components/PaginationBar';
 
 // تعريف دالة مكون من نحن
 export default function Ads() {
@@ -54,6 +55,7 @@ export default function Ads() {
                 .then(async (result) => {
                     if (result.data > 0) {
                         setAllAdsInsideThePage((await getAllAdsInsideThePage(1, pageSize)).data);
+                        setTotalPagesCount(Math.ceil(result.data / pageSize));
                     }
                     setIsGetAds(false);
                     setIsLoadingPage(false);
@@ -64,6 +66,26 @@ export default function Ads() {
                 });
         }
     }, []);
+    const getPreviousPage = async () => {
+        setIsGetAds(true);
+        const newCurrentPage = currentPage - 1;
+        setAllAdsInsideThePage((await getAllAdsInsideThePage(newCurrentPage, pageSize)).data);
+        setCurrentPage(newCurrentPage);
+        setIsGetAds(false);
+    }
+    const getNextPage = async () => {
+        setIsGetAds(true);
+        const newCurrentPage = currentPage + 1;
+        setAllAdsInsideThePage((await getAllAdsInsideThePage(newCurrentPage, pageSize)).data);
+        setCurrentPage(newCurrentPage);
+        setIsGetAds(false);
+    }
+    const getSpecificPage = async (pageNumber) => {
+        setIsGetAds(true);
+        setAllAdsInsideThePage((await getAllAdsInsideThePage(pageNumber, pageSize)).data);
+        setCurrentPage(pageNumber);
+        setIsGetAds(false);
+    }
     return (
         // بداية كتابة كود ال jsx لصفحة من نحن
         <div className="ads shared-pages-with-styles">
@@ -83,12 +105,27 @@ export default function Ads() {
                         <h1 className="welcome-msg text-center mb-4">مرحباً بك في صفحة الإعلانات</h1>
                         {/* بداية مكون الشبكة من البوتستراب */}
                         {allAdsInsideThePage.length === 0 && !isGetAds && <p className='alert alert-danger'>عذراً ، لا توجد إعلانات حالياً !!</p>}
-                        <div className="ads-box align-items-center p-4">
+                        <div className="ads-box align-items-center p-4 mb-5">
                             {allAdsInsideThePage.map((ad, index) => (
                                 <p className={`ad-content p-3 text-white ${index !== allAdsInsideThePage.length - 1 ? "mb-4" : ""}`} key={ad._id}>{ad.content}</p>
                             ))}
                         </div>
                         {/* نهاية مكون الشبكة من البوتستراب */}
+                        {totalPagesCount > 1 && !isGetAds &&
+                            <PaginationBar
+                                totalPagesCount={totalPagesCount}
+                                currentPage={currentPage}
+                                getPreviousPage={getPreviousPage}
+                                getNextPage={getNextPage}
+                                getSpecificPage={getSpecificPage}
+                                paginationButtonTextColor={"#FFF"}
+                                paginationButtonBackgroundColor={"var(--main-color-one)"}
+                                activePaginationButtonColor={"#FFF"}
+                                activePaginationButtonBackgroundColor={"#000"}
+                                isDisplayCurrentPageNumberAndCountOfPages={false}
+                                isDisplayNavigateToSpecificPageForm={false}
+                            />
+                        }
                     </div>
                     {/* نهاية مكون الحاوية من البوتستراب */}
                 </section>
