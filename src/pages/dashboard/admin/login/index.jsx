@@ -83,7 +83,6 @@ const AdminLogin = () => {
                 }
             }
         } catch (err) {
-            console.log(err);
             setIsLoginingStatus(false);
             setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
             setTimeout(() => {
