@@ -156,7 +156,7 @@ const RequestsManager = () => {
                                                 {request.files.length > 0 ? <td>
                                                     {request.files.map((path, fileIndex) =>
                                                         <div className="files-download-buttons" key={fileIndex}>
-                                                            {selectedImageForDownload !== `${process.env.BASE_API_URL}/${path}` && !errorMsg && <button
+                                                            {selectedImageForDownload !== `${process.env.BASE_API_URL}/${path}` && <button
                                                                 className="d-block btn btn-success mb-3 w-100"
                                                                 onClick={() => downloadImage(`${process.env.BASE_API_URL}/${path}`)}
                                                             >

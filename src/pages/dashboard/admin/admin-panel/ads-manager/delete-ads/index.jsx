@@ -15,9 +15,9 @@ export default function DeleteAds() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPagesCount, setTotalPagesCount] = useState(0);
     const [errorMsg, setErrorMsg] = useState("");
-    const [successMsg, setSuccessMsg] = useState("");
     const [waitMsg, setWaitMsg] = useState("");
-    const pageSize = 5;
+    const [deletingAdId, setDeletingAdId] = useState("");
+    const pageSize = 2;
     const router = useRouter();
     useEffect(() => {
         const adminToken = localStorage.getItem(process.env.adminTokenNameInLocalStorage);
@@ -52,14 +52,33 @@ export default function DeleteAds() {
     const deleteAd = async (e, adId) => {
         try {
             e.preventDefault();
+            setWaitMsg("جاري الحذف ...");
+            setDeletingAdId(adId);
             const res = await axios.delete(`${process.env.BASE_API_URL}/ads/${adId}`, {
                 headers: {
                     Authorization: localStorage.getItem(process.env.adminTokenNameInLocalStorage)
                 }
             });
             const result = res.data;
+            setWaitMsg("");
             if (!result.error) {
-                router.reload();
+                const newAllAdsInsideThePage = allAdsInsideThePage.filter((ad) => ad._id !== adId);
+                setAllAdsInsideThePage(allAdsInsideThePage.filter((ad) => ad._id !== adId));
+                setDeletingAdId("");
+                if (newAllAdsInsideThePage.length === 0) {
+                    if (currentPage > 1) {
+                        await getPreviousPage();
+                        setTotalPagesCount(totalPagesCount - 1);
+                    }
+                    if (currentPage === 1) {
+                        if (totalPagesCount > 1) {
+                            await getSpecificPage(1);
+                            setTotalPagesCount(totalPagesCount - 1);
+                        } else {
+                            setTotalPagesCount(totalPagesCount - 1);
+                        }
+                    }
+                }
             }
         }
         catch (err) {
@@ -68,6 +87,7 @@ export default function DeleteAds() {
             setErrorMsg("عذراً حدث خطا ما ، يرجى إعادة المحاولة !!");
             let errorTimeout = setTimeout(() => {
                 setErrorMsg("");
+                setDeletingAdId("");
                 clearTimeout(errorTimeout);
             }, 5000);
         }
@@ -118,9 +138,24 @@ export default function DeleteAds() {
                                                     className="delete-ads-form"
                                                     onSubmit={(e) => deleteAd(e, ad._id)}
                                                 >
-                                                    <button type="submit" className="btn btn-danger p-3">
+                                                    {ad._id !== deletingAdId && <button
+                                                        type="submit"
+                                                        className="btn btn-danger p-3"
+                                                    >
                                                         حذف الإعلان
-                                                    </button>
+                                                    </button>}
+                                                    {waitMsg && ad._id === deletingAdId && <button
+                                                        className="btn btn-danger p-3"
+                                                        disabled
+                                                    >
+                                                        جاري حذف الاعلان ...
+                                                    </button>}
+                                                    {errorMsg && ad._id === deletingAdId && <button
+                                                        type="submit"
+                                                        className="btn btn-warning p-3"
+                                                    >
+                                                        {errorMsg}
+                                                    </button>}
                                                 </form>
                                             </td>
                                         </tr>
