@@ -17,7 +17,7 @@ export default function DeleteAds() {
     const [errorMsg, setErrorMsg] = useState("");
     const [waitMsg, setWaitMsg] = useState("");
     const [deletingAdId, setDeletingAdId] = useState("");
-    const pageSize = 2;
+    const pageSize = 5;
     const router = useRouter();
     useEffect(() => {
         const adminToken = localStorage.getItem(process.env.adminTokenNameInLocalStorage);
