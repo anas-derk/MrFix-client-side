@@ -232,7 +232,7 @@ export default function Profile() {
         catch (err) {
             if (err?.response?.data?.msg === "Unauthorized Error") {
                 localStorage.removeItem(process.env.userTokenNameInLocalStorage);
-                await router.replace("/dashboard/admin/login");
+                await router.replace("/login");
                 return;
             }
             // طباعة رسالة الخطأ في الكونسول إن حصلت مشكلة عند إرسال الطلب للسيرفر

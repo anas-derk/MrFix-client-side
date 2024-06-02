@@ -43,7 +43,7 @@ export default function Login() {
             getUserInfo()
                 .then(async (result) => {
                     if (!result.error) {
-                        await router.push("/");
+                        await router.replace("/");
                     } else {
                         localStorage.removeItem(process.env.userTokenNameInLocalStorage);
                         setIsLoadingPage(false);
@@ -128,7 +128,7 @@ export default function Login() {
                     // تخزين نتيجة الاستجابة أي رقم معرّف المستخدم في التخزين المحلي
                     localStorage.setItem(process.env.userTokenNameInLocalStorage, result.data.token);
                     // إعادة التوجيه للصفحة الرئيسية بعد تسجيل الدخول
-                    await router.push("/");
+                    await router.replace("/");
                 }
             }
         }
